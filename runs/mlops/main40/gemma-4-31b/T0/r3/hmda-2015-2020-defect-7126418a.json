@@ -1,0 +1,140 @@
+{
+ "task_id": "hmda-2015-2020-defect-7126418a",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "lar_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000437,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1349,
+   "spent_seconds": 0.1349,
+   "wall_s": 0.334
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1127,
+   "spent_seconds": 0.2476,
+   "wall_s": 0.805
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to replay on reference data due to a KeyError, indicating it is broken and cannot handle the schema changes (Regulation C) introduced in 2018."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "hmda",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 7.71,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to replay on reference data due to a KeyError, indicating it is broken and cannot handle the schema changes (Regulation C) introduced in 2018."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"lar_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2591,
+    "completion_tokens": 20,
+    "total_tokens": 2611,
+    "cost": 0.00013759
+   },
+   "cost": 0.00013759,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"clean\"}\n```",
+   "usage": {
+    "prompt_tokens": 2655,
+    "completion_tokens": 18,
+    "total_tokens": 2673,
+    "cost": 0.00014011
+   },
+   "cost": 0.00014011,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"lar_adapter\"], \"retrain\": false, \"reason\": \"The lar_adapter failed to replay on reference data due to a KeyError, indicating it is broken and cannot handle the schema changes (Regulation C) introduced in 2018.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2703,
+    "completion_tokens": 68,
+    "total_tokens": 2771,
+    "cost": 0.00015887
+   },
+   "cost": 0.00015887,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7949,
+ "tokens_out": 106,
+ "compute_spent_s": 0.2476,
+ "compute_budget_s": 11.483238900003926,
+ "source_cache_hits": 4,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

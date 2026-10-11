@@ -1,0 +1,165 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.010685,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 6.315
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6860603358597117,
+    "cur_perf": 0.6753975330658345,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26916,
+    "common_rows": 26916,
+    "masked": []
+   },
+   "cost_s": 0.7523,
+   "spent_seconds": 1.2673,
+   "wall_s": 2.641
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter and time_features have changed versions causing output differences on new schema fields; rolling them back improves accuracy but not to reference level, indicating both pipeline fixes and model retraining are needed."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 70.78,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter and time_features have changed versions causing output differences on new schema fields; rolling them back improves accuracy but not to reference level, indicating both pipeline fixes and model retraining are needed."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2682,
+    "completion_tokens": 6199,
+    "total_tokens": 8881,
+    "cost": 0.008494525
+   },
+   "cost": 0.008494525,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\", \"time_features\"]\n}",
+   "usage": {
+    "prompt_tokens": 2797,
+    "completion_tokens": 394,
+    "total_tokens": 3191,
+    "cost": 0.0009667125
+   },
+   "cost": 0.0009667125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"time_features\"],\n  \"retrain\": true,\n  \"reason\": \"trip_adapter and time_features have changed versions causing output differences on new schema fields; rolling them back improves accuracy but not to reference level, indicating both pipeline fixes and model retraining are needed.\"\n}",
+   "usage": {
+    "prompt_tokens": 2948,
+    "completion_tokens": 573,
+    "total_tokens": 3521,
+    "cost": 0.00122395
+   },
+   "cost": 0.00122395,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8427,
+ "tokens_out": 7166,
+ "compute_spent_s": 1.2673,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 6,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

@@ -1,0 +1,354 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T8_356",
+ "label": "gpt-4.1-nano",
+ "model": "openai/gpt-4.1-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T8",
+ "instance": 356,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "refund",
+ "goal": "Refund 149 to Northwind: create a transfer of 149 with memo 'refund RF-9955 Northwind', record refund:RF-9955 with amount 149, and e-mail northwind@customers.invalid with subject 'Refund RF-9955'.",
+ "claimed": "completed",
+ "model_summary": "Refund of 149 processed for Northwind with record and email notification.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 3,
+ "n_tool_calls": 4,
+ "n_writes": 3,
+ "n_nudges": 1,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000278,
+ "paid_calls": 3,
+ "cached_calls": 0,
+ "tokens_in": 1931,
+ "tokens_out": 212,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "OpenAI|openai/gpt-4.1-nano"
+ ],
+ "model_latency_s": 5.52,
+ "step_map": {
+  "transfer_create:refund rf-9955 northwind": "refund",
+  "row_insert:refund:rf-9955": "log_refund",
+  "mail_send:northwind@customers.invalid|refund rf-9955": "tell_customer"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_maYR6HJEi5qAkDM1EH8yZlkF",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791454346.647,
+   "args": {
+    "amount": 149,
+    "memo": "refund RF-9955 Northwind",
+    "transfer_id": "RF-9955 Northwind"
+   },
+   "contract_tool": "transfer_create",
+   "step": "refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"263868603539848893816043399685001369188\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_G58pNWrywcto2nxFPTg45JPe",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791454347.766,
+   "args": {
+    "item": "refund:RF-9955",
+    "amount": 149
+   },
+   "contract_tool": "row_insert",
+   "step": "log_refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 300}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_WQPwbFGVg6Lxy0b5c5We0Nz3",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791454347.919,
+   "args": {
+    "to": "northwind@customers.invalid",
+    "subject": "Refund RF-9955",
+    "body": "Your refund RF-9955 of amount 149 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "tell_customer",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "call_id": "call_HUmojhgrVYhZUwzaztesKjmD",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791454352.032,
+   "args": {
+    "status": "completed",
+    "summary": "Refund of 149 processed for Northwind with record and email notification.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "refund": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_refund": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "tell_customer": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 3,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "refund",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "RF-9955 Northwind",
+   "focal": true,
+   "mode": "none",
+   "t": 1791454346.6980495,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.037,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "263868603539848893816043399685001369188"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_refund",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791454347.766201,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.048,
+    "value": {
+     "id": 300
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "tell_customer",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791454347.9185166,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.025,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Refund 149 to Northwind: create a transfer of 149 with memo 'refund RF-9955 Northwind', record refund:RF-9955 with amount 149, and e-mail northwind@customers.invalid with subject 'Refund RF-9955'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_maYR6HJEi5qAkDM1EH8yZlkF",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\":149,\"memo\":\"refund RF-9955 Northwind\",\"transfer_id\":\"RF-9955 Northwind\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_G58pNWrywcto2nxFPTg45JPe",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\":\"refund:RF-9955\",\"amount\":149}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_WQPwbFGVg6Lxy0b5c5We0Nz3",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\":\"northwind@customers.invalid\",\"subject\":\"Refund RF-9955\",\"body\":\"Your refund RF-9955 of amount 149 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_maYR6HJEi5qAkDM1EH8yZlkF",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"263868603539848893816043399685001369188\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_G58pNWrywcto2nxFPTg45JPe",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 300}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_WQPwbFGVg6Lxy0b5c5We0Nz3",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "The refund of 149 has been successfully transferred to Northwind with the memo 'refund RF-9955 Northwind'. The refund record has been created, and an email notification has been sent to Northwind at northwind@customers.invalid regarding the refund. All actions have been completed successfully."
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_HUmojhgrVYhZUwzaztesKjmD",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\":\"completed\",\"summary\":\"Refund of 149 processed for Northwind with record and email notification.\",\"uncertain_operations\":[]}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_HUmojhgrVYhZUwzaztesKjmD",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "95012f1f5c09",
+ "run_namespace": "95012f1f-2e99dc",
+ "wall_s": 15.24
+}

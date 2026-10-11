@@ -1,0 +1,184 @@
+{
+ "task_id": "bts-2019-01-2022-01-defect-bcfcb399",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.003807,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.97076
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 2.3717,
+   "spent_seconds": 2.3717,
+   "wall_s": 0.422
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7879867046533713,
+    "cur_perf": 0.7790598290598291,
+    "ref_perf": 0.8263081895069793,
+    "rows": 42120,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.7825,
+   "spent_seconds": 3.1542,
+   "wall_s": 1.168
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 3.1542,
+   "wall_s": 0.077
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "time_features environment change caused significant day_of_year output drift (PSI 0.97) degrading accuracy; rollback improves performance but retraining needed to adapt to current data distribution."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "bts",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 18.17,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "time_features environment change caused significant day_of_year output drift (PSI 0.97) degrading accuracy; rollback improves performance but retraining needed to adapt to current data distribution."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 1933,
+    "completion_tokens": 670,
+    "total_tokens": 2603,
+    "cost": 0.0011851125
+   },
+   "cost": 0.0011851125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2016,
+    "completion_tokens": 328,
+    "total_tokens": 2344,
+    "cost": 0.000754
+   },
+   "cost": 0.000754,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2151,
+    "completion_tokens": 282,
+    "total_tokens": 2433,
+    "cost": 0.0007161375
+   },
+   "cost": 0.0007161375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"time_features\"], \"retrain\": true, \"reason\": \"time_features environment change caused significant day_of_year output drift (PSI 0.97) degrading accuracy; rollback improves performance but retraining needed to adapt to current data distribution.\"}",
+   "usage": {
+    "prompt_tokens": 2193,
+    "completion_tokens": 612,
+    "total_tokens": 2805,
+    "cost": 0.0011519625
+   },
+   "cost": 0.0011519625,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8293,
+ "tokens_out": 1892,
+ "compute_spent_s": 3.1542,
+ "compute_budget_s": 15.425814300004276,
+ "source_cache_hits": 8,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

@@ -1,0 +1,288 @@
+{
+ "task_id": "divvy-2016-Q3-2024-Q2-defect-e3ff8d8e",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.000948,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 0.1529,
+   "spent_seconds": 0.1529,
+   "wall_s": 6.793
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q4"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2020-Q2",
+     "2020-Q3",
+     "2020-Q4"
+    ],
+    "versions": {
+     "2020-Q2": "current",
+     "2020-Q3": "current",
+     "2020-Q4": "current"
+    },
+    "retention": {
+     "2020-Q2": 1.0,
+     "2020-Q3": 1.0,
+     "2020-Q4": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "bike": {
+      "baseline_psi": 0.8155,
+      "boundary_psi": 0.4602,
+      "input_boundary_psi": 1.195,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0242,
+      "boundary_psi": 0.0722,
+      "input_boundary_psi": 0.0722,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0253,
+      "boundary_psi": 0.0601,
+      "input_boundary_psi": 0.0601,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "user": {
+      "baseline_psi": 0.0077,
+      "boundary_psi": 0.0595,
+      "input_boundary_psi": 0.0595,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_lng": {
+      "baseline_psi": 0.0249,
+      "boundary_psi": 0.0124,
+      "input_boundary_psi": 0.1675,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0002
+     },
+     "start_lat": {
+      "baseline_psi": 0.0072,
+      "boundary_psi": 0.0103,
+      "input_boundary_psi": 0.1223,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_lat": {
+      "baseline_psi": 0.0065,
+      "boundary_psi": 0.0079,
+      "input_boundary_psi": 0.2717,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0002
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.6437,
+   "spent_seconds": 0.7967,
+   "wall_s": 4.712
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0088,
+   "spent_seconds": 0.8055,
+   "wall_s": 0.363
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'started_at'"
+   },
+   "cost_s": 0.0022,
+   "spent_seconds": 0.8077,
+   "wall_s": 0.717
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails on current schema (started_at/ended_at) and has not been updated since 2020-Q1, breaking the entire pipeline."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 20.03,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails on current schema (started_at/ended_at) and has not been updated since 2020-Q1, breaking the entire pipeline."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3370,
+    "completion_tokens": 28,
+    "total_tokens": 3398,
+    "cost": 0.00049422
+   },
+   "cost": 0.00049422,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q4\"}",
+   "usage": {
+    "prompt_tokens": 3469,
+    "completion_tokens": 28,
+    "total_tokens": 3497,
+    "cost": 8.571e-05
+   },
+   "cost": 8.571e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 4192,
+    "completion_tokens": 16,
+    "total_tokens": 4208,
+    "cost": 0.000174
+   },
+   "cost": 0.000174,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 4244,
+    "completion_tokens": 17,
+    "total_tokens": 4261,
+    "cost": 8.304e-05
+   },
+   "cost": 8.304e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"trip_adapter fails on current schema (started_at/ended_at) and has not been updated since 2020-Q1, breaking the entire pipeline.\"}",
+   "usage": {
+    "prompt_tokens": 4297,
+    "completion_tokens": 62,
+    "total_tokens": 4359,
+    "cost": 0.00011151
+   },
+   "cost": 0.00011151,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 19572,
+ "tokens_out": 151,
+ "compute_spent_s": 0.8077,
+ "compute_budget_s": 25.978435799963336,
+ "source_cache_hits": 14,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

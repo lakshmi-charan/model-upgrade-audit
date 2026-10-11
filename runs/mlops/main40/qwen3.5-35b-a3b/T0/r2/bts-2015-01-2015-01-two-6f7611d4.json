@@ -1,0 +1,186 @@
+{
+ "task_id": "bts-2015-01-2015-01-two-6f7611d4",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.003927,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "flight_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.449
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "origin_state": 0.253982,
+     "dest_state": 0.377415
+    },
+    "rows": [
+     145837,
+     145837
+    ]
+   },
+   "cost_s": 0.1032,
+   "spent_seconds": 0.1032,
+   "wall_s": 1.327
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.8132940988617441,
+    "cur_perf": 0.8083669791737951,
+    "ref_perf": 0.8130999177255691,
+    "rows": 43839,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.788,
+   "spent_seconds": 0.8912,
+   "wall_s": 1.202
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "The encode component's config change altered feature encoding for origin_state and dest_state, causing artificial performance degradation; rolling back to reference version restores accuracy without needing retraining."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "effective": [
+   "clean",
+   "encode"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "bts",
+ "otype": "defect_only",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 26.83,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "The encode component's config change altered feature encoding for origin_state and dest_state, causing artificial performance degradation; rolling back to reference version restores accuracy without needing retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"flight_adapter\"}",
+   "usage": {
+    "prompt_tokens": 1884,
+    "completion_tokens": 854,
+    "total_tokens": 2738,
+    "cost": 0.00141635
+   },
+   "cost": 0.00141635,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 1926,
+    "completion_tokens": 510,
+    "total_tokens": 2436,
+    "cost": 0.000975975
+   },
+   "cost": 0.000975975,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"encode\"]}",
+   "usage": {
+    "prompt_tokens": 2023,
+    "completion_tokens": 282,
+    "total_tokens": 2305,
+    "cost": 0.0006953375
+   },
+   "cost": 0.0006953375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"encode\"], \"retrain\": false, \"reason\": \"The encode component's config change altered feature encoding for origin_state and dest_state, causing artificial performance degradation; rolling back to reference version restores accuracy without needing retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2157,
+    "completion_tokens": 376,
+    "total_tokens": 2533,
+    "cost": 0.0008393125
+   },
+   "cost": 0.0008393125,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7990,
+ "tokens_out": 2022,
+ "compute_spent_s": 0.8912,
+ "compute_budget_s": 20.39204970004357,
+ "source_cache_hits": 8,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

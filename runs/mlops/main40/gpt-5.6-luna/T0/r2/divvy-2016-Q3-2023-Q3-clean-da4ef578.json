@@ -1,0 +1,179 @@
+{
+ "task_id": "divvy-2016-Q3-2023-Q3-clean-da4ef578",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "station_join",
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001104,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.0169,
+   "wall_s": 0.277
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.0337,
+   "wall_s": 0.395
+  },
+  {
+   "step": 3,
+   "action": [
+    "final"
+   ],
+   "args": {
+    "fix": [
+     "trip_adapter",
+     "station_join"
+    ],
+    "retrain": true,
+    "reason": "The adapter is incompatible with the current source schema (including missing trip_id), while station joins produce substantial missingness and invalid distance/round-trip features; after repairing these pipeline defects, genuine feature and label drift warrants retraining."
+   },
+   "valid": false,
+   "tool_error": true,
+   "result": {
+    "error": "unknown action ['final']"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0337,
+   "wall_s": 0.0
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "station_join",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip adapter is stale and incompatible with the evolved source schema, while station joining introduces substantial current missingness that corrupts distance and round-trip features; repair both before retraining for the remaining genuine drift."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "clean",
+ "tier": "none",
+ "wall_s": 14.84,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "The trip adapter is stale and incompatible with the evolved source schema, while station joining introduces substantial current missingness that corrupts distance and round-trip features; repair both before retraining for the remaining genuine drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 1,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 2970,
+    "completion_tokens": 110,
+    "total_tokens": 3080,
+    "cost": 0.00019194
+   },
+   "cost": 0.00019194,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3021,
+    "completion_tokens": 41,
+    "total_tokens": 3062,
+    "cost": 0.00012189
+   },
+   "cost": 0.00012189,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":[\"final\"],\"fix\":[\"trip_adapter\",\"station_join\"],\"retrain\":true,\"reason\":\"The adapter is incompatible with the current source schema (including missing trip_id), while station joins produce substantial missingness and invalid distance/round-trip features; after repairing these pipeline defects, genuine feature and label drift warrants retraining.\"}",
+   "usage": {
+    "prompt_tokens": 3071,
+    "completion_tokens": 347,
+    "total_tokens": 3418,
+    "cost": 0.00048986
+   },
+   "cost": 0.00048986,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\",\"station_join\"],\"retrain\":true,\"reason\":\"The trip adapter is stale and incompatible with the evolved source schema, while station joining introduces substantial current missingness that corrupts distance and round-trip features; repair both before retraining for the remaining genuine drift.\"}",
+   "usage": {
+    "prompt_tokens": 3171,
+    "completion_tokens": 178,
+    "total_tokens": 3349,
+    "cost": 0.00030056
+   },
+   "cost": 0.00030056,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 12233,
+ "tokens_out": 676,
+ "compute_spent_s": 0.0337,
+ "compute_budget_s": 9.177554700003384,
+ "source_cache_hits": 3,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

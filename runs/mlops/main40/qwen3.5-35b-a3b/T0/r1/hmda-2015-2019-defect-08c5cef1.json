@@ -1,0 +1,143 @@
+{
+ "task_id": "hmda-2015-2019-defect-08c5cef1",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.003814,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1497,
+   "spent_seconds": 0.1497,
+   "wall_s": 0.103
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.3989,
+   "wall_s": 0.088
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is broken due to unhandled 2018 schema changes (missing occupancy_type/owner_occupancy keys), causing complete feature drift and accuracy collapse from 0.8171 to 0.2371."
+ },
+ "oracle": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": [
+   "lar_adapter"
+  ]
+ },
+ "domain": "hmda",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 18.45,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is broken due to unhandled 2018 schema changes (missing occupancy_type/owner_occupancy keys), causing complete feature drift and accuracy collapse from 0.8171 to 0.2371."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"lar_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2301,
+    "completion_tokens": 757,
+    "total_tokens": 3058,
+    "cost": 0.0013580125
+   },
+   "cost": 0.0013580125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"lar_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2357,
+    "completion_tokens": 713,
+    "total_tokens": 3070,
+    "cost": 0.0013099125
+   },
+   "cost": 0.0013099125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"lar_adapter\"], \"retrain\": true, \"reason\": \"lar_adapter is broken due to unhandled 2018 schema changes (missing occupancy_type/owner_occupancy keys), causing complete feature drift and accuracy collapse from 0.8171 to 0.2371.\"}",
+   "usage": {
+    "prompt_tokens": 2414,
+    "completion_tokens": 580,
+    "total_tokens": 2994,
+    "cost": 0.001146275
+   },
+   "cost": 0.001146275,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7072,
+ "tokens_out": 2050,
+ "compute_spent_s": 0.3989,
+ "compute_budget_s": 12.359913300024346,
+ "source_cache_hits": 4,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

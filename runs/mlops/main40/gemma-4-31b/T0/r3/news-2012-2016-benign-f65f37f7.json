@@ -1,0 +1,204 @@
+{
+ "task_id": "news-2012-2016-benign-f65f37f7",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "label_map"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000426,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "label_map"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {},
+    "rows": [
+     32098,
+     11721
+    ]
+   },
+   "cost_s": 0.0258,
+   "spent_seconds": 0.0258,
+   "wall_s": 0.56
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "ingest"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0078,
+   "spent_seconds": 0.0335,
+   "wall_s": 2.35
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.4935,
+   "spent_seconds": 0.527,
+   "wall_s": 0.508
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "label_map"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.18137950610275333,
+    "cur_perf": 0.18132803632236094,
+    "ref_perf": 0.7322784133433123,
+    "rows": 3523,
+    "common_rows": 3523,
+    "masked": []
+   },
+   "cost_s": 2.1719,
+   "spent_seconds": 2.6989,
+   "wall_s": 3.297
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "The label_map component changed its artifact and is producing different outputs, but rolling it back does not restore accuracy, indicating a combination of a broken component and significant concept/label drift over the 4-year gap."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [],
+  "consequential": []
+ },
+ "domain": "news",
+ "otype": "drift_only",
+ "scenario": "benign",
+ "tier": "none",
+ "wall_s": 15.13,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "The label_map component changed its artifact and is producing different outputs, but rolling it back does not restore accuracy, indicating a combination of a broken component and significant concept/label drift over the 4-year gap."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"label_map\"}\n```",
+   "usage": {
+    "prompt_tokens": 1288,
+    "completion_tokens": 20,
+    "total_tokens": 1308,
+    "cost": 7.152e-05
+   },
+   "cost": 7.152e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"ingest\"}\n```",
+   "usage": {
+    "prompt_tokens": 1362,
+    "completion_tokens": 19,
+    "total_tokens": 1381,
+    "cost": 7.784e-05
+   },
+   "cost": 7.784e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"text_norm\"}\n```",
+   "usage": {
+    "prompt_tokens": 1411,
+    "completion_tokens": 20,
+    "total_tokens": 1431,
+    "cost": 8.003e-05
+   },
+   "cost": 8.003e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"label_map\"]}\n```",
+   "usage": {
+    "prompt_tokens": 1461,
+    "completion_tokens": 20,
+    "total_tokens": 1481,
+    "cost": 8.325e-05
+   },
+   "cost": 8.325e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"label_map\"], \"retrain\": true, \"reason\": \"The label_map component changed its artifact and is producing different outputs, but rolling it back does not restore accuracy, indicating a combination of a broken component and significant concept/label drift over the 4-year gap.\"}\n```",
+   "usage": {
+    "prompt_tokens": 1611,
+    "completion_tokens": 75,
+    "total_tokens": 1686,
+    "cost": 0.00011289
+   },
+   "cost": 0.00011289,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7133,
+ "tokens_out": 154,
+ "compute_spent_s": 2.6989,
+ "compute_budget_s": 59.42331899997953,
+ "source_cache_hits": 10,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

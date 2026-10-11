@@ -1,0 +1,323 @@
+{
+ "task_id": "divvy-2016-Q3-2023-Q3-clean-da4ef578",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.016824,
+ "n_steps": 8,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'started_at'"
+   },
+   "cost_s": 0.0022,
+   "spent_seconds": 0.0022,
+   "wall_s": 1.348
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.0191,
+   "wall_s": 0.088
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 0.1432,
+   "wall_s": 1.877
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.16,
+   "wall_s": 0.003
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.16,
+   "wall_s": 0.112
+  },
+  {
+   "step": 6,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 0.1529,
+   "spent_seconds": 0.313,
+   "wall_s": 0.726
+  },
+  {
+   "step": 7,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "station_join",
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.3298,
+   "wall_s": 0.023
+  },
+  {
+   "step": 8,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.3467,
+   "wall_s": 0.119
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to unhandled schema changes (removed trip_id column in 2020-Q1), causing massive output drift (PSI=13.99) and feature missingness; model retraining needed due to accuracy drop from 0.87 to 0.66."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "clean",
+ "tier": "none",
+ "wall_s": 96.23,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to unhandled schema changes (removed trip_id column in 2020-Q1), causing massive output drift (PSI=13.99) and feature missingness; model retraining needed due to accuracy drop from 0.87 to 0.66."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 9,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3144,
+    "completion_tokens": 4513,
+    "total_tokens": 7657,
+    "cost": 0.0063778
+   },
+   "cost": 0.0063778,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 3207,
+    "completion_tokens": 617,
+    "total_tokens": 3824,
+    "cost": 0.0013232375
+   },
+   "cost": 0.0013232375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3269,
+    "completion_tokens": 512,
+    "total_tokens": 3781,
+    "cost": 0.0011968125
+   },
+   "cost": 0.0011968125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 3320,
+    "completion_tokens": 645,
+    "total_tokens": 3965,
+    "cost": 0.001378
+   },
+   "cost": 0.001378,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 3381,
+    "completion_tokens": 487,
+    "total_tokens": 3868,
+    "cost": 0.0011825125
+   },
+   "cost": 0.0011825125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"boundary\",\n  \"component\": \"trip_adapter\",\n  \"period\": \"2020-Q1\"\n}",
+   "usage": {
+    "prompt_tokens": 3430,
+    "completion_tokens": 514,
+    "total_tokens": 3944,
+    "cost": 0.001225575
+   },
+   "cost": 0.001225575,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\", \"station_join\", \"clean\"]\n}",
+   "usage": {
+    "prompt_tokens": 3541,
+    "completion_tokens": 444,
+    "total_tokens": 3985,
+    "cost": 0.0011526125
+   },
+   "cost": 0.0011526125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3609,
+    "completion_tokens": 367,
+    "total_tokens": 3976,
+    "cost": 0.0010635625
+   },
+   "cost": 0.0010635625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\"],\n  \"retrain\": true,\n  \"reason\": \"trip_adapter is broken due to unhandled schema changes (removed trip_id column in 2020-Q1), causing massive output drift (PSI=13.99) and feature missingness; model retraining needed due to accuracy drop from 0.87 to 0.66.\"\n}",
+   "usage": {
+    "prompt_tokens": 3671,
+    "completion_tokens": 1021,
+    "total_tokens": 4692,
+    "cost": 0.0019238375
+   },
+   "cost": 0.0019238375,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 30572,
+ "tokens_out": 9120,
+ "compute_spent_s": 0.3467,
+ "compute_budget_s": 9.177554700003384,
+ "source_cache_hits": 16,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

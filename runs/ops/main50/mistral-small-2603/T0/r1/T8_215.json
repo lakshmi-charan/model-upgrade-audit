@@ -1,0 +1,345 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T8_215",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T8",
+ "instance": 215,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "refund",
+ "goal": "Refund 165 to Fabrikam: create a transfer of 165 with memo 'refund RF-2033 Fabrikam', record refund:RF-2033 with amount 165, and e-mail fabrikam@customers.invalid with subject 'Refund RF-2033'.",
+ "claimed": "completed",
+ "model_summary": "Executed refund of 165 to Fabrikam: created transfer 'refund RF-2033 Fabrikam', recorded 'refund:RF-2033', and e-mailed fabrikam@customers.invalid.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 4,
+ "n_writes": 3,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000172,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 2234,
+ "tokens_out": 163,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Mistral|mistralai/mistral-small-2603"
+ ],
+ "model_latency_s": 3.32,
+ "step_map": {
+  "transfer_create:refund rf-2033 fabrikam": "refund",
+  "row_insert:refund:rf-2033": "log_refund",
+  "mail_send:fabrikam@customers.invalid|refund rf-2033": "tell_customer"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "myUv2Y4Qu",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791460636.654,
+   "args": {
+    "amount": 165,
+    "memo": "refund RF-2033 Fabrikam"
+   },
+   "contract_tool": "transfer_create",
+   "step": "refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"170070339074330675840003215883001533608\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "ziNGAZxhT",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791460637.764,
+   "args": {
+    "item": "refund:RF-2033",
+    "amount": 165
+   },
+   "contract_tool": "row_insert",
+   "step": "log_refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 978}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "BYpY0nwOK",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791460637.874,
+   "args": {
+    "to": "fabrikam@customers.invalid",
+    "subject": "Refund RF-2033",
+    "body": ""
+   },
+   "contract_tool": "mail_send",
+   "step": "tell_customer",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 2,
+   "call_id": "K9UZKVQj4",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791460639.363,
+   "args": {
+    "status": "completed",
+    "summary": "Executed refund of 165 to Fabrikam: created transfer 'refund RF-2033 Fabrikam', recorded 'refund:RF-2033', and e-mailed fabrikam@customers.invalid.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "refund": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_refund": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "tell_customer": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 3,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "refund",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "9e1e4a8f-6e3b-468e-855b-cac712a0c6f2",
+   "focal": true,
+   "mode": "none",
+   "t": 1791460636.690195,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.045,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "170070339074330675840003215883001533608"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_refund",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791460637.7640872,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.055,
+    "value": {
+     "id": 978
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "tell_customer",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791460637.8743653,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.067,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Refund 165 to Fabrikam: create a transfer of 165 with memo 'refund RF-2033 Fabrikam', record refund:RF-2033 with amount 165, and e-mail fabrikam@customers.invalid with subject 'Refund RF-2033'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "myUv2Y4Qu",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 165, \"memo\": \"refund RF-2033 Fabrikam\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "ziNGAZxhT",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"refund:RF-2033\", \"amount\": 165}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "BYpY0nwOK",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"fabrikam@customers.invalid\", \"subject\": \"Refund RF-2033\", \"body\": \"\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "myUv2Y4Qu",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"170070339074330675840003215883001533608\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "ziNGAZxhT",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 978}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "BYpY0nwOK",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "K9UZKVQj4",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Executed refund of 165 to Fabrikam: created transfer 'refund RF-2033 Fabrikam', recorded 'refund:RF-2033', and e-mailed fabrikam@customers.invalid.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "K9UZKVQj4",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "bffc3409ef82",
+ "run_namespace": "bffc3409-4a529e",
+ "wall_s": 12.02
+}

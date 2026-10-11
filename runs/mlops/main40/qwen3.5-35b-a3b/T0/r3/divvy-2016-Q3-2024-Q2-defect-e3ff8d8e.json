@@ -1,0 +1,349 @@
+{
+ "task_id": "divvy-2016-Q3-2024-Q2-defect-e3ff8d8e",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "interface",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": true
+ },
+ "agent_cost": 0.021664,
+ "n_steps": 8,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.088
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.3684210526315789,
+    "cur_perf": 0.3684210526315789,
+    "ref_perf": 0.8726720512649356,
+    "rows": 57,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.067,
+   "spent_seconds": 0.067,
+   "wall_s": 0.417
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 0.1911,
+   "wall_s": 0.184
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 0.3152,
+   "wall_s": 0.038
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'started_at'"
+   },
+   "cost_s": 0.0022,
+   "spent_seconds": 0.3174,
+   "wall_s": 0.095
+  },
+  {
+   "step": 6,
+   "action": "effect",
+   "args": {
+    "components": [
+     "station_join"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.17543859649122806,
+    "cur_perf": 0.3684210526315789,
+    "ref_perf": 0.8726720512649356,
+    "rows": 57,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.0179,
+   "spent_seconds": 0.3353,
+   "wall_s": 0.387
+  },
+  {
+   "step": 7,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0088,
+   "spent_seconds": 0.3441,
+   "wall_s": 0.013
+  },
+  {
+   "step": 8,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 7.5453,
+   "spent_seconds": 7.8894,
+   "wall_s": 0.459
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to stale schema handling (expects old column names like start_time but current data uses started_at), causing 99.8% data loss; retraining needed after fix due to 8-year temporal drift."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 94.76,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to stale schema handling (expects old column names like start_time but current data uses started_at), causing 99.8% data loss; retraining needed after fix due to 8-year temporal drift."
+ },
+ "forced_final": true,
+ "stop_reason": "step_limit",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 10,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 3204,
+    "completion_tokens": 6430,
+    "total_tokens": 9634,
+    "cost": 0.00887965
+   },
+   "cost": 0.00887965,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"clean\"]\n}",
+   "usage": {
+    "prompt_tokens": 3252,
+    "completion_tokens": 447,
+    "total_tokens": 3699,
+    "cost": 0.00110955
+   },
+   "cost": 0.00110955,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3390,
+    "completion_tokens": 571,
+    "total_tokens": 3961,
+    "cost": 0.001293175
+   },
+   "cost": 0.001293175,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3441,
+    "completion_tokens": 300,
+    "total_tokens": 3741,
+    "cost": 0.0009491625
+   },
+   "cost": 0.0009491625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3492,
+    "completion_tokens": 529,
+    "total_tokens": 4021,
+    "cost": 0.00125515
+   },
+   "cost": 0.00125515,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"station_join\"]\n}",
+   "usage": {
+    "prompt_tokens": 3555,
+    "completion_tokens": 1122,
+    "total_tokens": 4677,
+    "cost": 0.0020362875
+   },
+   "cost": 0.0020362875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 3695,
+    "completion_tokens": 774,
+    "total_tokens": 4469,
+    "cost": 0.0016066375
+   },
+   "cost": 0.0016066375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"time_features\"\n}",
+   "usage": {
+    "prompt_tokens": 3757,
+    "completion_tokens": 542,
+    "total_tokens": 4299,
+    "cost": 0.0013151125
+   },
+   "cost": 0.0013151125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\", \"time_features\"]\n}",
+   "usage": {
+    "prompt_tokens": 3859,
+    "completion_tokens": 490,
+    "total_tokens": 4349,
+    "cost": 0.0012640875
+   },
+   "cost": 0.0012640875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\"],\n  \"retrain\": true,\n  \"reason\": \"trip_adapter is broken due to stale schema handling (expects old column names like start_time but current data uses started_at), causing 99.8% data loss; retraining needed after fix due to 8-year temporal drift.\"\n}",
+   "usage": {
+    "prompt_tokens": 3929,
+    "completion_tokens": 1013,
+    "total_tokens": 4942,
+    "cost": 0.0019553625
+   },
+   "cost": 0.0019553625,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 35574,
+ "tokens_out": 12218,
+ "compute_spent_s": 7.8894,
+ "compute_budget_s": 25.978435799963336,
+ "source_cache_hits": 17,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

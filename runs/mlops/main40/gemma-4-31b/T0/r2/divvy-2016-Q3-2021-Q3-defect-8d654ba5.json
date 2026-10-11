@@ -1,0 +1,218 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.00097,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 1.7304,
+   "wall_s": 0.014
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 0.27,
+   "spent_seconds": 2.0004,
+   "wall_s": 0.161
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 2.1245,
+   "wall_s": 0.041
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "distance_km": 0.040515
+    },
+    "rows": [
+     99914,
+     99914
+    ]
+   },
+   "cost_s": 2.2058,
+   "spent_seconds": 4.3303,
+   "wall_s": 0.113
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to schema changes, time_features and clean have behavioral regressions, and the target distribution (y) has drifted significantly."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 6.26,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features",
+   "clean"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to schema changes, time_features and clean have behavioral regressions, and the target distribution (y) has drifted significantly."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 3472,
+    "completion_tokens": 20,
+    "total_tokens": 3492,
+    "cost": 0.00018104
+   },
+   "cost": 0.00018104,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 3599,
+    "completion_tokens": 20,
+    "total_tokens": 3619,
+    "cost": 0.00018735
+   },
+   "cost": 0.00018735,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"station_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 3696,
+    "completion_tokens": 20,
+    "total_tokens": 3716,
+    "cost": 0.00019224
+   },
+   "cost": 0.00019224,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"clean\"}\n```",
+   "usage": {
+    "prompt_tokens": 3746,
+    "completion_tokens": 18,
+    "total_tokens": 3764,
+    "cost": 0.0001935
+   },
+   "cost": 0.0001935,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\", \"clean\"], \"retrain\": true, \"reason\": \"trip_adapter is broken due to schema changes, time_features and clean have behavioral regressions, and the target distribution (y) has drifted significantly.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3831,
+    "completion_tokens": 69,
+    "total_tokens": 3900,
+    "cost": 0.00021593
+   },
+   "cost": 0.00021593,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 18344,
+ "tokens_out": 147,
+ "compute_spent_s": 4.3303,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

@@ -1,0 +1,118 @@
+# [model-migration port] copied from action-recovery/docker/compose.yml; only the compose project and network
+# names changed (actrec -> mmops) so this stack gets its own volumes. Credentials are passed in the
+# environment by code/run_ops.py --check-env (generated once, kept in testbeds/ops/runs/.secrets/).
+# Experiment stack (stages 3-6). Run from the project root:
+#   .venv\Scripts\python code\run.py stack up            (starts and bootstraps the services)
+#   .venv\Scripts\python code\run.py stack down          (removes containers and volumes)
+# Credentials come from ROOT/.env (never committed). Image digests are pinned in docker/images.lock
+# after the first pull; the paper reports them.
+#
+# Network layout
+#   direct ports (grader only):  5432 pg, 3000 gitea, 1025/8025 mailpit, 6379 redis, 3001 tigerbeetle, 8333 s3
+#   clean proxies (agent path):  26000-26009   no toxics, ever
+#   fault proxies (focal call):  26100-26179   one set per worker slot (base + 10*w); only the injected call uses them
+name: mmops
+
+networks:
+  net:
+    name: mmops-net
+
+volumes:
+  pgdata: {}
+  giteadata: {}
+  tbdata: {}
+  seaweeddata: {}
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: actrec
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: actrec
+    command: ["postgres", "-c", "max_connections=300"]
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    networks: [net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U actrec -d actrec"]
+      interval: 1s
+      retries: 60
+
+  gitea:
+    image: gitea/gitea:1.24
+    environment:
+      GITEA__database__DB_TYPE: sqlite3
+      GITEA__security__INSTALL_LOCK: "true"
+      GITEA__server__ROOT_URL: http://localhost:3000/
+      GITEA__server__HTTP_PORT: "3000"
+      GITEA__service__DISABLE_REGISTRATION: "true"
+      GITEA__webhook__ALLOWED_HOST_LIST: "*"
+      GITEA__webhook__DELIVER_TIMEOUT: "10"
+      GITEA__log__LEVEL: Warn
+    ports: ["3000:3000"]
+    volumes: ["giteadata:/data"]
+    networks: [net]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/healthz >/dev/null"]
+      interval: 1s
+      retries: 120
+
+  mailpit:
+    image: axllent/mailpit:latest
+    environment:
+      MP_MAX_MESSAGES: "100000"
+    ports: ["1025:1025", "8025:8025"]
+    networks: [net]
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 1s
+      retries: 60
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+    networks: [net]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      retries: 30
+
+  seaweedfs:
+    image: chrislusf/seaweedfs:latest
+    command: ["server", "-dir=/data", "-s3", "-s3.port=8333", "-master.volumeSizeLimitMB=64", "-volume.max=100"]
+    environment:
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-actrec}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:?set in .env}
+    ports: ["8333:8333"]
+    volumes: ["seaweeddata:/data"]
+    networks: [net]
+
+  tigerbeetle:
+    # Needs seccomp=unconfined on Docker Desktop/WSL2: the default seccomp profile blocks io_uring
+    # (verified in the inventory). Documented as a deviation in the paper.
+    image: ghcr.io/tigerbeetle/tigerbeetle:latest
+    security_opt: ["seccomp=unconfined"]
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        [ -f /data/0_0.tigerbeetle ] ||
+        /tigerbeetle format --cluster=0 --replica=0 --replica-count=1 --development /data/0_0.tigerbeetle &&
+        exec /tigerbeetle start --addresses=0.0.0.0:3001 --cache-grid=256MiB --development /data/0_0.tigerbeetle
+    ports: ["3001:3001"]
+    volumes: ["tbdata:/data"]
+    networks: [net]
+    profiles: [tb]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:latest
+    ports: ["8474:8474", "26000-26009:26000-26009", "26100-26179:26100-26179"]
+    networks: [net]
+
+  temporal:
+    image: temporalio/temporal:latest
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--ui-port", "8233"]
+    ports: ["7233:7233", "8233:8233"]
+    networks: [net]
+    profiles: [engine]

@@ -1,0 +1,263 @@
+{
+ "task_id": "divvy-2016-Q3-2018-Q1-defect-a794b09c",
+ "label": "gpt-4.1-nano",
+ "model": "openai/gpt-4.1-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000494,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2018-Q1"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ],
+    "versions": {
+     "2017-Q3": "current",
+     "2017-Q4": "current",
+     "2018-Q1": "current"
+    },
+    "retention": {
+     "2017-Q3": 1.0,
+     "2017-Q4": 1.0,
+     "2018-Q1": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "duration": {
+      "baseline_psi": 0.1008,
+      "boundary_psi": 8.1196,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.7361,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.7079,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "user": {
+      "baseline_psi": 0.1708,
+      "boundary_psi": 0.0455,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0128,
+      "boundary_psi": 0.0025,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0107,
+      "boundary_psi": 0.0021,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.1966,
+   "spent_seconds": 0.1966,
+   "wall_s": 1.18
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0015,
+   "spent_seconds": 0.1981,
+   "wall_s": 0.066
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0695,
+   "spent_seconds": 0.2676,
+   "wall_s": 0.261
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "time_features",
+     "station_join",
+     "clean",
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0015,
+   "spent_seconds": 0.2691,
+   "wall_s": 0.046
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter component is failing due to schema changes in the source data, specifically missing 'trip_id' column, which indicates a schema drift issue that needs fixing before retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 7.68,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter component is failing due to schema changes in the source data, specifically missing 'trip_id' column, which indicates a schema drift issue that needs fixing before retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2018-Q1\"}",
+   "usage": {
+    "prompt_tokens": 2177,
+    "completion_tokens": 23,
+    "total_tokens": 2200,
+    "cost": 8.29e-05
+   },
+   "cost": 8.29e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2659,
+    "completion_tokens": 14,
+    "total_tokens": 2673,
+    "cost": 0.0001179
+   },
+   "cost": 0.0001179,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2710,
+    "completion_tokens": 15,
+    "total_tokens": 2725,
+    "cost": 8.5e-05
+   },
+   "cost": 8.5e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"trip_adapter\", \"time_features\", \"station_join\", \"clean\", \"encode\"]}",
+   "usage": {
+    "prompt_tokens": 2750,
+    "completion_tokens": 29,
+    "total_tokens": 2779,
+    "cost": 9.46e-05
+   },
+   "cost": 9.46e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"The trip_adapter component is failing due to schema changes in the source data, specifically missing 'trip_id' column, which indicates a schema drift issue that needs fixing before retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2816,
+    "completion_tokens": 61,
+    "total_tokens": 2877,
+    "cost": 0.000114
+   },
+   "cost": 0.000114,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 13112,
+ "tokens_out": 142,
+ "compute_spent_s": 0.2691,
+ "compute_budget_s": 15.969842399998015,
+ "source_cache_hits": 10,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

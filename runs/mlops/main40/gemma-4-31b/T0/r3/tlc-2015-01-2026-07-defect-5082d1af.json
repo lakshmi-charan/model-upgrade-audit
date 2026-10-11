@@ -1,0 +1,150 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000481,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1317,
+   "spent_seconds": 0.1317,
+   "wall_s": 22.344
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.999028
+    },
+    "rows": [
+     150167,
+     150167
+    ]
+   },
+   "cost_s": 4.6229,
+   "spent_seconds": 4.7546,
+   "wall_s": 0.56
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The time_features component is defective (behavior changed on reference data), and the model requires retraining due to significant covariate drift and a long time gap since the reference period."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 31.21,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The time_features component is defective (behavior changed on reference data), and the model requires retraining due to significant covariate drift and a long time gap since the reference period."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2895,
+    "completion_tokens": 20,
+    "total_tokens": 2915,
+    "cost": 0.00015215
+   },
+   "cost": 0.00015215,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2945,
+    "completion_tokens": 20,
+    "total_tokens": 2965,
+    "cost": 0.00015409
+   },
+   "cost": 0.00015409,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"time_features\"], \"retrain\": true, \"reason\": \"The time_features component is defective (behavior changed on reference data), and the model requires retraining due to significant covariate drift and a long time gap since the reference period.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3035,
+    "completion_tokens": 65,
+    "total_tokens": 3100,
+    "cost": 0.00017493
+   },
+   "cost": 0.00017493,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8875,
+ "tokens_out": 105,
+ "compute_spent_s": 4.7546,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

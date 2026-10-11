@@ -1,0 +1,215 @@
+{
+ "task_id": "tlc-2022-01-2025-04-defect-5082d1af",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.001448,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1378,
+   "spent_seconds": 0.1378,
+   "wall_s": 15.089
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.99954
+    },
+    "rows": [
+     149906,
+     149906
+    ]
+   },
+   "cost_s": 4.059,
+   "spent_seconds": 4.1968,
+   "wall_s": 0.347
+  },
+  {
+   "step": 3,
+   "action": "boundary",
+   "args": {
+    "component": "time_features",
+    "period": "2023-04"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2022-10",
+     "2023-01",
+     "2023-04"
+    ],
+    "versions": {
+     "2022-10": "reference",
+     "2023-01": "reference",
+     "2023-04": "current"
+    },
+    "retention": {
+     "2022-10": 1.0,
+     "2023-01": 1.0,
+     "2023-04": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "duration_min": {
+      "baseline_psi": 0.0313,
+      "boundary_psi": 8.2869,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "dow": {
+      "baseline_psi": 0.0104,
+      "boundary_psi": 0.01,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "hour": {
+      "baseline_psi": 0.0058,
+      "boundary_psi": 0.0028,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 4.0605,
+   "spent_seconds": 8.2573,
+   "wall_s": 5.235
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The time_features component exhibits significant drift post-schema change in 2023-04, with high PSI and output differences, indicating a broken transformation; retraining is needed due to genuine feature distribution shift."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 29.01,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The time_features component exhibits significant drift post-schema change in 2023-04, with high PSI and output differences, indicating a broken transformation; retraining is needed due to genuine feature distribution shift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2499,
+    "completion_tokens": 14,
+    "total_tokens": 2513,
+    "cost": 0.00033215
+   },
+   "cost": 0.00033215,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2543,
+    "completion_tokens": 14,
+    "total_tokens": 2557,
+    "cost": 0.00033787
+   },
+   "cost": 0.00033787,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"time_features\", \"period\": \"2023-04\"}",
+   "usage": {
+    "prompt_tokens": 2626,
+    "completion_tokens": 25,
+    "total_tokens": 2651,
+    "cost": 0.00035438
+   },
+   "cost": 0.00035438,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"time_features\"], \"retrain\": true, \"reason\": \"The time_features component exhibits significant drift post-schema change in 2023-04, with high PSI and output differences, indicating a broken transformation; retraining is needed due to genuine feature distribution shift.\"}",
+   "usage": {
+    "prompt_tokens": 2989,
+    "completion_tokens": 67,
+    "total_tokens": 3056,
+    "cost": 0.00042341
+   },
+   "cost": 0.00042341,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10657,
+ "tokens_out": 120,
+ "compute_spent_s": 8.2573,
+ "compute_budget_s": 11.68125899998995,
+ "source_cache_hits": 10,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

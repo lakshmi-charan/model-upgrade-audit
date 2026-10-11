@@ -1,0 +1,142 @@
+{
+ "task_id": "tlc-2015-01-2015-07-two-849b4376",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "encode"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000695,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1985,
+   "spent_seconds": 0.1985,
+   "wall_s": 3.128
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.1985,
+   "wall_s": 0.377
+  }
+ ],
+ "final_decision": {
+  "fix": [],
+  "retrain": false,
+  "reason": "No clearly defective components detected. Rollback experiments showed current outputs match reference when reverting trip_adapter/time_features, and overall drift metrics do not indicate a concrete pipeline failure. Model accuracy drop is modest; consider optional retraining only if drift persists o"
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "effective": [
+   "encode",
+   "zone_join"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 29.79,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [],
+  "retrain": false,
+  "reason": "No clearly defective components detected. Rollback experiments showed current outputs match reference when reverting trip_adapter/time_features, and overall drift metrics do not indicate a concrete pipeline failure. Model accuracy drop is modest; consider optional retraining only if drift persists over subsequent periods."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2288,
+    "completion_tokens": 714,
+    "total_tokens": 3002,
+    "cost": 0.00030208
+   },
+   "cost": 0.00030208,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2329,
+    "completion_tokens": 354,
+    "total_tokens": 2683,
+    "cost": 0.00016013
+   },
+   "cost": 0.00016013,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [], \"retrain\": false, \"reason\": \"No clearly defective components detected. Rollback experiments showed current outputs match reference when reverting trip_adapter/time_features, and overall drift metrics do not indicate a concrete pipeline failure. Model accuracy drop is modest; consider optional retraining only if drift persists over subsequent periods.\"}",
+   "usage": {
+    "prompt_tokens": 2370,
+    "completion_tokens": 530,
+    "total_tokens": 2900,
+    "cost": 0.00023258
+   },
+   "cost": 0.00023258,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6987,
+ "tokens_out": 1598,
+ "compute_spent_s": 0.1985,
+ "compute_budget_s": 58.65384449994599,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

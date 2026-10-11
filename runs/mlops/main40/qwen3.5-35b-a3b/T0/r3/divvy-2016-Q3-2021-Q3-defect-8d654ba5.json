@@ -1,0 +1,303 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.01629,
+ "n_steps": 7,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 0.0048,
+   "wall_s": 0.299
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 1.7352,
+   "wall_s": 0.011
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 1.8593,
+   "wall_s": 0.052
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 1.8593,
+   "wall_s": 0.023
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 1.8641,
+   "wall_s": 0.009
+  },
+  {
+   "step": 6,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "distance_km": 0.040515
+    },
+    "rows": [
+     99914,
+     99914
+    ]
+   },
+   "cost_s": 2.2058,
+   "spent_seconds": 4.0699,
+   "wall_s": 0.114
+  },
+  {
+   "step": 7,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 0.27,
+   "spent_seconds": 4.3399,
+   "wall_s": 0.371
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails with KeyError due to schema changes, time_features and clean produce different outputs on reference data indicating code/config drift, and label y shows significant PSI drift requiring model update."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 66.3,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features",
+   "clean"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails with KeyError due to schema changes, time_features and clean produce different outputs on reference data indicating code/config drift, and label y shows significant PSI drift requiring model update."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 8,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3195,
+    "completion_tokens": 4828,
+    "total_tokens": 8023,
+    "cost": 0.0067955875
+   },
+   "cost": 0.0067955875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3250,
+    "completion_tokens": 491,
+    "total_tokens": 3741,
+    "cost": 0.001166425
+   },
+   "cost": 0.001166425,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"station_join\"}",
+   "usage": {
+    "prompt_tokens": 3365,
+    "completion_tokens": 471,
+    "total_tokens": 3836,
+    "cost": 0.0011591125
+   },
+   "cost": 0.0011591125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 3409,
+    "completion_tokens": 497,
+    "total_tokens": 3906,
+    "cost": 0.0012000625
+   },
+   "cost": 0.0012000625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 3452,
+    "completion_tokens": 1053,
+    "total_tokens": 4505,
+    "cost": 0.00192985
+   },
+   "cost": 0.00192985,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 3507,
+    "completion_tokens": 531,
+    "total_tokens": 4038,
+    "cost": 0.0012601875
+   },
+   "cost": 0.0012601875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 3587,
+    "completion_tokens": 596,
+    "total_tokens": 4183,
+    "cost": 0.0013576875
+   },
+   "cost": 0.0013576875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\", \"clean\"], \"retrain\": true, \"reason\": \"trip_adapter fails with KeyError due to schema changes, time_features and clean produce different outputs on reference data indicating code/config drift, and label y shows significant PSI drift requiring model update.\"}",
+   "usage": {
+    "prompt_tokens": 3681,
+    "completion_tokens": 633,
+    "total_tokens": 4314,
+    "cost": 0.0014210625
+   },
+   "cost": 0.0014210625,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 27446,
+ "tokens_out": 9100,
+ "compute_spent_s": 4.3399,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 13,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

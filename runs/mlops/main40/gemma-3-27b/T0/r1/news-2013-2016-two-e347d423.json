@@ -1,0 +1,313 @@
+{
+ "task_id": "news-2013-2016-two-e347d423",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "label_map"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.00075,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.2121,
+   "spent_seconds": 0.2121,
+   "wall_s": 6.895
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 0.999659
+    },
+    "rows": [
+     11721,
+     11721
+    ]
+   },
+   "cost_s": 0.6556,
+   "spent_seconds": 0.8677,
+   "wall_s": 2.397
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 1.0
+    },
+    "rows": [
+     34583,
+     34583
+    ]
+   },
+   "cost_s": 4.9073,
+   "spent_seconds": 5.775,
+   "wall_s": 1.074
+  },
+  {
+   "step": 4,
+   "action": "boundary",
+   "args": {
+    "component": "ingest",
+    "period": "2014"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2012",
+     "2013",
+     "2014"
+    ],
+    "versions": {
+     "2012": "reference",
+     "2013": "reference",
+     "2014": "current"
+    },
+    "retention": {
+     "2012": 1.0,
+     "2013": 1.0,
+     "2014": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {}
+   },
+   "cost_s": 0.0111,
+   "spent_seconds": 5.7861,
+   "wall_s": 3.382
+  },
+  {
+   "step": 5,
+   "action": "boundary",
+   "args": {
+    "component": "label_map",
+    "period": "2014"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2012",
+     "2013",
+     "2014"
+    ],
+    "versions": {
+     "2012": "reference",
+     "2013": "reference",
+     "2014": "current"
+    },
+    "retention": {
+     "2012": 1.0,
+     "2013": 1.0,
+     "2014": 0.561
+    },
+    "retention_jump": 0.439,
+    "columns_top": {
+     "category": {
+      "baseline_psi": 0.1984,
+      "boundary_psi": 0.7486,
+      "input_boundary_psi": 3.3916,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "section": {
+      "baseline_psi": 0.1135,
+      "boundary_psi": 0.7482,
+      "input_boundary_psi": 3.3916,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "short_description": {
+      "baseline_psi": 0.0332,
+      "boundary_psi": 0.3271,
+      "input_boundary_psi": 0.7506,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "headline": {
+      "baseline_psi": 0.0043,
+      "boundary_psi": 0.0482,
+      "input_boundary_psi": 0.055,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "date": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0573,
+   "spent_seconds": 5.8434,
+   "wall_s": 5.844
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "The vectorize component's behavior changed significantly, and the accuracy drop suggests the model needs retraining after fixing the component."
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 41.53,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "The vectorize component's behavior changed significantly, and the accuracy drop suggests the model needs retraining after fixing the component."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"text_norm\"}\n```",
+   "usage": {
+    "prompt_tokens": 1233,
+    "completion_tokens": 20,
+    "total_tokens": 1253,
+    "cost": 0.00010184
+   },
+   "cost": 0.00010184,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"vectorize\"}\n```",
+   "usage": {
+    "prompt_tokens": 1283,
+    "completion_tokens": 19,
+    "total_tokens": 1302,
+    "cost": 0.00010568
+   },
+   "cost": 0.00010568,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"vectorize\"}\n```",
+   "usage": {
+    "prompt_tokens": 1368,
+    "completion_tokens": 19,
+    "total_tokens": 1387,
+    "cost": 0.00011248
+   },
+   "cost": 0.00011248,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"ingest\", \"period\": \"2014\"}\n```",
+   "usage": {
+    "prompt_tokens": 1448,
+    "completion_tokens": 28,
+    "total_tokens": 1476,
+    "cost": 0.00012032
+   },
+   "cost": 0.00012032,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"label_map\", \"period\": \"2014\"}\n```",
+   "usage": {
+    "prompt_tokens": 1612,
+    "completion_tokens": 29,
+    "total_tokens": 1641,
+    "cost": 0.0001336
+   },
+   "cost": 0.0001336,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"vectorize\"], \"retrain\": true, \"reason\": \"The vectorize component's behavior changed significantly, and the accuracy drop suggests the model needs retraining after fixing the component.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2101,
+    "completion_tokens": 53,
+    "total_tokens": 2154,
+    "cost": 0.00017656
+   },
+   "cost": 0.00017656,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9045,
+ "tokens_out": 168,
+ "compute_spent_s": 5.8434,
+ "compute_budget_s": 16.746626099949935,
+ "source_cache_hits": 15,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

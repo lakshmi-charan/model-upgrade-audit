@@ -1,0 +1,364 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T8_262",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "category_detail": {
+  "missing_steps": [
+   "log_refund"
+  ],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [
+   {
+    "kind": "row",
+    "desc": {
+     "id": 1310,
+     "item": "RF-3025",
+     "amount": 424
+    },
+    "plan_tool": true
+   }
+  ],
+  "collateral": 0
+ },
+ "template": "T8",
+ "instance": 262,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "refund",
+ "goal": "Refund 424 to Northwind: create a transfer of 424 with memo 'refund RF-3025 Northwind', record refund:RF-3025 with amount 424, and e-mail northwind@customers.invalid with subject 'Refund RF-3025'.",
+ "claimed": "completed",
+ "model_summary": "Refunded 424 to Northwind, recorded refund RF-3025, and emailed Northwind.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 4,
+ "n_writes": 3,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000314,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3677,
+ "tokens_out": 125,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 12.94,
+ "step_map": {
+  "transfer_create:refund rf-3025 northwind": "refund",
+  "row_insert:rf-3025": "extra:0c0dcdce",
+  "mail_send:northwind@customers.invalid|refund rf-3025": "tell_customer"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-018266613f9441a28949872a250d9c3a",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791462905.499,
+   "args": {
+    "amount": 424,
+    "memo": "refund RF-3025 Northwind"
+   },
+   "contract_tool": "transfer_create",
+   "step": "refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"126233290600268757086325492942200861920\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-2ebced66f5134f6587f8f04725717a6b",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462907.978,
+   "args": {
+    "item": "RF-3025",
+    "amount": 424
+   },
+   "contract_tool": "row_insert",
+   "step": "extra:0c0dcdce",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1310}}",
+   "verdict": "not_a_plan_step"
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-bca62b3a259f4b128a89fec40a85d7da",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791462909.676,
+   "args": {
+    "to": "northwind@customers.invalid",
+    "subject": "Refund RF-3025",
+    "body": "Refund of 424 for RF-3025 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "tell_customer",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-613ad19d167e4ba7bbf8f7a38e554a87",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462917.029,
+   "args": {
+    "status": "completed",
+    "summary": "Refunded 424 to Northwind, recorded refund RF-3025, and emailed Northwind.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "refund": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_refund": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 0,
+    "standing": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "tell_customer": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": true,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 1,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 3,
+  "actor_effects": 0
+ },
+ "extras": [
+  {
+   "kind": "row",
+   "desc": {
+    "id": 1310,
+    "item": "RF-3025",
+    "amount": 424
+   },
+   "plan_tool": true
+  }
+ ],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "refund",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "1b5c9277-9547-4003-b773-8a8093e68126",
+   "focal": true,
+   "mode": "none",
+   "t": 1791462905.9713616,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.505,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "126233290600268757086325492942200861920"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "extra:0c0dcdce",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462907.977718,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.609,
+    "value": {
+     "id": 1310
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "tell_customer",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462909.6762922,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.995,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Refund 424 to Northwind: create a transfer of 424 with memo 'refund RF-3025 Northwind', record refund:RF-3025 with amount 424, and e-mail northwind@customers.invalid with subject 'Refund RF-3025'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-018266613f9441a28949872a250d9c3a",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 424, \"memo\": \"refund RF-3025 Northwind\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-2ebced66f5134f6587f8f04725717a6b",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"RF-3025\", \"amount\": 424}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-bca62b3a259f4b128a89fec40a85d7da",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"northwind@customers.invalid\", \"subject\": \"Refund RF-3025\", \"body\": \"Refund of 424 for RF-3025 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-018266613f9441a28949872a250d9c3a",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"126233290600268757086325492942200861920\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-2ebced66f5134f6587f8f04725717a6b",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1310}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-bca62b3a259f4b128a89fec40a85d7da",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-613ad19d167e4ba7bbf8f7a38e554a87",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Refunded 424 to Northwind, recorded refund RF-3025, and emailed Northwind.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-613ad19d167e4ba7bbf8f7a38e554a87",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "8d47e4951d24",
+ "run_namespace": "8d47e495-dfd798",
+ "wall_s": 43.66
+}

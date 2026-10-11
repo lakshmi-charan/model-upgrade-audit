@@ -1,0 +1,156 @@
+{
+ "task_id": "bts-2019-01-2022-01-defect-bcfcb399",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.00075,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.969053
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 1.9568,
+   "spent_seconds": 1.9568,
+   "wall_s": 1.873
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.97076
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 2.3717,
+   "spent_seconds": 4.3285,
+   "wall_s": 0.836
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Drift detected in day_of_year feature after environment change; time_features shows differing outputs vs reference; revert to known-good version and stabilize environment without retraining."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "bts",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 24.3,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Drift detected in day_of_year feature after environment change; time_features shows differing outputs vs reference; revert to known-good version and stabilize environment without retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 1816,
+    "completion_tokens": 422,
+    "total_tokens": 2238,
+    "cost": 0.0002596
+   },
+   "cost": 0.0002596,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 1884,
+    "completion_tokens": 393,
+    "total_tokens": 2277,
+    "cost": 0.0002514
+   },
+   "cost": 0.0002514,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"time_features\"],\"retrain\":false,\"reason\":\"Drift detected in day_of_year feature after environment change; time_features shows differing outputs vs reference; revert to known-good version and stabilize environment without retraining.\"}",
+   "usage": {
+    "prompt_tokens": 1951,
+    "completion_tokens": 353,
+    "total_tokens": 2304,
+    "cost": 0.00023875
+   },
+   "cost": 0.00023875,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 5651,
+ "tokens_out": 1168,
+ "compute_spent_s": 4.3285,
+ "compute_budget_s": 15.425814300004276,
+ "source_cache_hits": 4,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

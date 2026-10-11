@@ -1,0 +1,186 @@
+{
+ "task_id": "tlc-2015-01-2015-01-two-8215838f",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean",
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000886,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.999028
+    },
+    "rows": [
+     150167,
+     150167
+    ]
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.31
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "passenger_count": 0.000411
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 2.3099,
+   "spent_seconds": 2.3099,
+   "wall_s": 0.179
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 12.9286,
+   "spent_seconds": 15.2385,
+   "wall_s": 0.218
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "The 'time_features' and 'clean' components exhibit different behavior on reference data, likely causing the observed drift in 'duration_min' and 'passenger_count', respectively, and do not require a model retrain."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "clean",
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "two",
+ "tier": "T2",
+ "wall_s": 8.25,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features",
+   "clean"
+  ],
+  "retrain": false,
+  "reason": "The 'time_features' and 'clean' components exhibit different behavior on reference data, likely causing the observed drift in 'duration_min' and 'passenger_count', respectively, and do not require a model retrain."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2577,
+    "completion_tokens": 20,
+    "total_tokens": 2597,
+    "cost": 0.00020936
+   },
+   "cost": 0.00020936,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"clean\"}\n```",
+   "usage": {
+    "prompt_tokens": 2665,
+    "completion_tokens": 18,
+    "total_tokens": 2683,
+    "cost": 0.00021608
+   },
+   "cost": 0.00021608,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"zone_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 2750,
+    "completion_tokens": 20,
+    "total_tokens": 2770,
+    "cost": 0.0002232
+   },
+   "cost": 0.0002232,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"time_features\", \"clean\"], \"retrain\": false, \"reason\": \"The 'time_features' and 'clean' components exhibit different behavior on reference data, likely causing the observed drift in 'duration_min' and 'passenger_count', respectively, and do not require a model retrain.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2801,
+    "completion_tokens": 80,
+    "total_tokens": 2881,
+    "cost": 0.00023688
+   },
+   "cost": 0.00023688,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10793,
+ "tokens_out": 138,
+ "compute_spent_s": 15.2385,
+ "compute_budget_s": 28.396611300078803,
+ "source_cache_hits": 6,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

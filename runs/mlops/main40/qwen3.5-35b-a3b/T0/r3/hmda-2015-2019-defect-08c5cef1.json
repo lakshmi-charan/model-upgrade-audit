@@ -1,0 +1,145 @@
+{
+ "task_id": "hmda-2015-2019-defect-08c5cef1",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.012821,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "lar_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.2492,
+   "wall_s": 0.04
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1497,
+   "spent_seconds": 0.3989,
+   "wall_s": 0.129
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is stale and fails on current schema (KeyError for occupancy_type/owner_occupancy from 2018 Regulation C changes); model needs retraining due to 4-year temporal drift."
+ },
+ "oracle": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": [
+   "lar_adapter"
+  ]
+ },
+ "domain": "hmda",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 64.38,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is stale and fails on current schema (KeyError for occupancy_type/owner_occupancy from 2018 Regulation C changes); model needs retraining due to 4-year temporal drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\n    \"lar_adapter\"\n  ]\n}",
+   "usage": {
+    "prompt_tokens": 2301,
+    "completion_tokens": 7662,
+    "total_tokens": 9963,
+    "cost": 0.0103345125
+   },
+   "cost": 0.0103345125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"lar_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2371,
+    "completion_tokens": 650,
+    "total_tokens": 3021,
+    "cost": 0.0012302875
+   },
+   "cost": 0.0012302875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"lar_adapter\"],\n  \"retrain\": true,\n  \"reason\": \"lar_adapter is stale and fails on current schema (KeyError for occupancy_type/owner_occupancy from 2018 Regulation C changes); model needs retraining due to 4-year temporal drift.\"\n}",
+   "usage": {
+    "prompt_tokens": 2435,
+    "completion_tokens": 662,
+    "total_tokens": 3097,
+    "cost": 0.0012562875
+   },
+   "cost": 0.0012562875,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7107,
+ "tokens_out": 8974,
+ "compute_spent_s": 0.3989,
+ "compute_budget_s": 12.359913300024346,
+ "source_cache_hits": 3,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

@@ -1,0 +1,147 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.004939,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 1.783
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 0.1241,
+   "wall_s": 0.302
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Massive data loss (29962→26 rows) and 84-88% feature missing rates indicate upstream schema adaptation failure in trip_adapter, requiring fix followed by retraining."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 23.59,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Massive data loss (29962→26 rows) and 84-88% feature missing rates indicate upstream schema adaptation failure in trip_adapter, requiring fix followed by retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 3200,
+    "completion_tokens": 976,
+    "total_tokens": 4176,
+    "cost": 0.0017888
+   },
+   "cost": 0.0017888,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"station_join\"}",
+   "usage": {
+    "prompt_tokens": 3240,
+    "completion_tokens": 495,
+    "total_tokens": 3735,
+    "cost": 0.00117
+   },
+   "cost": 0.00117,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"Massive data loss (29962→26 rows) and 84-88% feature missing rates indicate upstream schema adaptation failure in trip_adapter, requiring fix followed by retraining.\"}",
+   "usage": {
+    "prompt_tokens": 3284,
+    "completion_tokens": 1113,
+    "total_tokens": 4397,
+    "cost": 0.00198055
+   },
+   "cost": 0.00198055,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9724,
+ "tokens_out": 2584,
+ "compute_spent_s": 0.1241,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

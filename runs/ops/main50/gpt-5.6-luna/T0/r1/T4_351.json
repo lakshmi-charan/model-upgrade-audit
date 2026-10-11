@@ -1,0 +1,447 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T4_351",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T4",
+ "instance": 351,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "stock_1",
+ "goal": "Receive purchase order PO-6012 at warehouse west: add 20 units to SKU-512 and 33 units to SKU-213, increment the counter restocks-west once, and record restock:PO-6012 with amount 53.",
+ "claimed": "partial",
+ "model_summary": "SKU-213 was increased by 33, restocks-west was incremented once, and record restock:PO-6012 amount 53 was inserted (record id 525). The SKU-512 adjustment of +20 timed out, so its outcome cannot be confirmed and was not retried to avoid a possible duplicate.",
+ "uncertain": [
+  "Adjust SKU-512 by +20"
+ ],
+ "layer_uncertain": [
+  "stock_1"
+ ],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000626,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 1136,
+ "tokens_out": 332,
+ "tokens_reasoning": 131,
+ "length_stops": 0,
+ "served": [
+  "OpenAI|openai/gpt-5.6-luna"
+ ],
+ "model_latency_s": 15.28,
+ "step_map": {
+  "stock_adjust:sku-512": "stock_1",
+  "stock_adjust:sku-213": "stock_2",
+  "counter_incr:restocks-west": "count_restock",
+  "row_insert:restock:po-6012": "log_po"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_0Av3c7ozH7jhQp3yolFs8cuc",
+   "tool": "adjust_stock",
+   "kind": "write",
+   "t": 1791455850.058,
+   "args": {
+    "sku": "SKU-512",
+    "delta": 20
+   },
+   "contract_tool": "stock_adjust",
+   "step": "stock_1",
+   "obs_status": "timeout",
+   "output": "{\"status\": \"timeout\", \"note\": \"no response within 4s\"}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_sVUwex6WmOakNGjfdgJVPNLY",
+   "tool": "adjust_stock",
+   "kind": "write",
+   "t": 1791455857.73,
+   "args": {
+    "sku": "SKU-213",
+    "delta": 33
+   },
+   "contract_tool": "stock_adjust",
+   "step": "stock_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"ok\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_Ugq658dvrijK3tmT98ocj1ze",
+   "tool": "increment_counter",
+   "kind": "write",
+   "t": 1791455858.935,
+   "args": {
+    "name": "restocks-west"
+   },
+   "contract_tool": "counter_incr",
+   "step": "count_restock",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"value\": 1}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_3X01eyywhbrydOXdsMFYYXbu",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791455861.925,
+   "args": {
+    "item": "restock:PO-6012",
+    "amount": 53
+   },
+   "contract_tool": "row_insert",
+   "step": "log_po",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 525}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_L52B85PZhir3rXA3QKPVyASc",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791455869.695,
+   "args": {
+    "status": "partial",
+    "summary": "SKU-213 was increased by 33, restocks-west was incremented once, and record restock:PO-6012 amount 53 was inserted (record id 525). The SKU-512 adjustment of +20 timed out, so its outcome cannot be confirmed and was not retried to avoid a possible duplicate.",
+    "uncertain_operations": [
+     "Adjust SKU-512 by +20"
+    ]
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "stock_1": {
+    "tool": "stock_adjust",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "stock_2": {
+    "tool": "stock_adjust",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "count_restock": {
+    "tool": "counter_incr",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_po": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "stock_1",
+   "tool": "stock_adjust",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": true,
+   "mode": "none",
+   "t": 1791455850.860513,
+   "pid": 32140,
+   "result": {
+    "kind": "timeout",
+    "elapsed_s": 4.779,
+    "value": null,
+    "exc_type": "ToolDeadline",
+    "exc_msg": "no response within 4s",
+    "background": {
+     "value": {
+      "ok": true
+     },
+     "kind": "ok",
+     "finished_after_s": 5.136
+    },
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "timeout:ToolDeadline:no response within #s",
+    "raw_signature": "timeout:ToolDeadline"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "stock_2",
+   "tool": "stock_adjust",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791455857.7303908,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.081,
+    "value": {
+     "ok": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "count_restock",
+   "tool": "counter_incr",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791455858.938044,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.846,
+    "value": {
+     "value": 1
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_po",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791455861.9503927,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.181,
+    "value": {
+     "id": 525
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Receive purchase order PO-6012 at warehouse west: add 20 units to SKU-512 and 33 units to SKU-213, increment the counter restocks-west once, and record restock:PO-6012 with amount 53. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_0Av3c7ozH7jhQp3yolFs8cuc",
+     "function": {
+      "name": "adjust_stock",
+      "arguments": "{\"sku\":\"SKU-512\",\"delta\":20}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_sVUwex6WmOakNGjfdgJVPNLY",
+     "function": {
+      "name": "adjust_stock",
+      "arguments": "{\"sku\":\"SKU-213\",\"delta\":33}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_Ugq658dvrijK3tmT98ocj1ze",
+     "function": {
+      "name": "increment_counter",
+      "arguments": "{\"name\":\"restocks-west\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_3X01eyywhbrydOXdsMFYYXbu",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\":\"restock:PO-6012\",\"amount\":53}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.summary",
+     "summary": "**Evaluating tool calls**\n\nI need to ensure that I perform actions just once, focusing on the exact actions required. I could consider parallel independent actions for stock adjustments—like using a counter to manage inserts simultaneously. However, it's crucial to limit calls to exactly one to prevent issues. So, I'll consider the structure and approach needed to achieve this correctly while maintaining precision in execution. It’s all about balancing efficiency and accuracy!",
+     "format": "openai-responses-v1",
+     "index": 0
+    },
+    {
+     "type": "reasoning.encrypted",
+     "data": "gAAAAABqx3JmwjaTWQRey2MVJ7hitVeNPehKg4l1hdW-0xSCzbt1aJqQBV2olF0ViYzvOxOZxws1U9SqaeabtuCDMNnEG2qPUNHnD99roVAW2nPfhG2MXeKbcA-ukfmJTpuFpdAGvDbk5emJna_7sy6tW5bNkps0wl6aUuOgndra7WXRF5olZttFbA7ACi4GyRmijQHSvDXkNBmtVb_YoAerSL94xLmp0NU8JAt2-aItF4aOELs4MMfr-ORAe5yIt26mTwXMu3Dhzr7nPT4TRzADJ-l6f6pBeZdK5L8J77WMV007BVomq2LRz4D64f6uEuW4vPwo0Co4avJTK2MQ2ZS-xZibvYiL8Et4iQy0LlJ9xOjqCKqr7DxlrW1u06WWc-09P62FSkCOtM1jJ1GbVJaqnHQY1X6-66Fa1D6L1laTz3wniMez0bfeXtYqqoEB5Dgsd3zPQjBJZ1b59wWcQzW-ROqVBK6hshxg8cu7aprOEWas0ocDTfNYJGI7fE_zOhRZN8gr6nxZuECesj_FJjQYM2MpVCRj4k9OB-d3LnRZqGMCJZVlDk0TBv1ECkx7gU-KP8e5rD_PnS5EMuxIo4mA8yApAhzjj5ASUveTi7scngjLqhQ9MrdiTHqaOtDuV-UiM3Hz2F94NdGB1NV7BquWNIXVU6-uNx3hIPTNHBFjntHvBP8adgpjlFQpIk9rrxcFIlrCWvCt9MiHSfpz77K_LAA8kQss-EcDFnga4lVqq5NFoKzKnpBTbt7AoUXRLuHf2yhsXQemL_Gx2H71Rwt4-Zh4cxAJvBYfMpa-kywLE3x-1sW3hBFkQAByCw1vFMQ3QFuXscJKZZ1CTA25dK6aDCJyT-Wqs5CK_fS7Jhpjc_8RbnxaAk6Y-VudAn-opU-JzmJrT3XgoPvM5bpcBXuoMDCMxKmkX5vtKSjuytCvTubQh37gUaka_C2i4sv0-TjE49K2NJkGe6zxcB7U2rlNQBcVssMtmsMn3z9y5dN9MlAKjBCUovqiBmvtrHoTGIrkLGrNg86JjmaeWzrQTaMk1eFj0S5DlArH2lvz0i5iDWlv-s9e59iMsYXInC8UFRZc3Hs9nNIf6I9romcW8pX-RpWElX7APm8qa44A73BLc17eg6CeTxpG2ojSFAeiCfrRvkADLj06B8BeEiaTNikqpTXwiajImgRFiWvEfn55xXS8g_39HJJYKB08SnUAWl3cj1sFeECm9GmJQ0qcJIlHTDYr8y_qL6FSebxjGm-iH_ugy3a8KuWRdFtnfYto4TGnE_CG8BZK75Yk7EoVMCGYMF_XNzmDm_CXpkdILNrXbJ0ZyPlDBy9CXn5h9VzAOlcYXnF3r_BAySw4RTV6mOzof5IFvroGU20GOzGYyNKPZJ9uvqsr25J2e_UsksEcf4DD0uZBMwn_bLap_woBRHVbkM5XCXhrt-Cth7hhkZWDjs-Ry_60fxixJ_ZXmOnTj40V6a3HW2Iu0ewJ8EHnk4KGPNH8GaHLL-7gMUqVi1GFZLlM0qWupTf1t6yw944T1_bJQVsPseHh.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+     "format": "openai-responses-v1",
+     "id": "rs_0605ef8d645733a0016ac77264f89c87d18b733975e00a3a4b",
+     "index": 1
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_0Av3c7ozH7jhQp3yolFs8cuc",
+   "content": "{\"status\": \"timeout\", \"note\": \"no response within 4s\"}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_sVUwex6WmOakNGjfdgJVPNLY",
+   "content": "{\"status\": \"ok\", \"result\": {\"ok\": true}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_Ugq658dvrijK3tmT98ocj1ze",
+   "content": "{\"status\": \"ok\", \"result\": {\"value\": 1}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_3X01eyywhbrydOXdsMFYYXbu",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 525}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_L52B85PZhir3rXA3QKPVyASc",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\":\"partial\",\"summary\":\"SKU-213 was increased by 33, restocks-west was incremented once, and record restock:PO-6012 amount 53 was inserted (record id 525). The SKU-512 adjustment of +20 timed out, so its outcome cannot be confirmed and was not retried to avoid a possible duplicate.\",\"uncertain_operations\":[\"Adjust SKU-512 by +20\"]}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.encrypted",
+     "data": "gAAAAABqx3J8cJcTRC9eVWZ1m0wHJWv4X5M_gh1eEpYFchEM-pwzif2ce1wIOHXNfL-KyDj19ZLFzrhy5gwk-aMsWG59kl5aTKU9C5DhutTSlEyjFmv7q-Pe4xzCb9ecn7xI8r7NjNwDBjrNo40tBkFEwszKagr2XL3NpuQAbiMSpGMQvazIVDGadk9Gjhr0epd_TOvebm-gEh-hTLS8aCBs6FhMsvzJHY0vTa7Rs4Hi9msyG5Y2Z3vkvMnopa3S4zO4VMsWIUeJJe3YzryEcMAPrldfCu6-9nmX2Z3at6KC7h1zArzrtnjaj0lzzEkP-IW2bhXoefboPR3ThuZGLcpXv93nO4tQkEwHiCCYSPAr8t7A6rOUzhOwXhck4kqC_b2RxjBDZ3EwOb8HAZtNKu1foj_48tuUpO5rV5dV8Xmc658nLtFIogJEDuRFo9K3AOBcdS37GmU_f6OBSGasQcPGK32SY_dCpBQiMLgKznZijmWMwVMBvsRES_g9-xx5jHpPciECdUPje-dnM131_iYAwnabsxTb2gGS7OvZFr5RwHntr6MeaCYBeShfthIS9kyCCTCCe7-cbIihCxgwjPQK9x8enoYu3PJszhmloYT2n1YlPmq1MXHc6pZwtQNYzNR4o7X5a6fNtJZYY4FE5EPKJzjHWXfQwB1p49bnfg6WqRW9KcOESCAgPFHthSzpFyumr6nc4pnzc19_SUbqIUloNOUbZraFoMB-ePwENrE-4pP4X3gJiSGC3-GwaXw6YPGiDwo9SiEA7sBZanASnVszR2gG0u7kAZB3os1b6ctjLGyq85tl2TcZp3dyo7fdZe0hiUgoo7CT8Trd120Z670kgHMU-gyN1bSjRotWt9eM7wOk93aZ29ul9jJIzLuiI98Py8KShcI2A9sffunB8X6IX-oZPDVE4tpB7Bj7iyKa7e03DwwaT52J2B3o4JMxgvzdNIDRkUyLlldiGH2DfGmTCFeERFdBPahVbWWawxeLN6wGde3FMNxwXT4_RYsyfBYnjrRplodn4HxOqOp2VBL-Iqw4E0vO35_X_Bp1QMrP0GxKl0d1fRrGrCFAP6t6NSigdgzxaUxrHxBMceZcE2iyMIuSEUCvmlfpKh7o6acYZKNyMCoH4YrsrdzgdhgxZYBtEZRKvrAddFp-Biy1tbg-Jgi02_ZGEZuWIFp4NkSFgEbc1pIwNtwbO4wZUXMPTQ77gR6BWCQFQeFQMJDyULkkdRGOne9KwPo5CZgia7uXEdO2oxm8KSpCqhXUQl57rxWZ3tLtd6MOhqcVPpQbNrLk7cSAaPZNGmzg0unafvWuKJMiqJODUVVJOnNPw-KpDtYqgr1cAL2RRRSILDoZCU0K1bz-scZgIOTLlt88jJ6EVZC0tyWzX7Ip_MpCLe1zrXLgNdKyYezh1OOE8LmiX2KEpxXbnlL6MrkvfUOcLn-kSvJVcX36f9SYTblrTEsrobckPAYykqTOd2_DtWQ16yhG6vXAcTwU67cETrIFZ254TEjrdJR0C23A57FR8YMW8Jpk5z5s-Tv0ZnVxg-JdA_PFbdwUppu-7om4KDvauZkcBTNOCXXxcQwqdQmZtX5EAQNnqRBtTUSGqso23aTT3BQqLq2XuYpyBVZGaRTCjgmFdMTw4yhgyjX2k4YxRcdIsBWthVD8Ymciec62IsxV9OCsFxhQePwndSBiFbd2S0BFjs7-loIPyqmrz6wTbnhv5Uy-tvU3GFGBMWByNCNrw5tZ1FLziB5RdnNustgWgptjZ94JDoZYZM3AFfqof8mSjxhnmfzSqG62N8CnVo7axFFFyJwhJRrIVi3NrSD0tliSe4vIWH4NxQNTXsvrZBVjEVhZdMta4Pf0J9IfyC_T0ZDdwrt310-YXcRKjfvnucha9aV1zA9Ml8RfQRK5cTtJgORy6vuAD4a83C2kXONKva_LhExaDawLW58ASdtp60XMWLIr_8MYO64=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+     "format": "openai-responses-v1",
+     "id": "rs_0605ef8d645733a0016ac7727ad08087d19cbcf87af3a5044f",
+     "index": 0
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_L52B85PZhir3rXA3QKPVyASc",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "7620de3920c5",
+ "run_namespace": "7620de39-b3fdd0",
+ "wall_s": 81.45
+}

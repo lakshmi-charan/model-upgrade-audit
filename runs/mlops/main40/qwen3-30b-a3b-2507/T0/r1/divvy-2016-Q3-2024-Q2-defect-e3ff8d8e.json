@@ -1,0 +1,343 @@
+{
+ "task_id": "divvy-2016-Q3-2024-Q2-defect-e3ff8d8e",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.004205,
+ "n_steps": 8,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 0.1529,
+   "spent_seconds": 0.1529,
+   "wall_s": 1.036
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2018-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ],
+    "failed": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ]
+   },
+   "cost_s": 0.0025,
+   "spent_seconds": 0.1554,
+   "wall_s": 0.252
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'started_at'"
+   },
+   "cost_s": 0.0022,
+   "spent_seconds": 0.1576,
+   "wall_s": 0.168
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 7.5453,
+   "spent_seconds": 7.7029,
+   "wall_s": 0.511
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 7.827,
+   "wall_s": 0.383
+  },
+  {
+   "step": 6,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 7.827,
+   "wall_s": 0.117
+  },
+  {
+   "step": 7,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 7.827,
+   "wall_s": 0.235
+  },
+  {
+   "step": 8,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0088,
+   "spent_seconds": 7.8358,
+   "wall_s": 0.006
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter and time_features components are broken due to schema changes in 2020-Q1 and 2024-Q2, causing downstream failures; retraining is needed due to severe label and feature drift."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 15.01,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter and time_features components are broken due to schema changes in 2020-Q1 and 2024-Q2, causing downstream failures; retraining is needed due to severe label and feature drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 9,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3186,
+    "completion_tokens": 24,
+    "total_tokens": 3210,
+    "cost": 0.00042666
+   },
+   "cost": 0.00042666,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2018-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3288,
+    "completion_tokens": 24,
+    "total_tokens": 3312,
+    "cost": 0.00043992
+   },
+   "cost": 0.00043992,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3398,
+    "completion_tokens": 14,
+    "total_tokens": 3412,
+    "cost": 0.00044902
+   },
+   "cost": 0.00044902,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 3454,
+    "completion_tokens": 14,
+    "total_tokens": 3468,
+    "cost": 0.0004563
+   },
+   "cost": 0.0004563,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"station_join\"}",
+   "usage": {
+    "prompt_tokens": 3549,
+    "completion_tokens": 14,
+    "total_tokens": 3563,
+    "cost": 0.00046865
+   },
+   "cost": 0.00046865,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 3593,
+    "completion_tokens": 13,
+    "total_tokens": 3606,
+    "cost": 0.00047385
+   },
+   "cost": 0.00047385,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 3636,
+    "completion_tokens": 13,
+    "total_tokens": 3649,
+    "cost": 0.00047944
+   },
+   "cost": 0.00047944,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"trip_adapter\", \"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 3679,
+    "completion_tokens": 17,
+    "total_tokens": 3696,
+    "cost": 0.00048711
+   },
+   "cost": 0.00048711,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": true, \"reason\": \"The trip_adapter and time_features components are broken due to schema changes in 2020-Q1 and 2024-Q2, causing downstream failures; retraining is needed due to severe label and feature drift.\"}",
+   "usage": {
+    "prompt_tokens": 3738,
+    "completion_tokens": 74,
+    "total_tokens": 3812,
+    "cost": 0.00052442
+   },
+   "cost": 0.00052442,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 31521,
+ "tokens_out": 207,
+ "compute_spent_s": 7.8358,
+ "compute_budget_s": 25.978435799963336,
+ "source_cache_hits": 20,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

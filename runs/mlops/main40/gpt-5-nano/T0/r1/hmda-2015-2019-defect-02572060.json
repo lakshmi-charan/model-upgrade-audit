@@ -1,0 +1,149 @@
+{
+ "task_id": "hmda-2015-2019-defect-02572060",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [
+   "lar_adapter"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000663,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.2492,
+   "wall_s": 0.083
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "lar_adapter",
+    "period": "2017"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2015",
+     "2016",
+     "2017"
+    ],
+    "failed": [
+     "2017"
+    ]
+   },
+   "cost_s": 0.1822,
+   "spent_seconds": 0.4315,
+   "wall_s": 1.918
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "Boundary check failed due to KeyError on owner_occupancy, indicating a schema-change mismatch in lar_adapter. Patch the adapter to align with the published LAR schema (2017-2018 changes) and add a guard for renamed/missing fields. No retraining needed unless drift persists after fix."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": []
+ },
+ "domain": "hmda",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 34.66,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "Boundary check failed due to KeyError on owner_occupancy, indicating a schema-change mismatch in lar_adapter. Patch the adapter to align with the published LAR schema (2017-2018 changes) and add a guard for renamed/missing fields. No retraining needed unless drift persists after fix."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"lar_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2094,
+    "completion_tokens": 451,
+    "total_tokens": 2545,
+    "cost": 0.0002851
+   },
+   "cost": 0.0002851,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"boundary\",\"component\":\"lar_adapter\",\"period\":\"2017\"}",
+   "usage": {
+    "prompt_tokens": 2146,
+    "completion_tokens": 345,
+    "total_tokens": 2491,
+    "cost": 0.00015314
+   },
+   "cost": 0.00015314,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"lar_adapter\"],\"retrain\":false,\"reason\":\"Boundary check failed due to KeyError on owner_occupancy, indicating a schema-change mismatch in lar_adapter. Patch the adapter to align with the published LAR schema (2017-2018 changes) and add a guard for renamed/missing fields. No retraining needed unless drift persists after fix.\"}",
+   "usage": {
+    "prompt_tokens": 2213,
+    "completion_tokens": 515,
+    "total_tokens": 2728,
+    "cost": 0.00022449
+   },
+   "cost": 0.00022449,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6453,
+ "tokens_out": 1311,
+ "compute_spent_s": 0.4315,
+ "compute_budget_s": 12.882809100032318,
+ "source_cache_hits": 5,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

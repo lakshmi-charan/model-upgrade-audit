@@ -1,0 +1,195 @@
+{
+ "task_id": "tlc-2022-01-2026-07-two-9163f1fe",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "encode"
+  ],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "trip_adapter"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000518,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2023-04"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2022-10",
+     "2023-01",
+     "2023-04"
+    ],
+    "versions": {
+     "2022-10": "reference",
+     "2023-01": "reference",
+     "2023-04": "current"
+    },
+    "retention": {
+     "2022-10": 1.0,
+     "2023-01": 1.0,
+     "2023-04": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "airport_fee": {
+      "baseline_psi": 0.0008,
+      "boundary_psi": 0.597,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "ratecode": {
+      "baseline_psi": 0.0085,
+      "boundary_psi": 0.0011,
+      "input_boundary_psi": 0.001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "congestion_surcharge": {
+      "baseline_psi": 0.0006,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "vendor": {
+      "baseline_psi": 0.0059,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.1971,
+   "spent_seconds": 0.1971,
+   "wall_s": 3.786
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1081,
+   "spent_seconds": 0.3052,
+   "wall_s": 5.589
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter is defective as it failed to handle the 2023-04 schema change (airport_fee rename), causing significant drift in that feature, and the model requires retraining due to genuine covariate drift in other features like fare_amount and speed_mph."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "effective": [
+   "encode",
+   "trip_adapter"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "defect_only",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 14.46,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter is defective as it failed to handle the 2023-04 schema change (airport_fee rename), causing significant drift in that feature, and the model requires retraining due to genuine covariate drift in other features like fare_amount and speed_mph."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2023-04\"}\n```",
+   "usage": {
+    "prompt_tokens": 2794,
+    "completion_tokens": 32,
+    "total_tokens": 2826,
+    "cost": 0.00015098
+   },
+   "cost": 0.00015098,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 3260,
+    "completion_tokens": 20,
+    "total_tokens": 3280,
+    "cost": 0.00017092
+   },
+   "cost": 0.00017092,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"The trip_adapter is defective as it failed to handle the 2023-04 schema change (airport_fee rename), causing significant drift in that feature, and the model requires retraining due to genuine covariate drift in other features like fare_amount and speed_mph.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3310,
+    "completion_tokens": 88,
+    "total_tokens": 3398,
+    "cost": 0.00019598
+   },
+   "cost": 0.00019598,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9364,
+ "tokens_out": 140,
+ "compute_spent_s": 0.3052,
+ "compute_budget_s": 14.082873899984406,
+ "source_cache_hits": 5,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

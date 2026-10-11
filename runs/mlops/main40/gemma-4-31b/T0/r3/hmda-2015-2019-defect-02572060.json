@@ -1,0 +1,113 @@
+{
+ "task_id": "hmda-2015-2019-defect-02572060",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [
+   "lar_adapter"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000283,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1682,
+   "spent_seconds": 0.1682,
+   "wall_s": 0.111
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to replay on reference data due to a KeyError, indicating it was updated to expect a new schema (Regulation C) but is not backward compatible or correctly handling the transition, and it is the source of the massive PSI spikes in downstream components."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": []
+ },
+ "domain": "hmda",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 5.64,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to replay on reference data due to a KeyError, indicating it was updated to expect a new schema (Regulation C) but is not backward compatible or correctly handling the transition, and it is the source of the massive PSI spikes in downstream components."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"lar_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2425,
+    "completion_tokens": 20,
+    "total_tokens": 2445,
+    "cost": 0.00012905
+   },
+   "cost": 0.00012905,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"lar_adapter\"], \"retrain\": false, \"reason\": \"The lar_adapter failed to replay on reference data due to a KeyError, indicating it was updated to expect a new schema (Regulation C) but is not backward compatible or correctly handling the transition, and it is the source of the massive PSI spikes in downstream components.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2489,
+    "completion_tokens": 84,
+    "total_tokens": 2573,
+    "cost": 0.00015401
+   },
+   "cost": 0.00015401,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 4914,
+ "tokens_out": 104,
+ "compute_spent_s": 0.1682,
+ "compute_budget_s": 12.882809100032318,
+ "source_cache_hits": 2,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

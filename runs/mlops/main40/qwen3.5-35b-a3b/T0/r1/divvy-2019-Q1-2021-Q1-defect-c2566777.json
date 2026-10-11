@@ -1,0 +1,205 @@
+{
+ "task_id": "divvy-2019-Q1-2021-Q1-defect-c2566777",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.015013,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.2492,
+   "wall_s": 1.057
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "station_join"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": null,
+    "cur_perf": null,
+    "ref_perf": 0.9589580898313574,
+    "rows": 0,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 2.0242,
+   "spent_seconds": 2.2734,
+   "wall_s": 3.496
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0855,
+   "spent_seconds": 2.3589,
+   "wall_s": 2.56
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.004,
+   "spent_seconds": 2.3629,
+   "wall_s": 0.363
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "trip_adapter must be updated to handle the 2020-Q1 schema change (ride_id instead of trip_id); pipeline produces 0 rows currently."
+ },
+ "oracle": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "trip_adapter"
+  ],
+  "consequential": [
+   "trip_adapter"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 86.21,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "trip_adapter must be updated to handle the 2020-Q1 schema change (ride_id instead of trip_id); pipeline produces 0 rows currently."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 2458,
+    "completion_tokens": 7798,
+    "total_tokens": 10256,
+    "cost": 0.010536825
+   },
+   "cost": 0.010536825,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"station_join\"]\n}",
+   "usage": {
+    "prompt_tokens": 2509,
+    "completion_tokens": 506,
+    "total_tokens": 3015,
+    "cost": 0.0010655125
+   },
+   "cost": 0.0010655125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2611,
+    "completion_tokens": 486,
+    "total_tokens": 3097,
+    "cost": 0.0010560875
+   },
+   "cost": 0.0010560875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2662,
+    "completion_tokens": 551,
+    "total_tokens": 3213,
+    "cost": 0.001148875
+   },
+   "cost": 0.001148875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\"],\n  \"retrain\": false,\n  \"reason\": \"trip_adapter must be updated to handle the 2020-Q1 schema change (ride_id instead of trip_id); pipeline produces 0 rows currently.\"\n}",
+   "usage": {
+    "prompt_tokens": 2724,
+    "completion_tokens": 587,
+    "total_tokens": 3311,
+    "cost": 0.00120575
+   },
+   "cost": 0.00120575,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 12964,
+ "tokens_out": 9928,
+ "compute_spent_s": 2.3629,
+ "compute_budget_s": 6.196439699990151,
+ "source_cache_hits": 10,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

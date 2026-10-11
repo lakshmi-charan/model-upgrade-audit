@@ -1,0 +1,259 @@
+{
+ "task_id": "divvy-2016-Q3-2018-Q1-defect-a794b09c",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "time_features"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001384,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "time_features",
+    "period": "2018-Q1"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ],
+    "versions": {
+     "2017-Q3": "current",
+     "2017-Q4": "current",
+     "2018-Q1": "current"
+    },
+    "retention": {
+     "2017-Q3": 1.0,
+     "2017-Q4": 1.0,
+     "2018-Q1": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "dow": {
+      "baseline_psi": null,
+      "boundary_psi": null,
+      "input_boundary_psi": 0.7361,
+      "input_missing_jump": 0.0,
+      "missing_jump": -1.0
+     },
+     "duration_min": {
+      "baseline_psi": 0.1451,
+      "boundary_psi": 0.0147,
+      "input_boundary_psi": 8.1196,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "hour": {
+      "baseline_psi": null,
+      "boundary_psi": null,
+      "input_boundary_psi": 0.7361,
+      "input_missing_jump": 0.0,
+      "missing_jump": -1.0
+     },
+     "month": {
+      "baseline_psi": null,
+      "boundary_psi": null,
+      "input_boundary_psi": 0.7361,
+      "input_missing_jump": 0.0,
+      "missing_jump": -1.0
+     }
+    }
+   },
+   "cost_s": 4.5411,
+   "spent_seconds": 4.5411,
+   "wall_s": 2.645
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0015,
+   "spent_seconds": 4.5426,
+   "wall_s": 0.02
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 2.5782,
+   "spent_seconds": 7.1208,
+   "wall_s": 1.832
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.9819146764645846,
+    "cur_perf": 0.9784445805266381,
+    "ref_perf": 0.8726720512649356,
+    "rows": 24495,
+    "common_rows": 24495,
+    "masked": []
+   },
+   "cost_s": 1.0106,
+   "spent_seconds": 8.1314,
+   "wall_s": 1.922
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "The changed time_features component produces different outputs on reference data and rolling it back improves current accuracy, while retraining is unnecessary because corrected-pipeline performance is high and current accuracy has not degraded."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 31.38,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "The changed time_features component produces different outputs on reference data and rolling it back improves current accuracy, while retraining is unnecessary because corrected-pipeline performance is high and current accuracy has not degraded."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\":\"boundary\",\"component\":\"time_features\",\"period\":\"2018-Q1\"}",
+   "usage": {
+    "prompt_tokens": 2176,
+    "completion_tokens": 131,
+    "total_tokens": 2307,
+    "cost": 0.00020126
+   },
+   "cost": 0.00020126,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2532,
+    "completion_tokens": 88,
+    "total_tokens": 2620,
+    "cost": 0.00023866
+   },
+   "cost": 0.00023866,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2582,
+    "completion_tokens": 168,
+    "total_tokens": 2750,
+    "cost": 0.00026528
+   },
+   "cost": 0.00026528,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2663,
+    "completion_tokens": 195,
+    "total_tokens": 2858,
+    "cost": 0.00030643
+   },
+   "cost": 0.00030643,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"time_features\"],\"retrain\":false,\"reason\":\"The changed time_features component produces different outputs on reference data and rolling it back improves current accuracy, while retraining is unnecessary because corrected-pipeline performance is high and current accuracy has not degraded.\"}",
+   "usage": {
+    "prompt_tokens": 2763,
+    "completion_tokens": 245,
+    "total_tokens": 3008,
+    "cost": 0.0003728
+   },
+   "cost": 0.0003728,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 12716,
+ "tokens_out": 827,
+ "compute_spent_s": 8.1314,
+ "compute_budget_s": 15.969842399998015,
+ "source_cache_hits": 16,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

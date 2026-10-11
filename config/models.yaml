@@ -1,0 +1,37 @@
+# Candidate models. Prices are USD per 1M tokens from the OpenRouter catalogue (2026-10-06); OpenRouter's
+# reported per-call cost is used when present. Free providers (gemini, groq) cost 0.
+# "family" + "order" define the old -> new upgrade chains studied (pairs are consecutive members).
+# reasoning: low = cheapest reasoning setting where the model supports it; off = disabled; omitted = model default.
+models:
+  # ---- OpenAI small models: the provider's own official retirement replacements (deprecations page)
+  - {label: gpt-4.1-nano,  provider: openrouter, model: openai/gpt-4.1-nano,  family: openai-small, order: 1, price_in: 0.10, price_out: 0.40, provider_order: [OpenAI], allow_fallbacks: false}
+  - {label: gpt-5-nano,    provider: openrouter, model: openai/gpt-5-nano,    family: openai-small, order: 2, price_in: 0.05, price_out: 0.40, reasoning: low, no_temperature: true, provider_order: [OpenAI], allow_fallbacks: false}
+  - {label: gpt-5.6-luna,  provider: openrouter, model: openai/gpt-5.6-luna,  family: openai-small, order: 3, price_in: 0.20, price_out: 1.20, reasoning: low, no_temperature: true, provider_order: [OpenAI], allow_fallbacks: false}
+  # ---- Llama 70B
+  - {label: llama-3.1-70b, provider: openrouter, model: meta-llama/llama-3.1-70b-instruct, family: llama-70b, order: 1, price_in: 0.40, price_out: 0.40, provider_order: [DeepInfra], allow_fallbacks: false}
+  - {label: llama-3.3-70b, provider: openrouter, model: meta-llama/llama-3.3-70b-instruct, family: llama-70b, order: 2, price_in: 0.22, price_out: 0.50, provider_order: [DeepInfra], allow_fallbacks: false}
+  # ---- Mistral Small
+  - {label: mistral-small-3.1, provider: openrouter, model: mistralai/mistral-small-3.1-24b-instruct, family: mistral-small, order: 1, price_in: 0.35, price_out: 0.56, provider_order: [Cloudflare], allow_fallbacks: false}
+  - {label: mistral-small-3.2, provider: openrouter, model: mistralai/mistral-small-3.2-24b-instruct, family: mistral-small, order: 2, price_in: 0.094, price_out: 0.25, provider_order: [DeepInfra], allow_fallbacks: false}
+  - {label: mistral-small-2603, provider: openrouter, model: mistralai/mistral-small-2603, family: mistral-small, order: 3, price_in: 0.15, price_out: 0.60, provider_order: [Mistral], allow_fallbacks: false}
+  # ---- Qwen3 30B-A3B line
+  - {label: qwen3-30b-a3b-2507, provider: openrouter, model: qwen/qwen3-30b-a3b-instruct-2507, family: qwen-30b, order: 1, price_in: 0.10, price_out: 0.30, provider_order: [Alibaba], allow_fallbacks: false}
+  - {label: qwen3.5-35b-a3b,    provider: openrouter, model: qwen/qwen3.5-35b-a3b, family: qwen-30b, order: 2, price_in: 0.08, price_out: 0.75, reasoning: off, provider_order: [Alibaba], allow_fallbacks: false}
+  - {label: qwen3.6-35b-a3b,    provider: openrouter, model: qwen/qwen3.6-35b-a3b, family: qwen-30b, order: 3, price_in: 0.15, price_out: 1.00, reasoning: off, provider_order: [Alibaba], allow_fallbacks: false}
+  # ---- DeepSeek chat line
+  - {label: deepseek-v3.1, provider: openrouter, model: deepseek/deepseek-chat-v3.1, family: deepseek, order: 1, price_in: 0.25, price_out: 0.95, provider_order: [DeepInfra], allow_fallbacks: false}
+  - {label: deepseek-v3.2, provider: openrouter, model: deepseek/deepseek-v3.2, family: deepseek, order: 2, price_in: 0.28, price_out: 0.42, provider_order: [DeepInfra], allow_fallbacks: false}
+  # ---- GLM flash line
+  - {label: glm-4.5-air,   provider: openrouter, model: z-ai/glm-4.5-air,   family: glm, order: 1, price_in: 0.13, price_out: 0.85, reasoning: off}
+  - {label: glm-4.7-flash, provider: openrouter, model: z-ai/glm-4.7-flash, family: glm, order: 2, price_in: 0.06, price_out: 0.40, reasoning: off}
+  # ---- Gemma (open weights)
+  - {label: gemma-3-27b, provider: openrouter, model: google/gemma-3-27b-it, family: gemma, order: 1, price_in: 0.08, price_out: 0.45, provider_order: [DeepInfra], allow_fallbacks: false}
+  - {label: gemma-4-31b, provider: openrouter, model: google/gemma-4-31b-it, family: gemma, order: 2, price_in: 0.09, price_out: 0.34, provider_order: [DeepInfra], allow_fallbacks: false}   # moved off the Google free tier (daily quota too low); same host as gemma-3-27b
+  # ---- Gemini Flash-Lite and Flash (free tier, Google AI Studio)
+  # - {label: gemini-2.5-flash-lite, provider: gemini, model: gemini-2.5-flash-lite, family: gemini-lite, order: 1, reasoning: off}   # REMOVED 2026-10-06: not available to new API users (HTTP 404)
+  - {label: gemini-3.1-flash-lite, provider: gemini, model: gemini-3.1-flash-lite, family: gemini-lite, order: 2, reasoning: low}
+  - {label: gemini-3.5-flash-lite, provider: gemini, model: gemini-3.5-flash-lite, family: gemini-lite, order: 3, reasoning: low}
+  # - {label: gemini-2.5-flash, provider: gemini, model: gemini-2.5-flash, family: gemini-flash, order: 1, reasoning: low}   # REMOVED 2026-10-06: not available to new API users (HTTP 404)
+  - {label: gemini-3-flash,   provider: gemini, model: gemini-3-flash-preview, family: gemini-flash, order: 2, reasoning: low}
+  - {label: gemini-3.5-flash, provider: gemini, model: gemini-3.5-flash, family: gemini-flash, order: 3, reasoning: low}
+  - {label: gemini-3.8-flash, provider: gemini, model: gemini-3.8-flash, family: gemini-flash, order: 4, reasoning: low}

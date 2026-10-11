@@ -21,29 +21,49 @@ When a provider retires the model behind an agent, teams switch to the next mode
 ## Repository layout
 
 ```
-paper/                   paper sources (Markdown), figures, bibliography and the built PDF
-  sections/              one file per section
-  build.sh               builds paper.pdf (pandoc + pandoc-crossref + xelatex)
+paper/                    paper sources (Markdown), figures, bibliography and the built PDF
 results/
-  final/                 confirmatory analysis on the repaired data (JSON outputs + full log)
-  audit_contaminated_run/ the superseded analysis on data collected during the outage (kept as an audit record)
-scripts/
-  make_tables.py         regenerates every results table from results/
-  figs.py, figs_integrity.py   regenerate the figures from results/
-  infra_scan.py          scans graded episodes for environment connection errors
+  final/                  confirmatory analysis on the repaired data (JSON outputs + full log)
+  audit_contaminated_run/ superseded analysis on data collected during the outage, with the list of affected episodes
+runs/                     every graded episode (one JSON file per episode) and per-call serving-provider logs
+  clinical/main, ops/main50, mlops/main40   confirmatory sets (k = 3 runs per model)
+  clinical/pilot          exploratory pilot
+  quarantine/             episodes excluded because the environment failed during the episode
+  calls.jsonl             one row per model call: model, serving provider, tokens, cost, latency
+code/                     runners (run_clinical.py, run_ops.py, run_mlops.py), the unified LLM client (mm/llm.py),
+                          environment checks and the infrastructure scan (infra_scan.py)
+analysis/                 confirmatory tests (H1–H5), transitions and erosion test (H6), flip and triage analyses
+testbeds/                 clinical (FHIR / MedAgentBench + hazard variants), ops (real services), mlops (pipeline diagnosis)
+config/models.yaml        models, routing and pinned serving providers
+docs/PROTOCOL.md          pre-registered protocol with dated amendments; docs/freeze/ holds the SHA-256 freeze records
+scripts/                  regenerate every table and figure of the paper from results/
 ```
 
-## Reproducing the tables and figures
+## Reproducing
+
+Tables and figures from the released results (no API keys needed):
 
 ```bash
 pip install -r requirements.txt
 python scripts/make_tables.py results/final results/audit_contaminated_run results/final/tables.md
 python scripts/figs.py results/final paper/figs
 python scripts/figs_integrity.py results/final results/audit_contaminated_run paper/figs
-bash paper/build.sh /path/to/pandoc-crossref     # optional: rebuild the PDF
 ```
 
-Testbed code, runners and the graded episode files will be added in a follow-up release.
+Re-running the statistics from the episode files:
+
+```bash
+python code/run_analysis.py          # writes analysis/out/ and prints the full log
+```
+
+Collecting new episodes requires API keys (copy `.env.example` to `.env`) and the testbed services:
+
+- **Clinical:** the MedAgentBench FHIR server (`docker run -p 8080:8080 jyxsu6/medagentbench`), then
+  `python code/run_clinical.py --check-env` and `python code/run_clinical.py --models <labels> --subset main --repeats 3`.
+- **Operations:** `docker compose -f testbeds/ops/docker/compose.yml up -d`, then `python code/run_ops.py ...`.
+- **MLOps:** requires the drift-or-defect source project (set `MM_MLOPS_SOURCE`), then `python code/run_mlops.py ...`.
+
+`python code/infra_scan.py` scans graded episodes for environment connection errors.
 
 ## Citation
 

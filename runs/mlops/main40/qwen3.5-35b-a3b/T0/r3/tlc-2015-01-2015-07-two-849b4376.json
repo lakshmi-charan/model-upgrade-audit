@@ -1,0 +1,191 @@
+{
+ "task_id": "tlc-2015-01-2015-07-two-849b4376",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "encode"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "zone_join"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.006775,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 1.0558,
+   "spent_seconds": 1.0558,
+   "wall_s": 4.014
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "do_borough": 0.124891,
+     "do_service": 0.168743
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 0.0599,
+   "spent_seconds": 1.1158,
+   "wall_s": 0.508
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "zone_join"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6972473754464447,
+    "cur_perf": 0.6970669937587937,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27719,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.6666,
+   "spent_seconds": 1.7823,
+   "wall_s": 0.787
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "zone_join"
+  ],
+  "retrain": true,
+  "reason": "zone_join config change causes feature drift in do_borough/do_service, but accuracy recovery requires retraining due to genuine covariate drift."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "effective": [
+   "encode",
+   "zone_join"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 36.75,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "zone_join"
+  ],
+  "retrain": true,
+  "reason": "zone_join config change causes feature drift in do_borough/do_service, but accuracy recovery requires retraining due to genuine covariate drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2412,
+    "completion_tokens": 2880,
+    "total_tokens": 5292,
+    "cost": 0.00413595
+   },
+   "cost": 0.00413595,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"zone_join\"}",
+   "usage": {
+    "prompt_tokens": 2456,
+    "completion_tokens": 410,
+    "total_tokens": 2866,
+    "cost": 0.0009321
+   },
+   "cost": 0.0009321,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"zone_join\"]}",
+   "usage": {
+    "prompt_tokens": 2553,
+    "completion_tokens": 95,
+    "total_tokens": 2648,
+    "cost": 0.0005383625
+   },
+   "cost": 0.0005383625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"zone_join\"], \"retrain\": true, \"reason\": \"zone_join config change causes feature drift in do_borough/do_service, but accuracy recovery requires retraining due to genuine covariate drift.\"}",
+   "usage": {
+    "prompt_tokens": 2688,
+    "completion_tokens": 563,
+    "total_tokens": 3251,
+    "cost": 0.0011687
+   },
+   "cost": 0.0011687,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10109,
+ "tokens_out": 3948,
+ "compute_spent_s": 1.7823,
+ "compute_budget_s": 58.65384449994599,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

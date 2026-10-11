@@ -1,0 +1,217 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001275,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 6.6891,
+   "spent_seconds": 6.6891,
+   "wall_s": 2.503
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2018-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ],
+    "failed": [
+     "2017-Q3",
+     "2017-Q4",
+     "2018-Q1"
+    ]
+   },
+   "cost_s": 5.3814,
+   "spent_seconds": 12.0705,
+   "wall_s": 0.782
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 12.0753,
+   "wall_s": 0.354
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 13.8058,
+   "wall_s": 1.084
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "trip_adapter is broken on current schema and must be repaired before any drift analysis or retraining can proceed."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 11.06,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "trip_adapter is broken on current schema and must be repaired before any drift analysis or retraining can proceed."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3359,
+    "completion_tokens": 28,
+    "total_tokens": 3387,
+    "cost": 0.00049257
+   },
+   "cost": 0.00049257,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2018-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3458,
+    "completion_tokens": 28,
+    "total_tokens": 3486,
+    "cost": 8.622e-05
+   },
+   "cost": 8.622e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3566,
+    "completion_tokens": 16,
+    "total_tokens": 3582,
+    "cost": 0.00051642
+   },
+   "cost": 0.00051642,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3619,
+    "completion_tokens": 17,
+    "total_tokens": 3636,
+    "cost": 7.569e-05
+   },
+   "cost": 7.569e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"trip_adapter is broken on current schema and must be repaired before any drift analysis or retraining can proceed.\"}",
+   "usage": {
+    "prompt_tokens": 3733,
+    "completion_tokens": 50,
+    "total_tokens": 3783,
+    "cost": 0.00010395
+   },
+   "cost": 0.00010395,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 17735,
+ "tokens_out": 139,
+ "compute_spent_s": 13.8058,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 14,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

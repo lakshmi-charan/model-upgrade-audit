@@ -1,0 +1,231 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "clean",
+   "encode",
+   "station_join",
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000678,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0074,
+   "spent_seconds": 0.0074,
+   "wall_s": 0.112
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2024-Q2"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2023-Q4",
+     "2024-Q1",
+     "2024-Q2"
+    ],
+    "versions": {
+     "2023-Q4": "current",
+     "2024-Q1": "current",
+     "2024-Q2": "current"
+    },
+    "retention": {
+     "2023-Q4": 1.0,
+     "2024-Q1": 1.0,
+     "2024-Q2": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "user": {
+      "baseline_psi": 0.0152,
+      "boundary_psi": 0.1087,
+      "input_boundary_psi": 0.1087,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0042,
+      "boundary_psi": 0.017,
+      "input_boundary_psi": 0.017,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "bike": {
+      "baseline_psi": 0.0097,
+      "boundary_psi": 0.014,
+      "input_boundary_psi": 0.014,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_lat": {
+      "baseline_psi": 0.0027,
+      "boundary_psi": 0.014,
+      "input_boundary_psi": 0.0179,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0005
+     },
+     "start_lat": {
+      "baseline_psi": 0.0036,
+      "boundary_psi": 0.0132,
+      "input_boundary_psi": 0.1015,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0029,
+      "boundary_psi": 0.0129,
+      "input_boundary_psi": 0.0129,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_lng": {
+      "baseline_psi": 0.0028,
+      "boundary_psi": 0.0082,
+      "input_boundary_psi": 0.0167,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0005
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 9.8403,
+   "spent_seconds": 9.8477,
+   "wall_s": 4.499
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "encode",
+   "station_join",
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "Strong multi-component drift signals and validation failures (station_join/clean/encode, time_features) along with upstream schema changes indicate a broken or misaligned pipeline; repairing these components is required before retraining the model can yield reliable improvements."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 38.8,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features",
+   "station_join",
+   "clean",
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "Strong multi-component drift signals and validation failures (station_join/clean/encode, time_features) along with upstream schema changes indicate a broken or misaligned pipeline; repairing these components is required before retraining the model can yield reliable improvements."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3014,
+    "completion_tokens": 516,
+    "total_tokens": 3530,
+    "cost": 0.00022462
+   },
+   "cost": 0.00022462,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2024-Q2\"}",
+   "usage": {
+    "prompt_tokens": 3067,
+    "completion_tokens": 306,
+    "total_tokens": 3373,
+    "cost": 0.00014327
+   },
+   "cost": 0.00014327,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"time_features\", \"station_join\", \"clean\", \"encode\"],\n  \"retrain\": false,\n  \"reason\": \"Strong multi-component drift signals and validation failures (station_join/clean/encode, time_features) along with upstream schema changes indicate a broken or misaligned pipeline; repairing these components is required before retraining the model can yield reliable improvements.\"\n}",
+   "usage": {
+    "prompt_tokens": 3669,
+    "completion_tokens": 648,
+    "total_tokens": 4317,
+    "cost": 0.00031017
+   },
+   "cost": 0.00031017,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9750,
+ "tokens_out": 1470,
+ "compute_spent_s": 9.8477,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 7,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001387,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 10.119
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.999028
+    },
+    "rows": [
+     150167,
+     150167
+    ]
+   },
+   "cost_s": 4.6229,
+   "spent_seconds": 5.1379,
+   "wall_s": 0.58
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6860603358597117,
+    "cur_perf": 0.6753975330658345,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26916,
+    "common_rows": 26916,
+    "masked": []
+   },
+   "cost_s": 0.8284,
+   "spent_seconds": 5.9663,
+   "wall_s": 1.201
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Both components demonstrably changed behavior and produce the severe current validation failures; rolling them back improves accuracy, but residual degradation indicates genuine drift requiring retraining after the pipeline fix."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 49.12,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "Both components demonstrably changed behavior and produce the severe current validation failures; rolling them back improves accuracy, but residual degradation indicates genuine drift requiring retraining after the pipeline fix."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2516,
+    "completion_tokens": 75,
+    "total_tokens": 2591,
+    "cost": 0.00071885
+   },
+   "cost": 0.00071885,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2604,
+    "completion_tokens": 56,
+    "total_tokens": 2660,
+    "cost": 0.00014006
+   },
+   "cost": 0.00014006,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\",\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2671,
+    "completion_tokens": 59,
+    "total_tokens": 2730,
+    "cost": 0.00014017
+   },
+   "cost": 0.00014017,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\",\"time_features\"],\"retrain\":true,\"reason\":\"Both components demonstrably changed behavior and produce the severe current validation failures; rolling them back improves accuracy, but residual degradation indicates genuine drift requiring retraining after the pipeline fix.\"}",
+   "usage": {
+    "prompt_tokens": 2774,
+    "completion_tokens": 257,
+    "total_tokens": 3031,
+    "cost": 0.00038811
+   },
+   "cost": 0.00038811,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10565,
+ "tokens_out": 447,
+ "compute_spent_s": 5.9663,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

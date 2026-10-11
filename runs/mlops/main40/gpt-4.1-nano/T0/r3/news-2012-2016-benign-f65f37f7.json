@@ -1,0 +1,274 @@
+{
+ "task_id": "news-2012-2016-benign-f65f37f7",
+ "label": "gpt-4.1-nano",
+ "model": "openai/gpt-4.1-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "label_map"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000644,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "ingest",
+    "period": "2014"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2012",
+     "2013",
+     "2014"
+    ],
+    "versions": {
+     "2012": "reference",
+     "2013": "reference",
+     "2014": "current"
+    },
+    "retention": {
+     "2012": 1.0,
+     "2013": 1.0,
+     "2014": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {}
+   },
+   "cost_s": 7.9147,
+   "spent_seconds": 7.9147,
+   "wall_s": 0.18
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "label_map",
+    "period": "2015"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2013",
+     "2014",
+     "2015"
+    ],
+    "versions": {
+     "2013": "reference",
+     "2014": "reference",
+     "2015": "current"
+    },
+    "retention": {
+     "2013": 1.0,
+     "2014": 0.561,
+     "2015": 1.0
+    },
+    "retention_jump": -0.8779,
+    "columns_top": {
+     "category": {
+      "baseline_psi": 0.7486,
+      "boundary_psi": 6.4779,
+      "input_boundary_psi": 1.6855,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "section": {
+      "baseline_psi": 0.7482,
+      "boundary_psi": 3.0902,
+      "input_boundary_psi": 1.6855,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "short_description": {
+      "baseline_psi": 0.3271,
+      "boundary_psi": 0.3362,
+      "input_boundary_psi": 0.1404,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "headline": {
+      "baseline_psi": 0.0482,
+      "boundary_psi": 0.1069,
+      "input_boundary_psi": 0.1133,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "date": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 9.2092,
+   "spent_seconds": 17.124,
+   "wall_s": 1.08
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "label_map"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0162,
+   "spent_seconds": 17.1402,
+   "wall_s": 0.408
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "label_map",
+     "text_norm",
+     "vectorize"
+    ],
+    "reason": "The label_map component shows significant schema change and potential drift, which likely impacted downstream features and model performance."
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.18137950610275333,
+    "cur_perf": 0.18132803632236094,
+    "ref_perf": 0.7322784133433123,
+    "rows": 3523,
+    "common_rows": 3523,
+    "masked": []
+   },
+   "cost_s": 1.5295,
+   "spent_seconds": 18.6697,
+   "wall_s": 1.834
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "Significant schema change and drift in label_map component likely caused the model performance degradation; retraining is recommended after fixing the component."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [],
+  "consequential": []
+ },
+ "domain": "news",
+ "otype": "drift_only",
+ "scenario": "benign",
+ "tier": "none",
+ "wall_s": 9.64,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "Significant schema change and drift in label_map component likely caused the model performance degradation; retraining is recommended after fixing the component."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"ingest\", \"period\": \"2014\"}",
+   "usage": {
+    "prompt_tokens": 1152,
+    "completion_tokens": 21,
+    "total_tokens": 1173,
+    "cost": 0.0001236
+   },
+   "cost": 0.0001236,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"label_map\", \"period\": \"2015\"}",
+   "usage": {
+    "prompt_tokens": 1285,
+    "completion_tokens": 21,
+    "total_tokens": 1306,
+    "cost": 6.01e-05
+   },
+   "cost": 6.01e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"label_map\"}",
+   "usage": {
+    "prompt_tokens": 1696,
+    "completion_tokens": 15,
+    "total_tokens": 1711,
+    "cost": 0.0001756
+   },
+   "cost": 0.0001756,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"label_map\", \"text_norm\", \"vectorize\"], \"reason\": \"The label_map component shows significant schema change and potential drift, which likely impacted downstream features and model performance.\"}",
+   "usage": {
+    "prompt_tokens": 1736,
+    "completion_tokens": 48,
+    "total_tokens": 1784,
+    "cost": 0.0001928
+   },
+   "cost": 0.0001928,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"label_map\"], \"retrain\": true, \"reason\": \"Significant schema change and drift in label_map component likely caused the model performance degradation; retraining is recommended after fixing the component.\"}",
+   "usage": {
+    "prompt_tokens": 1870,
+    "completion_tokens": 51,
+    "total_tokens": 1921,
+    "cost": 9.22e-05
+   },
+   "cost": 9.22e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7739,
+ "tokens_out": 156,
+ "compute_spent_s": 18.6697,
+ "compute_budget_s": 59.42331899997953,
+ "source_cache_hits": 15,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

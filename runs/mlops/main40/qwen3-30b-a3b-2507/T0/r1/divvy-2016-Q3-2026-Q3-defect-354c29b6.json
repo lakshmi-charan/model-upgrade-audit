@@ -1,0 +1,193 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001805,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 1.7304,
+   "wall_s": 0.082
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 6.6891,
+   "spent_seconds": 8.4195,
+   "wall_s": 0.877
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 7.5453,
+   "spent_seconds": 15.9648,
+   "wall_s": 0.447
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter failed on reference data due to schema change in 2020-Q1, and time_features produces different outputs post-2020-Q1; both components are defective and retraining is needed due to confirmed drift."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 8.01,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter failed on reference data due to schema change in 2020-Q1, and time_features produces different outputs post-2020-Q1; both components are defective and retraining is needed due to confirmed drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3182,
+    "completion_tokens": 14,
+    "total_tokens": 3196,
+    "cost": 0.00042094
+   },
+   "cost": 0.00042094,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3296,
+    "completion_tokens": 24,
+    "total_tokens": 3320,
+    "cost": 0.00044096
+   },
+   "cost": 0.00044096,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 3397,
+    "completion_tokens": 14,
+    "total_tokens": 3411,
+    "cost": 0.00044889
+   },
+   "cost": 0.00044889,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": true, \"reason\": \"The trip_adapter failed on reference data due to schema change in 2020-Q1, and time_features produces different outputs post-2020-Q1; both components are defective and retraining is needed due to confirmed drift.\"}",
+   "usage": {
+    "prompt_tokens": 3493,
+    "completion_tokens": 77,
+    "total_tokens": 3570,
+    "cost": 0.00049413
+   },
+   "cost": 0.00049413,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 13368,
+ "tokens_out": 129,
+ "compute_spent_s": 15.9648,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

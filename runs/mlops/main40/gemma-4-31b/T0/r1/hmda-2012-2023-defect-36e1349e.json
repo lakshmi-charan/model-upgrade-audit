@@ -1,0 +1,119 @@
+{
+ "task_id": "hmda-2012-2023-defect-36e1349e",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "encode"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000408,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1226,
+   "spent_seconds": 0.1226,
+   "wall_s": 0.127
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode",
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to handle the 2018 schema change (causing a KeyError), and the encode component is producing 100% missing values for 'county' and validation failures for 'purpose'."
+ },
+ "oracle": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": [
+   "lar_adapter"
+  ]
+ },
+ "domain": "hmda",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 3.31,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter",
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "The lar_adapter failed to handle the 2018 schema change (causing a KeyError), and the encode component is producing 100% missing values for 'county' and validation failures for 'purpose'."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"lar_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2680,
+    "completion_tokens": 20,
+    "total_tokens": 2700,
+    "cost": 0.00024032
+   },
+   "cost": 0.00024032,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"lar_adapter\", \"encode\"], \"retrain\": false, \"reason\": \"The lar_adapter failed to handle the 2018 schema change (causing a KeyError), and the encode component is producing 100% missing values for 'county' and validation failures for 'purpose'.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2744,
+    "completion_tokens": 78,
+    "total_tokens": 2822,
+    "cost": 0.00016724
+   },
+   "cost": 0.00016724,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 5424,
+ "tokens_out": 98,
+ "compute_spent_s": 0.1226,
+ "compute_budget_s": 10.681098599998222,
+ "source_cache_hits": 2,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

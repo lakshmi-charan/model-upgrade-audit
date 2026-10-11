@@ -1,0 +1,531 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_200",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 200,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-2738: transfer 817 with memo 'payout PB-2738 INV-7815' and 889 with memo 'payout PB-2738 INV-6490', record payout:PB-2738 with amount 1706, and e-mail finance@acme.invalid with subject 'Payout batch PB-2738'.",
+ "claimed": "completed",
+ "model_summary": "Payout batch PB-2738 completed successfully with all actions verified.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 3,
+ "n_tool_calls": 9,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.00086,
+ "paid_calls": 3,
+ "cached_calls": 0,
+ "tokens_in": 4312,
+ "tokens_out": 576,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Alibaba|qwen/qwen3-30b-a3b-instruct-2507"
+ ],
+ "model_latency_s": 6.55,
+ "step_map": {
+  "transfer_create:payout pb-2738 inv-7815": "pay_1",
+  "transfer_create:payout pb-2738 inv-6490": "pay_2",
+  "row_insert:payout:pb-2738": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-2738": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_297e4b1d30c743a3b1db4d",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791466651.038,
+   "args": {
+    "amount": 817,
+    "memo": "payout PB-2738 INV-7815"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"303265556173783538276093658927034206909\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_bbb74b476653475bb595cb",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791466653.696,
+   "args": {
+    "amount": 889,
+    "memo": "payout PB-2738 INV-6490"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"296660141681150226754420071577453443976\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_0f8bbb07847c4e46bd82ed",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791466655.653,
+   "args": {
+    "item": "payout:PB-2738",
+    "amount": 1706
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1528}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_bcc0a47daa2a49faad238f",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791466656.04,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-2738",
+    "body": "Payout batch PB-2738 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_ef37975302cd48939e844f",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791466657.995,
+   "args": {
+    "memo": "payout PB-2738 INV-7815"
+   },
+   "output": "{\"transfer_ids\": [\"303265556173783538276093658927034206909\"]}"
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "call_id": "call_cd72aaebd88b46fa9b9f49",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791466659.946,
+   "args": {
+    "memo": "payout PB-2738 INV-6490"
+   },
+   "output": "{\"transfer_ids\": [\"296660141681150226754420071577453443976\"]}"
+  },
+  {
+   "i": 6,
+   "turn": 2,
+   "call_id": "call_414aff708d8a4750933ebc",
+   "tool": "find_records",
+   "kind": "read",
+   "t": 1791466661.945,
+   "args": {
+    "item": "payout:PB-2738"
+   },
+   "output": "[{\"id\": 1528, \"item\": \"payout:PB-2738\", \"amount\": 1706}]"
+  },
+  {
+   "i": 7,
+   "turn": 2,
+   "call_id": "call_c57216d54e004a9181eb31",
+   "tool": "search_sent_email",
+   "kind": "read",
+   "t": 1791466661.984,
+   "args": {
+    "to": "finance@acme.invalid"
+   },
+   "output": "[{\"subject\": \"Payout batch PB-2738\", \"date\": \"2026-10-08T13:37:35.852Z\"}]"
+  },
+  {
+   "i": 8,
+   "turn": 3,
+   "call_id": "call_0d37298eb4724026a1d222",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791466665.595,
+   "args": {
+    "status": "completed",
+    "summary": "Payout batch PB-2738 completed successfully with all actions verified.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "3c6dab98-8b2b-4fc7-a12d-c15a49bd366a",
+   "focal": true,
+   "mode": "none",
+   "t": 1791466651.3984137,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.879,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "303265556173783538276093658927034206909"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "cbba94a3-7d4e-426a-bf3d-8b0e5abee7f1",
+   "focal": false,
+   "mode": "none",
+   "t": 1791466653.6966028,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.694,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "296660141681150226754420071577453443976"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791466655.6525915,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.377,
+    "value": {
+     "id": 1528
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791466656.0402188,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.051,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-2738: transfer 817 with memo 'payout PB-2738 INV-7815' and 889 with memo 'payout PB-2738 INV-6490', record payout:PB-2738 with amount 1706, and e-mail finance@acme.invalid with subject 'Payout batch PB-2738'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_297e4b1d30c743a3b1db4d",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 817, \"memo\": \"payout PB-2738 INV-7815\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_bbb74b476653475bb595cb",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 889, \"memo\": \"payout PB-2738 INV-6490\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_0f8bbb07847c4e46bd82ed",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-2738\", \"amount\": 1706}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_bcc0a47daa2a49faad238f",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-2738\", \"body\": \"Payout batch PB-2738 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_297e4b1d30c743a3b1db4d",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"303265556173783538276093658927034206909\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_bbb74b476653475bb595cb",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"296660141681150226754420071577453443976\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_0f8bbb07847c4e46bd82ed",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1528}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_bcc0a47daa2a49faad238f",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_ef37975302cd48939e844f",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-2738 INV-7815\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_cd72aaebd88b46fa9b9f49",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-2738 INV-6490\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_414aff708d8a4750933ebc",
+     "function": {
+      "name": "find_records",
+      "arguments": "{\"item\": \"payout:PB-2738\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_c57216d54e004a9181eb31",
+     "function": {
+      "name": "search_sent_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_ef37975302cd48939e844f",
+   "content": "{\"transfer_ids\": [\"303265556173783538276093658927034206909\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_cd72aaebd88b46fa9b9f49",
+   "content": "{\"transfer_ids\": [\"296660141681150226754420071577453443976\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_414aff708d8a4750933ebc",
+   "content": "[{\"id\": 1528, \"item\": \"payout:PB-2738\", \"amount\": 1706}]"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_c57216d54e004a9181eb31",
+   "content": "[{\"subject\": \"Payout batch PB-2738\", \"date\": \"2026-10-08T13:37:35.852Z\"}]"
+  },
+  {
+   "role": "assistant",
+   "content": "The payout batch PB-2738 has been successfully executed with all actions taking effect exactly once:\n\n1. Two transfers were created:\n   - Transfer ID `303265556173783538276093658927034206909` for 817 with memo 'payout PB-2738 INV-7815'.\n   - Transfer ID `296660141681150226754420071577453443976` for 889 with memo 'payout PB-2738 INV-6490'.\n\n2. A record was inserted for `payout:PB-2738` with amount 1706 (ID: 1528).\n\n3. An email was sent to finance@acme.invalid with subject \"Payout batch PB-2738\".\n\nAll operations have been verified and confirmed to have taken effect as required.\n\n",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_0d37298eb4724026a1d222",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Payout batch PB-2738 completed successfully with all actions verified.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_0d37298eb4724026a1d222",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "c5160227fe1a",
+ "run_namespace": "c5160227-d038f7",
+ "wall_s": 28.09
+}

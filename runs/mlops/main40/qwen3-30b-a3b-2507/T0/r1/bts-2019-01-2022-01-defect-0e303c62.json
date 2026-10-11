@@ -1,0 +1,216 @@
+{
+ "task_id": "bts-2019-01-2022-01-defect-0e303c62",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [
+   "clean"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.001345,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "y": 0.006621
+    },
+    "rows": [
+     145439,
+     145439
+    ]
+   },
+   "cost_s": 2.4474,
+   "spent_seconds": 2.4474,
+   "wall_s": 0.406
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "y": 0.006173
+    },
+    "rows": [
+     140440,
+     140440
+    ]
+   },
+   "cost_s": 1.8725,
+   "spent_seconds": 4.32,
+   "wall_s": 0.564
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "flight_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 4.32,
+   "wall_s": 0.291
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7879867046533713,
+    "cur_perf": 0.7942545109211776,
+    "ref_perf": 0.8263081895069793,
+    "rows": 42120,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.9438,
+   "spent_seconds": 5.2637,
+   "wall_s": 1.824
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean"
+  ],
+  "retrain": false,
+  "reason": "The 'clean' component's behavior changed between versions, causing a drop in accuracy; rolling it back restores performance without needing retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "bts",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T3",
+ "wall_s": 9.7,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "clean"
+  ],
+  "retrain": false,
+  "reason": "The 'clean' component's behavior changed between versions, causing a drop in accuracy; rolling it back restores performance without needing retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 1831,
+    "completion_tokens": 13,
+    "total_tokens": 1844,
+    "cost": 0.00024479
+   },
+   "cost": 0.00024479,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 1913,
+    "completion_tokens": 12,
+    "total_tokens": 1925,
+    "cost": 0.00025493
+   },
+   "cost": 0.00025493,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"flight_adapter\"}",
+   "usage": {
+    "prompt_tokens": 1993,
+    "completion_tokens": 14,
+    "total_tokens": 2007,
+    "cost": 0.00026637
+   },
+   "cost": 0.00026637,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"clean\"]}",
+   "usage": {
+    "prompt_tokens": 2036,
+    "completion_tokens": 12,
+    "total_tokens": 2048,
+    "cost": 0.00027092
+   },
+   "cost": 0.00027092,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"clean\"], \"retrain\": false, \"reason\": \"The 'clean' component's behavior changed between versions, causing a drop in accuracy; rolling it back restores performance without needing retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2170,
+    "completion_tokens": 50,
+    "total_tokens": 2220,
+    "cost": 0.0003081
+   },
+   "cost": 0.0003081,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9943,
+ "tokens_out": 101,
+ "compute_spent_s": 5.2637,
+ "compute_budget_s": 15.218334299996059,
+ "source_cache_hits": 10,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

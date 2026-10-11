@@ -1,0 +1,306 @@
+{
+ "task_id": "hmda-2015-2019-defect-08c5cef1",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.01565,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1497,
+   "spent_seconds": 0.1497,
+   "wall_s": 0.103
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "lar_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.3989,
+   "wall_s": 0.185
+  },
+  {
+   "step": 3,
+   "action": "boundary",
+   "args": {
+    "component": "lar_adapter",
+    "period": "2018"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2016",
+     "2017",
+     "2018"
+    ],
+    "versions": {
+     "2016": "reference",
+     "2017": "reference",
+     "2018": "current"
+    },
+    "retention": {
+     "2016": 1.0,
+     "2017": 1.0,
+     "2018": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "amount_k": {
+      "baseline_psi": 0.01,
+      "boundary_psi": 8.2638,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0003
+     },
+     "msa_income_k": {
+      "baseline_psi": 12.2266,
+      "boundary_psi": 1.1872,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0065
+     },
+     "purpose": {
+      "baseline_psi": 0.05,
+      "boundary_psi": 0.7875,
+      "input_boundary_psi": 6.6594,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "action": {
+      "baseline_psi": 0.0045,
+      "boundary_psi": 0.0103,
+      "input_boundary_psi": 0.0103,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "income_k": {
+      "baseline_psi": 0.0015,
+      "boundary_psi": 0.009,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0168
+     },
+     "occupancy": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0087,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "tract_income_pct": {
+      "baseline_psi": 0.0098,
+      "boundary_psi": 0.0058,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0065
+     },
+     "tract_minority_pct": {
+      "baseline_psi": 0.0157,
+      "boundary_psi": 0.0027,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": -0.0065
+     }
+    }
+   },
+   "cost_s": 1.1729,
+   "spent_seconds": 1.5718,
+   "wall_s": 6.48
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 1.821,
+   "wall_s": 1.666
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "lar_adapter",
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 2.0702,
+   "wall_s": 0.138
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is broken due to unhandled 2018 schema changes causing 99% out-of-range values; model requires retraining due to genuine covariate drift over 4-year period."
+ },
+ "oracle": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": [
+   "lar_adapter"
+  ]
+ },
+ "domain": "hmda",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 85.57,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": true,
+  "reason": "lar_adapter is broken due to unhandled 2018 schema changes causing 99% out-of-range values; model requires retraining due to genuine covariate drift over 4-year period."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"lar_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2301,
+    "completion_tokens": 7093,
+    "total_tokens": 9394,
+    "cost": 0.0095948125
+   },
+   "cost": 0.0095948125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"lar_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 2364,
+    "completion_tokens": 486,
+    "total_tokens": 2850,
+    "cost": 0.00101595
+   },
+   "cost": 0.00101595,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"boundary\",\n  \"component\": \"lar_adapter\",\n  \"period\": \"2018\"\n}",
+   "usage": {
+    "prompt_tokens": 2428,
+    "completion_tokens": 524,
+    "total_tokens": 2952,
+    "cost": 0.00107575
+   },
+   "cost": 0.00107575,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"lar_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3090,
+    "completion_tokens": 703,
+    "total_tokens": 3793,
+    "cost": 0.001416025
+   },
+   "cost": 0.001416025,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"lar_adapter\", \"clean\"]\n}",
+   "usage": {
+    "prompt_tokens": 3154,
+    "completion_tokens": 502,
+    "total_tokens": 3656,
+    "cost": 0.001165125
+   },
+   "cost": 0.001165125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"lar_adapter\"],\n  \"retrain\": true,\n  \"reason\": \"lar_adapter is broken due to unhandled 2018 schema changes causing 99% out-of-range values; model requires retraining due to genuine covariate drift over 4-year period.\"\n}",
+   "usage": {
+    "prompt_tokens": 3220,
+    "completion_tokens": 661,
+    "total_tokens": 3881,
+    "cost": 0.00138255
+   },
+   "cost": 0.00138255,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 16557,
+ "tokens_out": 9969,
+ "compute_spent_s": 2.0702,
+ "compute_budget_s": 12.359913300024346,
+ "source_cache_hits": 9,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

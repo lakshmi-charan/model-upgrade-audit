@@ -1,0 +1,421 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_326",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 326,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-9697: transfer 628 with memo 'payout PB-9697 INV-6314' and 875 with memo 'payout PB-9697 INV-4634', record payout:PB-9697 with amount 1503, and e-mail finance@acme.invalid with subject 'Payout batch PB-9697'.",
+ "claimed": "completed",
+ "model_summary": "Successfully processed payout batch PB-9697: created two transfers (628 and 875), inserted a record for the total amount (1503), and sent a notification email to finance@acme.invalid.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000196,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 2039,
+ "tokens_out": 222,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-4-31b-it"
+ ],
+ "model_latency_s": 13.52,
+ "step_map": {
+  "transfer_create:payout pb-9697 inv-6314": "pay_1",
+  "transfer_create:payout pb-9697 inv-4634": "pay_2",
+  "row_insert:payout:pb-9697": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-9697": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-96ea2f8a8c36d330",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791463112.555,
+   "args": {
+    "amount": 628,
+    "memo": "payout PB-9697 INV-6314"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"277800409458101652240364762918672600682\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-9312f55a1d4230f2",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791463115.098,
+   "args": {
+    "amount": 875,
+    "memo": "payout PB-9697 INV-4634"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"89002847627321923608981287113654466526\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-8e1890a57e3f46a2",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791463116.278,
+   "args": {
+    "amount": 1503,
+    "item": "payout:PB-9697"
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1326}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-ae643543c03676e1",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791463116.789,
+   "args": {
+    "body": "Payout batch PB-9697 has been processed.",
+    "subject": "Payout batch PB-9697",
+    "to": "finance@acme.invalid"
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-98bd7043227f43ee",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791463125.355,
+   "args": {
+    "status": "completed",
+    "summary": "Successfully processed payout batch PB-9697: created two transfers (628 and 875), inserted a record for the total amount (1503), and sent a notification email to finance@acme.invalid.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "d445335d-de19-4122-8623-bce15dd20c42",
+   "focal": true,
+   "mode": "none",
+   "t": 1791463112.5903575,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.345,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "277800409458101652240364762918672600682"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "e84cfc6e-a737-4e8a-8f2e-9d3157edcf1a",
+   "focal": false,
+   "mode": "none",
+   "t": 1791463115.098029,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.141,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "89002847627321923608981287113654466526"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791463116.2775865,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.47,
+    "value": {
+     "id": 1326
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791463116.7890513,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.492,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-9697: transfer 628 with memo 'payout PB-9697 INV-6314' and 875 with memo 'payout PB-9697 INV-4634', record payout:PB-9697 with amount 1503, and e-mail finance@acme.invalid with subject 'Payout batch PB-9697'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-96ea2f8a8c36d330",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 628, \"memo\": \"payout PB-9697 INV-6314\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-9312f55a1d4230f2",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 875, \"memo\": \"payout PB-9697 INV-4634\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-8e1890a57e3f46a2",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"amount\": 1503, \"item\": \"payout:PB-9697\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "chatcmpl-tool-ae643543c03676e1",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"body\": \"Payout batch PB-9697 has been processed.\", \"subject\": \"Payout batch PB-9697\", \"to\": \"finance@acme.invalid\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-96ea2f8a8c36d330",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"277800409458101652240364762918672600682\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-9312f55a1d4230f2",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"89002847627321923608981287113654466526\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-8e1890a57e3f46a2",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1326}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-ae643543c03676e1",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-98bd7043227f43ee",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Successfully processed payout batch PB-9697: created two transfers (628 and 875), inserted a record for the total amount (1503), and sent a notification email to finance@acme.invalid.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-98bd7043227f43ee",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "5a2994615855",
+ "run_namespace": "5a299461-d4c82a",
+ "wall_s": 37.06
+}

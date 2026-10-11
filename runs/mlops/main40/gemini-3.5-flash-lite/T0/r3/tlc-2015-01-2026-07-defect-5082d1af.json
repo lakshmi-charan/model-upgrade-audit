@@ -1,0 +1,163 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "gemini-3.5-flash-lite",
+ "model": "gemini-3.5-flash-lite",
+ "provider": "gemini",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.0,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 34.977
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.987597
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 2.8867,
+   "spent_seconds": 3.4017,
+   "wall_s": 23.515
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter and time_features have unhandled schema/environment changes causing validation failures and drift, and retraining is needed to adapt to world changes."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 109.5,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter and time_features have unhandled schema/environment changes causing validation failures and drift, and retraining is needed to adapt to world changes."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2878,
+    "completion_tokens": 19,
+    "total_tokens": 3134,
+    "cost": null
+   },
+   "cost": 0.0,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "\n```json\n{\"action\": \"rollback\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2986,
+    "completion_tokens": 20,
+    "total_tokens": 3123,
+    "cost": null
+   },
+   "cost": 0.0,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": true, \"reason\": \"trip_adapter and time_features have unhandled schema/environment changes causing validation failures and drift, and retraining is needed to adapt to world changes.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3069,
+    "completion_tokens": 65,
+    "total_tokens": 3134,
+    "cost": null
+   },
+   "cost": 0.0,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8933,
+ "tokens_out": 104,
+ "compute_spent_s": 3.4017,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

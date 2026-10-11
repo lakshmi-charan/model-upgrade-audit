@@ -1,0 +1,159 @@
+{
+ "task_id": "news-2013-2016-defect-b01e78f9",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.002945,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "label_map"
+    ],
+    "reason": "Testing if rolling back label_map to reference version fixes accuracy given its artifact change and extreme PSI on y label"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.01419244961680386,
+    "cur_perf": 0.00851305334846765,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": 3523,
+    "masked": []
+   },
+   "cost_s": 1.5371,
+   "spent_seconds": 1.5371,
+   "wall_s": 1.882
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize"
+    ],
+    "reason": "Testing if rolling back vectorize config change fixes accuracy given its PSI and config change"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.14596273291925466,
+    "cur_perf": 0.023291925465838508,
+    "ref_perf": 0.7222063989366753,
+    "rows": 9660,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 1.574,
+   "spent_seconds": 3.1111,
+   "wall_s": 1.567
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "Vectorize config change caused PSI spike and accuracy degradation; model requires retraining due to 2013-2016 covariate drift from new category values"
+ },
+ "oracle": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "vectorize"
+  ],
+  "consequential": [
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T3",
+ "wall_s": 22.03,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "Vectorize config change caused PSI spike and accuracy degradation; model requires retraining due to 2013-2016 covariate drift from new category values"
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"label_map\"], \"reason\": \"Testing if rolling back label_map to reference version fixes accuracy given its artifact change and extreme PSI on y label\"}",
+   "usage": {
+    "prompt_tokens": 1181,
+    "completion_tokens": 722,
+    "total_tokens": 1903,
+    "cost": 0.0011305125
+   },
+   "cost": 0.0011305125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"vectorize\"], \"reason\": \"Testing if rolling back vectorize config change fixes accuracy given its PSI and config change\"}",
+   "usage": {
+    "prompt_tokens": 1347,
+    "completion_tokens": 385,
+    "total_tokens": 1732,
+    "cost": 0.0007193875
+   },
+   "cost": 0.0007193875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"vectorize\"], \"retrain\": true, \"reason\": \"Vectorize config change caused PSI spike and accuracy degradation; model requires retraining due to 2013-2016 covariate drift from new category values\"}",
+   "usage": {
+    "prompt_tokens": 1505,
+    "completion_tokens": 654,
+    "total_tokens": 2159,
+    "cost": 0.0010947625
+   },
+   "cost": 0.0010947625,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 4033,
+ "tokens_out": 1761,
+ "compute_spent_s": 3.1111,
+ "compute_budget_s": 7.255892100016354,
+ "source_cache_hits": 7,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

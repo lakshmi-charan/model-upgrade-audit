@@ -1,0 +1,311 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.018941,
+ "n_steps": 7,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "start_lat": 1.0,
+     "start_lng": 1.0,
+     "end_lat": 0.99897,
+     "end_lng": 0.99897,
+     "distance_km": 0.99897,
+     "round_trip": 0.34739
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 0.0637,
+   "spent_seconds": 0.0637,
+   "wall_s": 0.342
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "station_join"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.15384615384615385,
+    "cur_perf": 0.34615384615384615,
+    "ref_perf": 0.8726720512649356,
+    "rows": 26,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.2107,
+   "spent_seconds": 0.2743,
+   "wall_s": 0.566
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.2743,
+   "wall_s": 0.996
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.2743,
+   "wall_s": 0.06
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 2.0048,
+   "wall_s": 0.097
+  },
+  {
+   "step": 6,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 2.1288,
+   "wall_s": 0.104
+  },
+  {
+   "step": 7,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 7.5453,
+   "spent_seconds": 9.6741,
+   "wall_s": 0.337
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter crashes on reference data due to environment changes, time_features produces different outputs on old data, and both require fixes before retraining can address genuine drift."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 104.29,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter crashes on reference data due to environment changes, time_features produces different outputs on old data, and both require fixes before retraining can address genuine drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 8,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3200,
+    "completion_tokens": 7041,
+    "total_tokens": 10241,
+    "cost": 0.0096733
+   },
+   "cost": 0.0096733,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"station_join\"]\n}",
+   "usage": {
+    "prompt_tokens": 3346,
+    "completion_tokens": 541,
+    "total_tokens": 3887,
+    "cost": 0.001247025
+   },
+   "cost": 0.001247025,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 3487,
+    "completion_tokens": 592,
+    "total_tokens": 4079,
+    "cost": 0.0013362375
+   },
+   "cost": 0.0013362375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 3537,
+    "completion_tokens": 536,
+    "total_tokens": 4073,
+    "cost": 0.0012715625
+   },
+   "cost": 0.0012715625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3587,
+    "completion_tokens": 551,
+    "total_tokens": 4138,
+    "cost": 0.0012991875
+   },
+   "cost": 0.0012991875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3709,
+    "completion_tokens": 512,
+    "total_tokens": 4221,
+    "cost": 0.0012683125
+   },
+   "cost": 0.0012683125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"time_features\"\n}",
+   "usage": {
+    "prompt_tokens": 3760,
+    "completion_tokens": 590,
+    "total_tokens": 4350,
+    "cost": 0.001378
+   },
+   "cost": 0.001378,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"time_features\"],\n  \"retrain\": true,\n  \"reason\": \"trip_adapter crashes on reference data due to environment changes, time_features produces different outputs on old data, and both require fixes before retraining can address genuine drift.\"\n}",
+   "usage": {
+    "prompt_tokens": 3862,
+    "completion_tokens": 646,
+    "total_tokens": 4508,
+    "cost": 0.001467375
+   },
+   "cost": 0.001467375,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 28488,
+ "tokens_out": 11009,
+ "compute_spent_s": 9.6741,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 15,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

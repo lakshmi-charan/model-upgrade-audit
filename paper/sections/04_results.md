@@ -19,7 +19,7 @@ Every new model is at least as good as its predecessor on average in almost ever
 
 ![Where each upgrade's change in mean success comes from. Bars to the right are gains; bars to the left split the losses into tasks the old model always passed that became flaky (1–2 of 3), tasks it always passed that the new model always fails (reliable negative flips), and losses on other tasks. Diamonds mark the net change.](figs/fig_decomposition.png){#fig:decomp width=100%}
 
-## One-shot regression reports are mostly false alarms {#sec:noise}
+## At least half of one-shot regression reports are false alarms {#sec:noise}
 
 A one-shot regression suite runs each task once with the new model and flags every task the old model handled that now fails. In our data that procedure flags 54 tasks across the 18 cells (counting only tasks the old model passed in all three runs, so that the old model's own flakiness cannot cause the flag). Of these, 34 (63%) pass in at least one of the new model's next two runs (Figure [-@fig:noise]); only 20 fail all three times. The pre-registered test required the lower end of the 95% interval to exceed one half; it equals 0.50, so H1 is formally not supported, but the point estimate and the interval both say that at least half of what a one-shot suite reports is run-to-run noise.
 
@@ -41,4 +41,4 @@ Unlicensed writes fall in every pair but one (Figure [-@fig:overreach]). Measure
 
 ## Reliability does not erode {#sec:erosion}
 
-H6 predicted that upgrades would turn tasks the old model always passed into flaky ones more often than the reverse. On the two testbeds where it was confirmatory, no cell shows significant erosion; the two smallest one-sided p-values are 0.052 and 0.066, both on MLOps (net losses of 3 and 4 tasks), and neither is close to significant after Holm correction (0.32, 0.33). On the repaired clinical data, where the hypothesis was formed and is exploratory, pass^3 rises in four of six pairs and erosion is never significant. As Section [-@sec:integrity] shows, the pattern that motivated H6 was produced by the outage.
+H6 predicted that upgrades would turn tasks the old model always passed into flaky ones more often than the reverse. On the two testbeds where it was confirmatory, no cell shows significant erosion; the two smallest one-sided p-values are 0.052 and 0.066, both on MLOps (net losses of 3 and 4 tasks), and neither is close to significant after Holm correction (0.32, 0.33). On the repaired clinical data, where the hypothesis was formed and is exploratory, pass^3^ rises in four of six pairs and erosion is never significant. As Section [-@sec:integrity] shows, the pattern that motivated H6 was produced by the outage.

@@ -1,0 +1,251 @@
+{
+ "task_id": "tlc-2022-01-2026-07-two-9163f1fe",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001816,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.1793,
+   "spent_seconds": 0.1793,
+   "wall_s": 6.947
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1081,
+   "spent_seconds": 0.2874,
+   "wall_s": 10.285
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 1.845,
+   "spent_seconds": 2.1324,
+   "wall_s": 0.902
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "vendor": 1.0,
+     "ratecode": 0.008775,
+     "pu_borough": 0.012707,
+     "do_borough": 0.081899,
+     "do_service": 0.998574
+    },
+    "rows": [
+     112932,
+     112932
+    ]
+   },
+   "cost_s": 0.2312,
+   "spent_seconds": 2.3637,
+   "wall_s": 0.82
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7616659236142072,
+    "cur_perf": 0.7364392926140586,
+    "ref_perf": 0.7973555280089724,
+    "rows": 26916,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.7707,
+   "spent_seconds": 3.1344,
+   "wall_s": 1.588
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "reason": "The encode configuration changed behavior on reference data and rolling it back improves current accuracy from 0.7364 to 0.7617, while remaining degradation indicates genuine distribution/label drift requiring retraining; trip_adapter and time_features show no harmful behavioral change."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "effective": [
+   "encode",
+   "trip_adapter"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "defect_only",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 49.92,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "reason": "The encode configuration changed behavior on reference data and rolling it back improves current accuracy from 0.7364 to 0.7617, while remaining degradation indicates genuine distribution/label drift requiring retraining; trip_adapter and time_features show no harmful behavioral change."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2431,
+    "completion_tokens": 104,
+    "total_tokens": 2535,
+    "cost": 0.0007324
+   },
+   "cost": 0.0007324,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 117,
+    "total_tokens": 2617,
+    "cost": 0.00020681
+   },
+   "cost": 0.00020681,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2539,
+    "completion_tokens": 45,
+    "total_tokens": 2584,
+    "cost": 0.00011429
+   },
+   "cost": 0.00011429,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"encode\"}",
+   "usage": {
+    "prompt_tokens": 2578,
+    "completion_tokens": 138,
+    "total_tokens": 2716,
+    "cost": 0.00022667
+   },
+   "cost": 0.00022667,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"encode\"]}",
+   "usage": {
+    "prompt_tokens": 2684,
+    "completion_tokens": 96,
+    "total_tokens": 2780,
+    "cost": 0.0001938
+   },
+   "cost": 0.0001938,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"encode\"],\"retrain\":true,\"reason\":\"The encode configuration changed behavior on reference data and rolling it back improves current accuracy from 0.7364 to 0.7617, while remaining degradation indicates genuine distribution/label drift requiring retraining; trip_adapter and time_features show no harmful behavioral change.\"}",
+   "usage": {
+    "prompt_tokens": 2781,
+    "completion_tokens": 220,
+    "total_tokens": 3001,
+    "cost": 0.00034247
+   },
+   "cost": 0.00034247,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 15513,
+ "tokens_out": 720,
+ "compute_spent_s": 3.1344,
+ "compute_budget_s": 14.082873899984406,
+ "source_cache_hits": 12,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

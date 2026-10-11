@@ -1,0 +1,239 @@
+{
+ "task_id": "divvy-2016-Q3-2017-Q1-defect-9f5eb9c8",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000697,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2017-Q1"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2016-Q3",
+     "2016-Q4",
+     "2017-Q1"
+    ],
+    "versions": {
+     "2016-Q3": "reference",
+     "2016-Q4": "reference",
+     "2017-Q1": "current"
+    },
+    "retention": {
+     "2016-Q3": 1.0,
+     "2016-Q4": 1.0,
+     "2017-Q1": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 2.0868,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "user": {
+      "baseline_psi": 0.1175,
+      "boundary_psi": 0.0343,
+      "input_boundary_psi": 0.0343,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "duration": {
+      "baseline_psi": 0.0694,
+      "boundary_psi": 0.0166,
+      "input_boundary_psi": 0.0166,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0049,
+      "boundary_psi": 0.002,
+      "input_boundary_psi": 0.002,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0056,
+      "boundary_psi": 0.002,
+      "input_boundary_psi": 0.002,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 2.07
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0673,
+   "spent_seconds": 0.0673,
+   "wall_s": 0.292
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "end_lat": 0.95935,
+     "end_lng": 0.95926,
+     "distance_km": 0.95935
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 0.0491,
+   "spent_seconds": 0.1164,
+   "wall_s": 0.235
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "station_join has a defective config causing distance_km drift and validation failure, while the model also needs retraining due to label drift (y rate change)."
+ },
+ "oracle": {
+  "fix": [
+   "station_join"
+  ],
+  "retrain": false,
+  "effective": [
+   "station_join"
+  ],
+  "consequential": [
+   "station_join"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T3",
+ "wall_s": 8.51,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "station_join has a defective config causing distance_km drift and validation failure, while the model also needs retraining due to label drift (y rate change)."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2017-Q1\"}\n```",
+   "usage": {
+    "prompt_tokens": 2232,
+    "completion_tokens": 32,
+    "total_tokens": 2264,
+    "cost": 0.00012344
+   },
+   "cost": 0.00012344,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2804,
+    "completion_tokens": 20,
+    "total_tokens": 2824,
+    "cost": 0.0001478
+   },
+   "cost": 0.0001478,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"station_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 2854,
+    "completion_tokens": 20,
+    "total_tokens": 2874,
+    "cost": 0.0002547
+   },
+   "cost": 0.0002547,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"station_join\"], \"retrain\": true, \"reason\": \"station_join has a defective config causing distance_km drift and validation failure, while the model also needs retraining due to label drift (y rate change).\"}\n```",
+   "usage": {
+    "prompt_tokens": 2971,
+    "completion_tokens": 62,
+    "total_tokens": 3033,
+    "cost": 0.00017071
+   },
+   "cost": 0.00017071,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10861,
+ "tokens_out": 134,
+ "compute_spent_s": 0.1164,
+ "compute_budget_s": 3.4521954000010737,
+ "source_cache_hits": 7,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

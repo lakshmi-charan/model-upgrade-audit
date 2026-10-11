@@ -1,0 +1,238 @@
+{
+ "task_id": "divvy-2016-Q3-2017-Q1-defect-9f5eb9c8",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "station_join"
+  ],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.001447,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'starttime'"
+   },
+   "cost_s": 0.0044,
+   "spent_seconds": 0.0044,
+   "wall_s": 0.894
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2017-Q1"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2016-Q3",
+     "2016-Q4",
+     "2017-Q1"
+    ],
+    "versions": {
+     "2016-Q3": "reference",
+     "2016-Q4": "reference",
+     "2017-Q1": "current"
+    },
+    "retention": {
+     "2016-Q3": 1.0,
+     "2016-Q4": 1.0,
+     "2017-Q1": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 2.0868,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "user": {
+      "baseline_psi": 0.1175,
+      "boundary_psi": 0.0343,
+      "input_boundary_psi": 0.0343,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "duration": {
+      "baseline_psi": 0.0694,
+      "boundary_psi": 0.0166,
+      "input_boundary_psi": 0.0166,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0049,
+      "boundary_psi": 0.002,
+      "input_boundary_psi": 0.002,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0056,
+      "boundary_psi": 0.002,
+      "input_boundary_psi": 0.002,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0044,
+   "wall_s": 9.169
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0673,
+   "spent_seconds": 0.0717,
+   "wall_s": 1.057
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trips schema changed at 2017-Q1 and trip_adapter was not updated, causing the sharp downstream feature drift and validation failures; after repairing it, retraining is warranted for the substantial remaining period/label drift."
+ },
+ "oracle": {
+  "fix": [
+   "station_join"
+  ],
+  "retrain": false,
+  "effective": [
+   "station_join"
+  ],
+  "consequential": [
+   "station_join"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T3",
+ "wall_s": 38.32,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trips schema changed at 2017-Q1 and trip_adapter was not updated, causing the sharp downstream feature drift and validation failures; after repairing it, retraining is warranted for the substantial remaining period/label drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 1948,
+    "completion_tokens": 139,
+    "total_tokens": 2087,
+    "cost": 0.0002063
+   },
+   "cost": 0.0002063,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"boundary\",\"component\":\"trip_adapter\",\"period\":\"2017-Q1\"}",
+   "usage": {
+    "prompt_tokens": 1999,
+    "completion_tokens": 55,
+    "total_tokens": 2054,
+    "cost": 0.00011825
+   },
+   "cost": 0.00011825,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2477,
+    "completion_tokens": 334,
+    "total_tokens": 2811,
+    "cost": 0.00056082
+   },
+   "cost": 0.00056082,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\"],\"retrain\":true,\"reason\":\"The trips schema changed at 2017-Q1 and trip_adapter was not updated, causing the sharp downstream feature drift and validation failures; after repairing it, retraining is warranted for the substantial remaining period/label drift.\"}",
+   "usage": {
+    "prompt_tokens": 2516,
+    "completion_tokens": 418,
+    "total_tokens": 2934,
+    "cost": 0.00056143
+   },
+   "cost": 0.00056143,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8940,
+ "tokens_out": 946,
+ "compute_spent_s": 0.0717,
+ "compute_budget_s": 3.4521954000010737,
+ "source_cache_hits": 6,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

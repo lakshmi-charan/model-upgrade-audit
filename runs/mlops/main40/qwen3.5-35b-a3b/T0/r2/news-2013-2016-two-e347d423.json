@@ -1,0 +1,237 @@
+{
+ "task_id": "news-2013-2016-two-e347d423",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "label_map"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.004992,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "label_map"
+    ],
+    "reason": "Testing if rolling back label_map to reference version fixes accuracy, as it shows highest PSI (7.0588) and row ratio drop (0.586) correlating with y feature drift"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.01419244961680386,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 2.422,
+   "spent_seconds": 2.422,
+   "wall_s": 20.993
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "text_norm"
+    ],
+    "reason": "Testing if rolling back text_norm to reference version fixes accuracy, as it has known environment change and high PSI (7.0247)"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.01419244961680386,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.6847,
+   "spent_seconds": 3.1068,
+   "wall_s": 1.589
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize"
+    ],
+    "reason": "Testing if rolling back vectorize to reference version fixes accuracy, as it has known config change and high PSI (7.0247)"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.20238433153562305,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.7504,
+   "spent_seconds": 3.8571,
+   "wall_s": 0.733
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize",
+     "label_map"
+    ],
+    "reason": "Testing combined rollback of vectorize and label_map to see if both changes contribute to accuracy degradation"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.20238433153562305,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.9327,
+   "spent_seconds": 4.7899,
+   "wall_s": 0.864
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "Vectorize component config change causes major accuracy drop (from 0.7222 to 0.0142), rollback restores to 0.2024; remaining gap indicates genuine data drift requiring retraining"
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 52.09,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "Vectorize component config change causes major accuracy drop (from 0.7222 to 0.0142), rollback restores to 0.2024; remaining gap indicates genuine data drift requiring retraining"
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"label_map\"], \"reason\": \"Testing if rolling back label_map to reference version fixes accuracy, as it shows highest PSI (7.0588) and row ratio drop (0.586) correlating with y feature drift\"}",
+   "usage": {
+    "prompt_tokens": 1183,
+    "completion_tokens": 1234,
+    "total_tokens": 2417,
+    "cost": 0.0017964375
+   },
+   "cost": 0.0017964375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"text_norm\"], \"reason\": \"Testing if rolling back text_norm to reference version fixes accuracy, as it has known environment change and high PSI (7.0247)\"}",
+   "usage": {
+    "prompt_tokens": 1366,
+    "completion_tokens": 432,
+    "total_tokens": 1798,
+    "cost": 0.000783575
+   },
+   "cost": 0.000783575,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"vectorize\"], \"reason\": \"Testing if rolling back vectorize to reference version fixes accuracy, as it has known config change and high PSI (7.0247)\"}",
+   "usage": {
+    "prompt_tokens": 1536,
+    "completion_tokens": 418,
+    "total_tokens": 1954,
+    "cost": 0.000793
+   },
+   "cost": 0.000793,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"vectorize\", \"label_map\"], \"reason\": \"Testing combined rollback of vectorize and label_map to see if both changes contribute to accuracy degradation\"}",
+   "usage": {
+    "prompt_tokens": 1706,
+    "completion_tokens": 299,
+    "total_tokens": 2005,
+    "cost": 0.000665925
+   },
+   "cost": 0.000665925,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"vectorize\"], \"retrain\": true, \"reason\": \"Vectorize component config change causes major accuracy drop (from 0.7222 to 0.0142), rollback restores to 0.2024; remaining gap indicates genuine data drift requiring retraining\"}",
+   "usage": {
+    "prompt_tokens": 1868,
+    "completion_tokens": 500,
+    "total_tokens": 2368,
+    "cost": 0.00095355
+   },
+   "cost": 0.00095355,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7659,
+ "tokens_out": 2883,
+ "compute_spent_s": 4.7899,
+ "compute_budget_s": 16.746626099949935,
+ "source_cache_hits": 13,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

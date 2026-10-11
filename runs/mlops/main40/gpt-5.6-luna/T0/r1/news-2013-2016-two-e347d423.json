@@ -1,0 +1,182 @@
+{
+ "task_id": "news-2013-2016-two-e347d423",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "label_map"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001286,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "label_map"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.321
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "text_norm",
+     "vectorize"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.20238433153562305,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 6.0633,
+   "spent_seconds": 6.0633,
+   "wall_s": 33.189
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 2.975,
+   "spent_seconds": 9.0384,
+   "wall_s": 10.843
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "The vectorizer configuration change is implicated in the severe degradation and rolling back the changed text-processing/vectorization path improves accuracy to 0.2024, while label mapping and text normalization show no behavioral change; the remaining gap and substantial label drift indicate genuin"
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 62.83,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "The vectorizer configuration change is implicated in the severe degradation and rolling back the changed text-processing/vectorization path improves accuracy to 0.2024, while label mapping and text normalization show no behavioral change; the remaining gap and substantial label drift indicate genuine drift requiring retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"label_map\"}",
+   "usage": {
+    "prompt_tokens": 1110,
+    "completion_tokens": 106,
+    "total_tokens": 1216,
+    "cost": 0.00040455
+   },
+   "cost": 0.00040455,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"text_norm\",\"vectorize\"]}",
+   "usage": {
+    "prompt_tokens": 1148,
+    "completion_tokens": 92,
+    "total_tokens": 1240,
+    "cost": 0.00014264
+   },
+   "cost": 0.00014264,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"text_norm\"}",
+   "usage": {
+    "prompt_tokens": 1249,
+    "completion_tokens": 141,
+    "total_tokens": 1390,
+    "cost": 0.00021795
+   },
+   "cost": 0.00021795,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"vectorize\"],\"retrain\":true,\"reason\":\"The vectorizer configuration change is implicated in the severe degradation and rolling back the changed text-processing/vectorization path improves accuracy to 0.2024, while label mapping and text normalization show no behavioral change; the remaining gap and substantial label drift indicate genuine drift requiring retraining.\"}",
+   "usage": {
+    "prompt_tokens": 1288,
+    "completion_tokens": 405,
+    "total_tokens": 1693,
+    "cost": 0.00052127
+   },
+   "cost": 0.00052127,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 4795,
+ "tokens_out": 744,
+ "compute_spent_s": 9.0384,
+ "compute_budget_s": 16.746626099949935,
+ "source_cache_hits": 8,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

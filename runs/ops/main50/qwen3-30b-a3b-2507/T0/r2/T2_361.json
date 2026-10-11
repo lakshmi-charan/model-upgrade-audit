@@ -1,0 +1,531 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_361",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 361,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-5560: transfer 340 with memo 'payout PB-5560 INV-9510' and 101 with memo 'payout PB-5560 INV-9337', record payout:PB-5560 with amount 441, and e-mail finance@acme.invalid with subject 'Payout batch PB-5560'.",
+ "claimed": "completed",
+ "model_summary": "Payout batch PB-5560 was successfully processed with two transfers, a record insertion, and an email sent. All actions confirmed to have taken effect.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 3,
+ "n_tool_calls": 9,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000812,
+ "paid_calls": 3,
+ "cached_calls": 0,
+ "tokens_in": 4302,
+ "tokens_out": 486,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Alibaba|qwen/qwen3-30b-a3b-instruct-2507"
+ ],
+ "model_latency_s": 7.7,
+ "step_map": {
+  "transfer_create:payout pb-5560 inv-9510": "pay_1",
+  "transfer_create:payout pb-5560 inv-9337": "pay_2",
+  "row_insert:payout:pb-5560": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-5560": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_a6be036cc88f4c55ac52d9",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791467078.896,
+   "args": {
+    "amount": 340,
+    "memo": "payout PB-5560 INV-9510"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"233278291168133422337760471961715952942\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_44d077cb82574e6aa5bbf9",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791467080.231,
+   "args": {
+    "amount": 101,
+    "memo": "payout PB-5560 INV-9337"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"13278069035774412230249311388936247324\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_d75ac4b37ed440eba0d8f7",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791467082.85,
+   "args": {
+    "item": "payout:PB-5560",
+    "amount": 441
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1593}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_9324c1eaa77f4eceb358f6",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791467083.296,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-5560",
+    "body": "Payout batch PB-5560 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_791ca71787bf40cc8319f1",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791467084.965,
+   "args": {
+    "memo": "payout PB-5560 INV-9510"
+   },
+   "output": "{\"transfer_ids\": [\"233278291168133422337760471961715952942\"]}"
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "call_id": "call_ca1bd913d7514c56bce323",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791467086.893,
+   "args": {
+    "memo": "payout PB-5560 INV-9337"
+   },
+   "output": "{\"transfer_ids\": [\"13278069035774412230249311388936247324\"]}"
+  },
+  {
+   "i": 6,
+   "turn": 2,
+   "call_id": "call_b0f2314b9f454e7d8ed5ab",
+   "tool": "find_records",
+   "kind": "read",
+   "t": 1791467088.845,
+   "args": {
+    "item": "payout:PB-5560"
+   },
+   "output": "[{\"id\": 1593, \"item\": \"payout:PB-5560\", \"amount\": 441}]"
+  },
+  {
+   "i": 7,
+   "turn": 2,
+   "call_id": "call_804a327b469646e5abc9d6",
+   "tool": "search_sent_email",
+   "kind": "read",
+   "t": 1791467088.886,
+   "args": {
+    "to": "finance@acme.invalid"
+   },
+   "output": "[{\"subject\": \"Payout batch PB-5560\", \"date\": \"2026-10-08T13:44:43.12Z\"}]"
+  },
+  {
+   "i": 8,
+   "turn": 3,
+   "call_id": "call_372fd2af845044edbb467b",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791467092.617,
+   "args": {
+    "status": "completed",
+    "summary": "Payout batch PB-5560 was successfully processed with two transfers, a record insertion, and an email sent. All actions confirmed to have taken effect.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "eeae9cf8-28ad-494d-97f5-a488079670df",
+   "focal": true,
+   "mode": "none",
+   "t": 1791467079.131946,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.07,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "233278291168133422337760471961715952942"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "6c9a8693-2152-42d2-adc4-410bfa0b20e5",
+   "focal": false,
+   "mode": "none",
+   "t": 1791467080.2309103,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.455,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "13278069035774412230249311388936247324"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791467082.8498497,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.295,
+    "value": {
+     "id": 1593
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791467083.2962332,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.06,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-5560: transfer 340 with memo 'payout PB-5560 INV-9510' and 101 with memo 'payout PB-5560 INV-9337', record payout:PB-5560 with amount 441, and e-mail finance@acme.invalid with subject 'Payout batch PB-5560'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_a6be036cc88f4c55ac52d9",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 340, \"memo\": \"payout PB-5560 INV-9510\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_44d077cb82574e6aa5bbf9",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 101, \"memo\": \"payout PB-5560 INV-9337\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_d75ac4b37ed440eba0d8f7",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-5560\", \"amount\": 441}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_9324c1eaa77f4eceb358f6",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-5560\", \"body\": \"Payout batch PB-5560 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_a6be036cc88f4c55ac52d9",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"233278291168133422337760471961715952942\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_44d077cb82574e6aa5bbf9",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"13278069035774412230249311388936247324\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_d75ac4b37ed440eba0d8f7",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1593}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_9324c1eaa77f4eceb358f6",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_791ca71787bf40cc8319f1",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-5560 INV-9510\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_ca1bd913d7514c56bce323",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-5560 INV-9337\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_b0f2314b9f454e7d8ed5ab",
+     "function": {
+      "name": "find_records",
+      "arguments": "{\"item\": \"payout:PB-5560\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_804a327b469646e5abc9d6",
+     "function": {
+      "name": "search_sent_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_791ca71787bf40cc8319f1",
+   "content": "{\"transfer_ids\": [\"233278291168133422337760471961715952942\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_ca1bd913d7514c56bce323",
+   "content": "{\"transfer_ids\": [\"13278069035774412230249311388936247324\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_b0f2314b9f454e7d8ed5ab",
+   "content": "[{\"id\": 1593, \"item\": \"payout:PB-5560\", \"amount\": 441}]"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_804a327b469646e5abc9d6",
+   "content": "[{\"subject\": \"Payout batch PB-5560\", \"date\": \"2026-10-08T13:44:43.12Z\"}]"
+  },
+  {
+   "role": "assistant",
+   "content": "The payout batch PB-5560 has been successfully processed. The transfers for 340 (memo: 'payout PB-5560 INV-9510') and 101 (memo: 'payout PB-5560 INV-9337') were created, the record for 'payout:PB-5560' with amount 441 was inserted, and the email to finance@acme.invalid with subject 'Payout batch PB-5560' was sent. All actions have been verified to have taken effect.\n\nAll operations succeeded as required.\n\n",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_372fd2af845044edbb467b",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Payout batch PB-5560 was successfully processed with two transfers, a record insertion, and an email sent. All actions confirmed to have taken effect.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_372fd2af845044edbb467b",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "b9c20a089b07",
+ "run_namespace": "b9c20a08-5bd63b",
+ "wall_s": 27.2
+}

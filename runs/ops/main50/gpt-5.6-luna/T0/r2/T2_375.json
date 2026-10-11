@@ -1,0 +1,520 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_375",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 375,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'.",
+ "claimed": "completed",
+ "model_summary": "Completed payout batch PB-4805 exactly once: created transfers of 730 and 579 with the specified memos, inserted payout:PB-4805 for 1309, and queued one email to finance@acme.invalid with subject “Payout batch PB-4805”.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 3,
+ "n_tool_calls": 7,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.001131,
+ "paid_calls": 3,
+ "cached_calls": 0,
+ "tokens_in": 2445,
+ "tokens_out": 491,
+ "tokens_reasoning": 136,
+ "length_stops": 0,
+ "served": [
+  "OpenAI|openai/gpt-5.6-luna"
+ ],
+ "model_latency_s": 23.49,
+ "step_map": {
+  "transfer_create:payout pb-4805 inv-2306": "pay_1",
+  "transfer_create:payout pb-4805 inv-4630": "pay_2",
+  "row_insert:payout:pb-4805": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-4805": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_88LyBDQQbs6bTe43inYsameO",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791456277.79,
+   "args": {
+    "amount": 730,
+    "memo": "payout PB-4805 INV-2306",
+    "transfer_id": "48050000000000000000000000000001"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"318504071059264421269799059899285160113\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_kshbP7CuMjHOrIoWWbSI31yN",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791456281.337,
+   "args": {
+    "amount": 579,
+    "memo": "payout PB-4805 INV-4630",
+    "transfer_id": "48050000000000000000000000000002"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"73988384090141688820793908579559760600\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_38FUuetIs49uUjAbuiUE0Qte",
+   "tool": "find_records",
+   "kind": "read",
+   "t": 1791456283.301,
+   "args": {
+    "item": "payout:PB-4805"
+   },
+   "output": "[]"
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_gpsCnSzB1Atoo5GKLx4MukSU",
+   "tool": "search_sent_email",
+   "kind": "read",
+   "t": 1791456283.701,
+   "args": {
+    "to": "finance@acme.invalid"
+   },
+   "output": "[]"
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_2J3bCebQq0WJKL9vyTxTtxmx",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791456295.125,
+   "args": {
+    "item": "payout:PB-4805",
+    "amount": 1309
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 583}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "call_id": "call_76G4F7hIXHVAGDAmQbV4pWZF",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791456296.25,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-4805",
+    "body": "Payout batch PB-4805 completed.\n\nTransfers:\n- 730 — payout PB-4805 INV-2306\n- 579 — payout PB-4805 INV-4630\n\nTotal: 1309"
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "call_id": "call_fY3WDT8IFa0jI9htpj3Xqjty",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791456305.356,
+   "args": {
+    "status": "completed",
+    "summary": "Completed payout batch PB-4805 exactly once: created transfers of 730 and 579 with the specified memos, inserted payout:PB-4805 for 1309, and queued one email to finance@acme.invalid with subject “Payout batch PB-4805”.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "48050000000000000000000000000001",
+   "focal": true,
+   "mode": "none",
+   "t": 1791456278.3344657,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.688,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "318504071059264421269799059899285160113"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "48050000000000000000000000000002",
+   "focal": false,
+   "mode": "none",
+   "t": 1791456281.3376617,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.856,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "73988384090141688820793908579559760600"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791456295.128858,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.932,
+    "value": {
+     "id": 583
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791456296.2502625,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.196,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_88LyBDQQbs6bTe43inYsameO",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\":730,\"memo\":\"payout PB-4805 INV-2306\",\"transfer_id\":\"48050000000000000000000000000001\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_kshbP7CuMjHOrIoWWbSI31yN",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\":579,\"memo\":\"payout PB-4805 INV-4630\",\"transfer_id\":\"48050000000000000000000000000002\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_38FUuetIs49uUjAbuiUE0Qte",
+     "function": {
+      "name": "find_records",
+      "arguments": "{\"item\":\"payout:PB-4805\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_gpsCnSzB1Atoo5GKLx4MukSU",
+     "function": {
+      "name": "search_sent_email",
+      "arguments": "{\"to\":\"finance@acme.invalid\"}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.summary",
+     "summary": "**Planning transfer execution**\n\nI need to execute a process only once, so idempotency is crucial here. We can use a 32 hex ID to manage this, but I should first check existing records to ensure no duplicates. I'll send emails as checks initially. The transfers will utilize fixed IDs, and it seems I might need to run parallel queries for the records and emails, while ensuring that transfers are created idempotently and independently. I'll focus on executing all actions while avoiding duplicates.",
+     "format": "openai-responses-v1",
+     "index": 0
+    },
+    {
+     "type": "reasoning.encrypted",
+     "data": "gAAAAABqx3QSwAyMsZKYBuIIwIiUV8kRUcLF-mfsH3udedkPtENzKiKWPHs2V3l40lczc6DOZxP1KnelNeQ176HZV6OxhIxn1bpeQQTZrrBvRkArMXUiqlC6MS5rAj8y6HW8WeM4Tui28sxIhib4Y5Ui3Ung7FyZd5N91ADJg-oCAGv_1vAbvJEezpDQGQW0Mn-IULiDLtOu8HXLC5G6wfgGffGiypYFLBavgkOSNuvF5gx0LLecMAYwEOkKpl9-zXdllN-AQwr0JpQTdJ5Fz7wrl5xGIkbUw71bpgdJFg-YpBgIxM19BR_0_fFC51eRan_J_YeVVag5BeMB2RNK7k3iDuVXoRCQ0S7ZssblagU1DKvBqduHuai49AjuEnBbIRAZ-FHMesEuS1hgFzIhJpDw0UUVfvdC3Yr3g7390z31-UrEyZykl5i0JjSvflk4qE8PtNfubj3JY5HydyZfjtUYLQ3u9FR2saJ_hRdf_GU4DRQpIrzofZyWqPXCsHpEazXHrcmpCEVlTiCnxLtaBJtH8YX3I04PH6-R9b034gV0ytRyn5xSwaJis8PTaeyIJ1jdpXSi8Qw5HDbvgEuC_YPitUV2VHPGM709YdprdgH3HweHH82I7nSxL2k6sTs0LDeFmigS66QvqlZgCWnaqqaJY8U0Ku7b0-BVmVpw7_s4slRr3kORl0r-TlrriAneFpQ4w-R3CGi-1T5VUeXgJRBpqGk204RZSroOfJ-XvNSN0hF39gayup1QCnyP6UWP3AqjiZ4257G28yhi5tEkBrDF1WKx4SaedKeL--lxyaB22PMFa4eNP8wfcTqelz7y8YV1pRS4qR3RgoqWKDDmKM4Up8FPpVbUzuapiKuvo8Nj4sXm5Fos9exPeNRrQzjCngIfOPZkPADlrZ4dY5qln4ZIj0ZeUN3xcjUiT60mAe66Z5_F1PJe3lzL5XUNVjXHxptFybCfymnwAGvfc3V4_V1sEYL5nlPm-1hcXpS_zhHhIhM6x0RXbz1-9ao_kIoB5NfJOa1vmR5quF7SaN2jZPMysmZ2rN2hO5OR_7r6j7UbQACoVVyfgHNZpjeu92MbM2i0pf5NfMYfJ38BrrxDH3tT7gtKds5y3-hkwfCqvEcEB5xIM7whL0IZcKZ8bm3btQF04lu2nrXb4RTU0Pf0T-vXICY8hK2CpN3yMNfbu9hRPihA6DsQdQgDvknb2OhWbVHk61u7af1bODMucK4JNIu5nWJO9rSSmfKh_X3IrkfDo-I0rBs_PQAROtYVi093yp9KNc5wWUT6NcTl_kDgUCg_B15Xth_sHfGD1qVB516g0KgkMsNjkmI6v3Av-slc6hVXyVekytMyl6EnIiyo9oy1qsUGyHRRVBEC9A8y3Z9n66C42_0OxKu2WLgZD241VzbqsTD-_GrylB2SyHhlEnrF7UsDaW-_OPQlDOGbIf6RP0u-k3Ka_PNeA9OQun7khQUYnNJTUz56zmsyd2lcaOpUVJ291fMMWsViLDR7dxw61tcP-FTu0KLbQlHtmz_Kxg-irxVCvnYfN-Lm4KRGTP51J5ZXIMjZ366j5zNTxIo00XO8oFrI5Xr0j_-6RPkfYQXQ6FPs0bQrCxsmrPVTjY7XHNFQg9uTfsp6nf-IPpitG-6FafcG820pnWNkjzTa57kkrAt0-6r3_MUDtSlAnnrGhkP8tcZvnYkXMp94Zpr4uu0RXhf71L69Z04ghUKsVQLqDokbusFWWXXZ0snJPm2tmtGIophjmiJUixRF1D0F1gPrTVbMBKYiB8FqEMpkasjtw90sl1zCtYLYOMmdT0L373UbBgffeGy6cm9BzsqUOyLAnhvRYr19H-sHcNMHOlmfDbNK5JwcGFmWnh0NDe8yJJcCgXS0ZMfHhD4QXPa1dIRhv23WRx08O8-vwi9QIsX_9z_K-58y2X4Uz3R2Jf2MzqKmlutcAtnyzILd-x2TZ_us_gb2Qh7KZfbia2MFCWL-81Dqw3xwfb9BGLcKgV_LpNnjJeC0axHPAga7tRokj-XjyXFVO18=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+     "format": "openai-responses-v1",
+     "id": "rs_0efa3b0f352976e3016ac7740f414c87d1a39fba6bba63e759",
+     "index": 1
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_88LyBDQQbs6bTe43inYsameO",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"318504071059264421269799059899285160113\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_kshbP7CuMjHOrIoWWbSI31yN",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"73988384090141688820793908579559760600\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_38FUuetIs49uUjAbuiUE0Qte",
+   "content": "[]"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_gpsCnSzB1Atoo5GKLx4MukSU",
+   "content": "[]"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_2J3bCebQq0WJKL9vyTxTtxmx",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\":\"payout:PB-4805\",\"amount\":1309}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_76G4F7hIXHVAGDAmQbV4pWZF",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\":\"finance@acme.invalid\",\"subject\":\"Payout batch PB-4805\",\"body\":\"Payout batch PB-4805 completed.\\n\\nTransfers:\\n- 730 — payout PB-4805 INV-2306\\n- 579 — payout PB-4805 INV-4630\\n\\nTotal: 1309\"}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.encrypted",
+     "data": "gAAAAABqx3QmHFAWsVuMpPFQqebVpl5_0d0_iWVG13KpBahRzINovkQDWawjDFXZHIKui6OWk64BXrVM4om6OfLU6bWNhdoIKQTARaKpSBg3esuf9fb-ClqdrFzfIz8LwCQKQGSOO6gCJwTA-jEWIejNWv6y5IpH-t2o7zAP_zjIL5bhAwRkBMfeiCtHVG4_f7yj1vufXtMahHrRMf2kSbmvMSrQEd63LuGiEtbZDrpkKBle-qOawawSw0M6xlhMoBeJHD_rB-zuJK9gEqcF9wTh01-DezUmwLnyrqVomW15tkXa2LXc_bb1Lq-RdCf1rKZHcErYGsw5JwCTkUQ7pBOt5lJK3Thi6McbHIUI9pZjUKI2yV7cj64WCajjv-7dG4IYCk963TSOt0TZ_WaoUJ2U0TZU9tfGXKaprIdyonfcOyuQySjrHN8YqFb0fUdw6Iim9FHqzTKN9lp7TU4_zIQY7K-e37i1poFrLlHqHypS8025plaPC1i2HJFDESnJbSTmgxJ1m0bsbg1fJR9QO6gwxRmM2B2D0ON_x1GSjJSOvtsEgqA4bHfnXJkD4OJPV0vbSHUaxMwpJcDDln3R-Nj6RUE2v-_UFd1OpkHpFjaRdC7iUmLRTq7jnPlo2RF5wX8k-VcnDvs2WMf2PVL1jBHlkJsCsvtCsMFHEUFyy1Z6P9E38uByfxA4Zsm7EBDLSYPQBdnAb7u0SJUu69dOupDQRenw31TLLewBWh0lfRK7fJ7ssKH3Xj3EXiwO-kIpX-c3UIk-sWn4N3nbcc1HCdhT3zXlhFe75cvbZBhOy3bN-Q3HjjEDbrUAV3kF4Kre9fedYqcUkh3UCJ6JloLyo7z8t2o_wijA2_om-h-EyrOWWLQPxuBdRkx24zys-XHcsMH1TCt9nOnx3rhGWoMdCBHVTII0u0aqYzeE0OZrt_UbPFxd1YSP_3aeNNJaASuPVpBmgu_cfzzaddkJHadXsY_eZJRTaehY4Agx4CPfcuHJIQTS-fIDCWj5Jfx7cfiBXBcPiaPKF5JMCuCIPrMTSqP4N9fvYERon9JYS16kW7ddkFLg6KRAJZWl2_GTscZf6jZ-k_AB4cfumvXB9npuJWuFAZyEPgDe12BJzUUBJDnChSGnSZJBqDLhmyrxM8tK1BqhIhtE1iHM5Org09eS5F8dnLe_5IOw4UT9ALityBMzhBfXQ7f9i11lS-ID0LEk7Fy3NEBBV1k7zOmCNYfeyQdJol_6MwHpoFSeKin2-z6E1VBDLwX_e2ZHHWrow6Y7iHm-YWyyRm5pRddmlPQ3gzs5X4qLXXtVfatj5nRoUBH2TaoFE_j5n0O2Mf6WSytEGSx-qh3a26ATJmFttFYDBXnQEoVAyZNjZkvYV-eHzwRFR4ZhLr61Oy8=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+     "format": "openai-responses-v1",
+     "id": "rs_0efa3b0f352976e3016ac77425eeac87d184c38007361c45b8",
+     "index": 0
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_2J3bCebQq0WJKL9vyTxTtxmx",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 583}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_76G4F7hIXHVAGDAmQbV4pWZF",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_fY3WDT8IFa0jI9htpj3Xqjty",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\":\"completed\",\"summary\":\"Completed payout batch PB-4805 exactly once: created transfers of 730 and 579 with the specified memos, inserted payout:PB-4805 for 1309, and queued one email to finance@acme.invalid with subject “Payout batch PB-4805”.\",\"uncertain_operations\":[]}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.summary",
+     "summary": "**Determining email status**\n\nI need to finish checking this email situation. When it says \"queued,\" does that mean it was accepted successfully? The tool mentions that sent mail can’t be recalled, and if it’s queued, it’s likely that it has been accepted. I’m thinking this might only happen once, so I should confirm the outcome. It seems that I might need to check if it went through as expected.",
+     "format": "openai-responses-v1",
+     "index": 0
+    },
+    {
+     "type": "reasoning.encrypted",
+     "data": "gAAAAABqx3Qw6Q6k8TXCqMGoZ_FIFACMQAw3gl7WonxjdDPUG4hKoyj7JqDHN_JU_CeMeH8RsEQ0C07aPVVHeJOcRoHJtsq3qcJn30VDaNlvfg4745J0EnPSqDZeEqnngCnk3oXUqGpUn3Ou2ilo4CeUbSeHxJYDe47G35RBfNOBfFdFZj2o9xiYd43IYLC3LVLl4IQz8e8luEEcTM7PMF7CWMuVsUU30W-pHY0B2D6PQuqpolXt_22SIit3D4smwGW7-efsplij-5Xz5KwG8KXxLceXrpBGXRLddupNdCbOFtaOH9O9UbyLNA4npHzcl7PK_Yu5p0t1Ce80I5OzwaMH3ZMYh6Ol4G9OoxAVNT9y2rgOwsWGE00YX5phxDXuu4OEzw9NpPmitz35rIqOYcwknEdUKBJDdngm26TC5LAwBLWQVW4MhoN_9osPIM1Rd0XKTvoh4EO5eaDlSCIvqt1g6arnGGdNDBvNurI-JrFZp0XRO-RjJprOJtcQpwvpgsuvDibswVsyGsH0wLTMyuRsKtQj53hOAVTnxyu6gboQG5ce5HTZJNpkobfbqpzCyosymX5IrQpSFN-dieIPenWRlCEXt3PNA3D_O7TDu75wQq5JXRZ3ki4qR4L2D2ByGJmSf4FsMFNXe_IAKryE_TIhS8isKdoSLFosd5nf6_gxQTLoY8WdUhgOFW3AeXXv32OZzstWScUX0lTEVw3AseT3d2iGyMuajHwrq-T-_5z8LeyOixeeWFtAMnAedEkRobxKnhqu4rwa4u-OvXy1wSsDw3srvcVJcObrb8tXB6WWzuiC7B5T_SAkam7QXAskwJZakMqyVDyRtEyRr517NbB3P9WURFCUqYBUZ2r5yW7r7DvTpG8M80xZ2jBoMv7i_uNDv_o7_FpIUBI37RksKCOJUkPWtYvAMjNcDudeHT-y0LFtiSI0fQknn0ZszUqGLKqdyFfZHZJMVgG1i1QziWTsPp3VJlhQoDD2-XII2wxb7UNiAUaP8d9umNJYrTQLoxrdF8j9DzCbaoIz0c5xD151-BAl8St0sWBdg6UBQnrWp0V8Wt7awngURohm51PdX8rysVNYzaYb7yBo6MsTtfZcBFwa57i61V5lRiJiW-PMfVyq5-mmQASuNcMkcwPOmnKxt0sgAehUPYGX3-ev69WX4jdgXZSkP_NVqKY8IdPpvQAwmQv3oQOYqY4V0dKqfEcJXnZxEMpgmcilUL8PyioT1s5iyP9ESoJoiWM9ovvuU3_70mrEbCPB7NOy7yT2Bg8B0UT9DCa30qLcvEZ-6tvODUgD6eQBJx1fgCMCqqCxhPokRg1XkyHKwaTL-V9HWMDGXytk_d-HukZBJBMhQDjHm6-ddIng5-MYdo9TKy3Ajj0QahO7DJBm21DzlHW9HV45-uKqUcJF6H3hWsfJ2FzPXIKVSvLA1nbGKv8QWQPddY1IK7K4tbAKK51v067ky08FosutQRqSQOdvYxqbBaGAEdnEXdcWRXr4AaVppuECaJQI5dJ9b0A=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+     "format": "openai-responses-v1",
+     "id": "rs_0efa3b0f352976e3016ac7742e804887d199a8fc003b8fedc0",
+     "index": 1
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_fY3WDT8IFa0jI9htpj3Xqjty",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "51fcde236d13",
+ "run_namespace": "51fcde23-f9ec5e",
+ "wall_s": 43.72
+}

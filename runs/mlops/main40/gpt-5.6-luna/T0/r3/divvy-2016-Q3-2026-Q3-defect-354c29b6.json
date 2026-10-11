@@ -1,0 +1,215 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "station_join",
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.001601,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0074,
+   "spent_seconds": 0.0074,
+   "wall_s": 0.031
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 1.7378,
+   "wall_s": 1.886
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0074,
+   "spent_seconds": 1.7452,
+   "wall_s": 0.321
+  },
+  {
+   "step": 4,
+   "action": [
+    "final"
+   ],
+   "args": {
+    "fix": [
+     "trip_adapter"
+    ],
+    "retrain": true,
+    "reason": "trip_adapter is stale against the current trips schema, causing missing trip_id errors, severe row loss and downstream feature missingness; repair schema normalization first, then retrain for the remaining long-term distribution and label drift."
+   },
+   "valid": false,
+   "tool_error": true,
+   "result": {
+    "error": "unknown action ['final']"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 1.7452,
+   "wall_s": 0.0
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "station_join",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The adapter is incompatible with the evolved trips schema and causes severe downstream missingness and row loss, while station_join is stale for changed station identifiers and dockless coordinate data; repair both before retraining for the remaining distribution and label drift."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 62.39,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "The adapter is incompatible with the evolved trips schema and causes severe downstream missingness and row loss, while station_join is stale for changed station identifiers and dockless coordinate data; repair both before retraining for the remaining distribution and label drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 1,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 3014,
+    "completion_tokens": 111,
+    "total_tokens": 3125,
+    "cost": 0.00019402
+   },
+   "cost": 0.00019402,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3065,
+    "completion_tokens": 87,
+    "total_tokens": 3152,
+    "cost": 0.00017797
+   },
+   "cost": 0.00017797,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3170,
+    "completion_tokens": 38,
+    "total_tokens": 3208,
+    "cost": 0.00013369
+   },
+   "cost": 0.00013369,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":[\"final\"],\"fix\":[\"trip_adapter\"],\"retrain\":true,\"reason\":\"trip_adapter is stale against the current trips schema, causing missing trip_id errors, severe row loss and downstream feature missingness; repair schema normalization first, then retrain for the remaining long-term distribution and label drift.\"}",
+   "usage": {
+    "prompt_tokens": 3220,
+    "completion_tokens": 249,
+    "total_tokens": 3469,
+    "cost": 0.00037524
+   },
+   "cost": 0.00037524,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\",\"station_join\"],\"retrain\":true,\"reason\":\"The adapter is incompatible with the evolved trips schema and causes severe downstream missingness and row loss, while station_join is stale for changed station identifiers and dockless coordinate data; repair both before retraining for the remaining distribution and label drift.\"}",
+   "usage": {
+    "prompt_tokens": 3315,
+    "completion_tokens": 526,
+    "total_tokens": 3841,
+    "cost": 0.00071989
+   },
+   "cost": 0.00071989,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 15784,
+ "tokens_out": 1011,
+ "compute_spent_s": 1.7452,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 5,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

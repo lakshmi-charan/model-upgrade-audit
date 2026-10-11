@@ -1,0 +1,249 @@
+{
+ "task_id": "news-2013-2016-two-e347d423",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "label_map"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000701,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.2121,
+   "spent_seconds": 0.2121,
+   "wall_s": 0.171
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 0.999659
+    },
+    "rows": [
+     11721,
+     11721
+    ]
+   },
+   "cost_s": 0.6556,
+   "spent_seconds": 0.8677,
+   "wall_s": 0.096
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 1.0
+    },
+    "rows": [
+     34583,
+     34583
+    ]
+   },
+   "cost_s": 4.9073,
+   "spent_seconds": 5.775,
+   "wall_s": 0.285
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "label_map"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 5.775,
+   "wall_s": 0.145
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.20238433153562305,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 1.1375,
+   "spent_seconds": 6.9125,
+   "wall_s": 1.406
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": false,
+  "reason": "Rolling back 'vectorize' significantly improves accuracy, indicating a broken component rather than data drift."
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 18.36,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": false,
+  "reason": "Rolling back 'vectorize' significantly improves accuracy, indicating a broken component rather than data drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"text_norm\"}\n```",
+   "usage": {
+    "prompt_tokens": 1233,
+    "completion_tokens": 20,
+    "total_tokens": 1253,
+    "cost": 0.00010184
+   },
+   "cost": 0.00010184,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"vectorize\"}\n```",
+   "usage": {
+    "prompt_tokens": 1283,
+    "completion_tokens": 19,
+    "total_tokens": 1302,
+    "cost": 0.00010568
+   },
+   "cost": 0.00010568,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"vectorize\"}\n```",
+   "usage": {
+    "prompt_tokens": 1368,
+    "completion_tokens": 19,
+    "total_tokens": 1387,
+    "cost": 0.00011248
+   },
+   "cost": 0.00011248,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"label_map\"}\n```",
+   "usage": {
+    "prompt_tokens": 1448,
+    "completion_tokens": 20,
+    "total_tokens": 1468,
+    "cost": 0.00011904
+   },
+   "cost": 0.00011904,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"vectorize\"]}\n```",
+   "usage": {
+    "prompt_tokens": 1498,
+    "completion_tokens": 19,
+    "total_tokens": 1517,
+    "cost": 0.00012288
+   },
+   "cost": 0.00012288,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"vectorize\"], \"retrain\": false, \"reason\": \"Rolling back 'vectorize' significantly improves accuracy, indicating a broken component rather than data drift.\"}\n```",
+   "usage": {
+    "prompt_tokens": 1643,
+    "completion_tokens": 49,
+    "total_tokens": 1692,
+    "cost": 0.00013928
+   },
+   "cost": 0.00013928,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8473,
+ "tokens_out": 146,
+ "compute_spent_s": 6.9125,
+ "compute_budget_s": 16.746626099949935,
+ "source_cache_hits": 12,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

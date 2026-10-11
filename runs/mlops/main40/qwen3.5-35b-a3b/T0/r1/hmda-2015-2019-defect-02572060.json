@@ -1,0 +1,143 @@
+{
+ "task_id": "hmda-2015-2019-defect-02572060",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [
+   "lar_adapter"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.004457,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "lar_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'occupancy_type'"
+   },
+   "cost_s": 0.1682,
+   "spent_seconds": 0.1682,
+   "wall_s": 0.09
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "lar_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'owner_occupancy'"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.4174,
+   "wall_s": 0.032
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "lar_adapter must be updated to handle the 2018 schema changes (new column names like occupancy_type, owner_occupancy); model accuracy improved so retraining unnecessary."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "lar_adapter"
+  ],
+  "consequential": []
+ },
+ "domain": "hmda",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 21.3,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "lar_adapter must be updated to handle the 2018 schema changes (new column names like occupancy_type, owner_occupancy); model accuracy improved so retraining unnecessary."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"lar_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2219,
+    "completion_tokens": 1339,
+    "total_tokens": 3558,
+    "cost": 0.0021012875
+   },
+   "cost": 0.0021012875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"lar_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 2276,
+    "completion_tokens": 521,
+    "total_tokens": 2797,
+    "cost": 0.00104715
+   },
+   "cost": 0.00104715,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"lar_adapter\"], \"retrain\": false, \"reason\": \"lar_adapter must be updated to handle the 2018 schema changes (new column names like occupancy_type, owner_occupancy); model accuracy improved so retraining unnecessary.\"}",
+   "usage": {
+    "prompt_tokens": 2333,
+    "completion_tokens": 715,
+    "total_tokens": 3048,
+    "cost": 0.0013086125
+   },
+   "cost": 0.0013086125,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6828,
+ "tokens_out": 2575,
+ "compute_spent_s": 0.4174,
+ "compute_budget_s": 12.882809100032318,
+ "source_cache_hits": 3,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

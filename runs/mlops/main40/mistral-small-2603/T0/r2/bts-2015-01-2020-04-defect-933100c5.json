@@ -1,0 +1,225 @@
+{
+ "task_id": "bts-2015-01-2020-04-defect-933100c5",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.00053,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "flight_adapter",
+     "clean",
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.9439309216782685,
+    "cur_perf": 0.9359427897599757,
+    "ref_perf": 0.8130999177255691,
+    "rows": 26289,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 7.1236,
+   "spent_seconds": 7.1236,
+   "wall_s": 15.884
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "origin_state": 0.253982,
+     "dest_state": 0.377415
+    },
+    "rows": [
+     145837,
+     145837
+    ]
+   },
+   "cost_s": 0.1032,
+   "spent_seconds": 7.2268,
+   "wall_s": 6.03
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "carrier": 1.0,
+     "origin_state": 1.0,
+     "dest_state": 0.999828,
+     "origin_size": 0.464484,
+     "dest_size": 1.0
+    },
+    "rows": [
+     87398,
+     87398
+    ]
+   },
+   "cost_s": 0.0612,
+   "spent_seconds": 7.288,
+   "wall_s": 2.337
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0423,
+   "spent_seconds": 7.3303,
+   "wall_s": 1.685
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "reason": "encode component's config change caused feature drift and accuracy degradation; rolling back fixes the issue."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "effective": [
+   "encode"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "bts",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T3",
+ "wall_s": 36.11,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "reason": "encode component's config change caused feature drift and accuracy degradation; rolling back fixes the issue."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"flight_adapter\", \"clean\", \"encode\"]}",
+   "usage": {
+    "prompt_tokens": 1969,
+    "completion_tokens": 22,
+    "total_tokens": 1991,
+    "cost": 0.00028047
+   },
+   "cost": 0.00028047,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2110,
+    "completion_tokens": 14,
+    "total_tokens": 2124,
+    "cost": 6.138e-05
+   },
+   "cost": 6.138e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2201,
+    "completion_tokens": 13,
+    "total_tokens": 2214,
+    "cost": 5.715e-05
+   },
+   "cost": 5.715e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 2316,
+    "completion_tokens": 14,
+    "total_tokens": 2330,
+    "cost": 6.204e-05
+   },
+   "cost": 6.204e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"encode\"], \"retrain\": true, \"reason\": \"encode component's config change caused feature drift and accuracy degradation; rolling back fixes the issue.\"}",
+   "usage": {
+    "prompt_tokens": 2352,
+    "completion_tokens": 42,
+    "total_tokens": 2394,
+    "cost": 6.912e-05
+   },
+   "cost": 6.912e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10948,
+ "tokens_out": 105,
+ "compute_spent_s": 7.3303,
+ "compute_budget_s": 16.806100800000422,
+ "source_cache_hits": 10,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

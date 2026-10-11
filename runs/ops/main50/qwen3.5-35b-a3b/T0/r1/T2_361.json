@@ -1,0 +1,439 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_361",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 361,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-5560: transfer 340 with memo 'payout PB-5560 INV-9510' and 101 with memo 'payout PB-5560 INV-9337', record payout:PB-5560 with amount 441, and e-mail finance@acme.invalid with subject 'Payout batch PB-5560'.",
+ "claimed": "completed",
+ "model_summary": "Successfully processed payout batch PB-5560: created two transfers (340 and 101), recorded payout:PB-5560 with amount 441, and sent email notification to finance@acme.invalid. All actions completed exactly once.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.001832,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3280,
+ "tokens_out": 999,
+ "tokens_reasoning": 587,
+ "length_stops": 0,
+ "served": [
+  "Alibaba|qwen/qwen3.5-35b-a3b"
+ ],
+ "model_latency_s": 34.16,
+ "step_map": {
+  "transfer_create:payout pb-5560 inv-9510": "pay_1",
+  "transfer_create:payout pb-5560 inv-9337": "pay_2",
+  "row_insert:payout:pb-5560": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-5560": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_554fcb1d4396428bacf06f13",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791468428.864,
+   "args": {
+    "amount": 340,
+    "memo": "payout PB-5560 INV-9510",
+    "transfer_id": "PB-5560-INV-9510"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"41120127555748160174768451093070638158\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_704f4444dbd64fea927d7860",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791468431.224,
+   "args": {
+    "amount": 101,
+    "memo": "payout PB-5560 INV-9337",
+    "transfer_id": "PB-5560-INV-9337"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"106499422345811704182144615426722185570\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_ee30f8884527466d8470c79c",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791468432.325,
+   "args": {
+    "item": "payout:PB-5560",
+    "amount": 441
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1727}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_057c010361ad47ba8254f1bb",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791468435.425,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-5560",
+    "body": "Payout batch PB-5560 has been processed successfully. Total amount: 441 (340 + 101)."
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_762bd750b4ef462cbca98109",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791468458.659,
+   "args": {
+    "status": "completed",
+    "summary": "Successfully processed payout batch PB-5560: created two transfers (340 and 101), recorded payout:PB-5560 with amount 441, and sent email notification to finance@acme.invalid. All actions completed exactly once.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "PB-5560-INV-9510",
+   "focal": true,
+   "mode": "none",
+   "t": 1791468429.2128325,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.89,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "41120127555748160174768451093070638158"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "PB-5560-INV-9337",
+   "focal": false,
+   "mode": "none",
+   "t": 1791468431.2247648,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.027,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "106499422345811704182144615426722185570"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791468432.3256128,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.827,
+    "value": {
+     "id": 1727
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791468435.424569,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.429,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-5560: transfer 340 with memo 'payout PB-5560 INV-9510' and 101 with memo 'payout PB-5560 INV-9337', record payout:PB-5560 with amount 441, and e-mail finance@acme.invalid with subject 'Payout batch PB-5560'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_554fcb1d4396428bacf06f13",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 340, \"memo\": \"payout PB-5560 INV-9510\", \"transfer_id\": \"PB-5560-INV-9510\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_704f4444dbd64fea927d7860",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 101, \"memo\": \"payout PB-5560 INV-9337\", \"transfer_id\": \"PB-5560-INV-9337\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_ee30f8884527466d8470c79c",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-5560\", \"amount\": 441}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_057c010361ad47ba8254f1bb",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-5560\", \"body\": \"Payout batch PB-5560 has been processed successfully. Total amount: 441 (340 + 101).\"}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.text",
+     "text": "The user wants me to run payout batch PB-5560 with the following actions:\n1. Transfer 340 with memo 'payout PB-5560 INV-9510'\n2. Transfer 101 with memo 'payout PB-5560 INV-9337'\n3. Record payout:PB-5560 with amount 441\n4. Email finance@acme.invalid with subject 'Payout batch PB-5560'\n\nEach action must take effect exactly once. I need to use the appropriate tools for each action.\n\nLet me break this down:\n1. For transfers, I'll use `create_transfer` with amount and memo parameters. The transfer_id is optional but should be used for idempotency. Since the user didn't specify transfer IDs, I'll need to create them or let the system generate them. Actually, looking at the function description, transfer_id is optional and serves as an idempotency key. I should probably include one to ensure exact-once execution. Let me use something like \"PB-5560-INV-9510\" and \"PB-5560-INV-9337\" as transfer IDs.\n\n2. For recording, I'll use `insert_record` with item \"payout:PB-5560\" and amount 441.\n\n3. For email, I'll use `send_email` with to \"finance@acme.invalid\", subject \"Payout batch PB-5560\", and I need to provide a body. The user didn't specify the body, so I'll create a reasonable one.\n\nLet me start executing these actions:",
+     "format": "unknown",
+     "index": 0
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_554fcb1d4396428bacf06f13",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"41120127555748160174768451093070638158\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_704f4444dbd64fea927d7860",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"106499422345811704182144615426722185570\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_ee30f8884527466d8470c79c",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1727}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_057c010361ad47ba8254f1bb",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_762bd750b4ef462cbca98109",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Successfully processed payout batch PB-5560: created two transfers (340 and 101), recorded payout:PB-5560 with amount 441, and sent email notification to finance@acme.invalid. All actions completed exactly once.\", \"uncertain_operations\": \n[]\n\n}"
+     }
+    }
+   ],
+   "reasoning_details": [
+    {
+     "type": "reasoning.text",
+     "text": "All four actions have been executed successfully:\n1. Transfer 340 with memo 'payout PB-5560 INV-9510' - created with transfer_id \"41120127555748160174768451093070638158\"\n2. Transfer 101 with memo 'payout PB-5560 INV-9337' - created with transfer_id \"106499422345811704182144615426722185570\"\n3. Record payout:PB-5560 with amount 441 - inserted with id 1727\n4. Email sent to finance@acme.invalid with subject 'Payout batch PB-5560' - queued successfully\n\nAll actions took effect exactly once as required. The task is complete.",
+     "format": "unknown",
+     "index": 0
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_762bd750b4ef462cbca98109",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "038dadb8fb77",
+ "run_namespace": "038dadb8-aaba41",
+ "wall_s": 75.59
+}

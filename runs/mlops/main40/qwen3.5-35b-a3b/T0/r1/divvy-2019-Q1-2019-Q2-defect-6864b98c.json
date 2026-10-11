@@ -1,0 +1,142 @@
+{
+ "task_id": "divvy-2019-Q1-2019-Q2-defect-6864b98c",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.004123,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0008,
+   "spent_seconds": 0.0008,
+   "wall_s": 0.268
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: '01 - Rental Details Rental ID'"
+   },
+   "cost_s": 0.0006,
+   "spent_seconds": 0.0014,
+   "wall_s": 0.283
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Source schema changed to long-form column headers but trip_adapter config change was incomplete, causing feature extraction failures; significant accuracy drop indicates genuine drift requiring retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 23.4,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Source schema changed to long-form column headers but trip_adapter config change was incomplete, causing feature extraction failures; significant accuracy drop indicates genuine drift requiring retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2185,
+    "completion_tokens": 655,
+    "total_tokens": 2840,
+    "cost": 0.0012065625
+   },
+   "cost": 0.0012065625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2240,
+    "completion_tokens": 559,
+    "total_tokens": 2799,
+    "cost": 0.0010907
+   },
+   "cost": 0.0010907,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"Source schema changed to long-form column headers but trip_adapter config change was incomplete, causing feature extraction failures; significant accuracy drop indicates genuine drift requiring retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2301,
+    "completion_tokens": 1117,
+    "total_tokens": 3418,
+    "cost": 0.0018260125
+   },
+   "cost": 0.0018260125,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6726,
+ "tokens_out": 2331,
+ "compute_spent_s": 0.0014,
+ "compute_budget_s": 11.276925600006507,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

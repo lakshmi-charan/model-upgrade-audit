@@ -1,0 +1,458 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T7_348",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "category_detail": {
+  "missing_steps": [
+   "triage_note",
+   "eta_note"
+  ],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T7",
+ "instance": 348,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "open_ticket",
+ "goal": "Triage ticket TCK-3567 for Adatum: open the issue 'Ticket TCK-3567: Adatum cannot export reports' (body: 'Reported by Adatum. Priority 2.'), add exactly these two comments to it, in order: 'Triage: reproduced for Adatum; assigning to reports team.' and 'ETA for Adatum: fix in next release.', and record triage:TCK-3567 with amount 2.",
+ "claimed": "failed",
+ "model_summary": "Failed to complete the task due to server errors when adding comments and an invalid argument error when inserting a record.",
+ "uncertain": [
+  "add_comment(issue_number=3567bo"
+ ],
+ "layer_uncertain": [
+  "eta_note",
+  "triage_note"
+ ],
+ "n_turns": 3,
+ "n_tool_calls": 6,
+ "n_writes": 5,
+ "n_nudges": 0,
+ "n_malformed": 1,
+ "stop": "finished",
+ "agent_cost": 0.00056,
+ "paid_calls": 3,
+ "cached_calls": 0,
+ "tokens_in": 6502,
+ "tokens_out": 247,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 11.85,
+ "step_map": {
+  "issue_create:ticket tck-3567: adatum cannot export reports": "open_ticket",
+  "issue_comment:3567|triage: reproduced for adatum; assigning to reports team": "triage_note",
+  "issue_comment:3567|eta for adatum: fix in next release": "eta_note",
+  "row_insert:triage:tck-3567": "log_triage",
+  "row_insert:triage:tck-356": "extra:32e7b7ed"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-f09ec540366e434fb9a714a1b0b6e120",
+   "tool": "create_issue",
+   "kind": "write",
+   "t": 1791462107.446,
+   "args": {
+    "title": "Ticket TCK-3567: Adatum cannot export reports",
+    "body": "Reported by Adatum. Priority 2."
+   },
+   "contract_tool": "issue_create",
+   "step": "open_ticket",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"number\": 1}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-fbe01bcbed9343e2835649bd7f7772fc",
+   "tool": "add_comment",
+   "kind": "write",
+   "t": 1791462108.873,
+   "args": {
+    "issue_number": 3567,
+    "body": "Triage: reproduced for Adatum; assigning to reports team."
+   },
+   "contract_tool": "issue_comment",
+   "step": "triage_note",
+   "obs_status": "error",
+   "output": "{\"status\": \"error\", \"note\": \"httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500\"}",
+   "verdict": "missing",
+   "step_standing": 0,
+   "step_expected": 1,
+   "step_executions": 0
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-6761fdd29d914cbd8816d6f17ee2158c",
+   "tool": "add_comment",
+   "kind": "write",
+   "t": 1791462111.246,
+   "args": {
+    "issue_number": 3567,
+    "body": "ETA for Adatum: fix in next release."
+   },
+   "contract_tool": "issue_comment",
+   "step": "eta_note",
+   "obs_status": "error",
+   "output": "{\"status\": \"error\", \"note\": \"httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500\"}",
+   "verdict": "missing",
+   "step_standing": 0,
+   "step_expected": 1,
+   "step_executions": 0
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-f846c52008e54b6ba5f53776bb93c5d3",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462111.879,
+   "args": {
+    "item": "triage:TCK-3567",
+    "amount": 2
+   },
+   "contract_tool": "row_insert",
+   "step": "log_triage",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1169}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-3608a99c79834f6581addf343848b95a",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462114.631,
+   "args": {
+    "item": "triage:TCK-356"
+   },
+   "contract_tool": "row_insert",
+   "step": "extra:32e7b7ed",
+   "malformed": "KeyError: 'amount'",
+   "obs_status": "invalid_args",
+   "output": "{\"error\": \"invalid arguments: KeyError: 'amount'\"}",
+   "verdict": "not_a_plan_step"
+  },
+  {
+   "i": 5,
+   "turn": 3,
+   "call_id": "chatcmpl-tool-872a403e6f0f47f381ba099aaa01cc51",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462120.137,
+   "args": {
+    "status": "failed",
+    "summary": "Failed to complete the task due to server errors when adding comments and an invalid argument error when inserting a record.",
+    "uncertain_operations": [
+     "add_comment(issue_number=3567bo"
+    ]
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "open_ticket": {
+    "tool": "issue_create",
+    "cls": "A",
+    "reversible": "targeted",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "triage_note": {
+    "tool": "issue_comment",
+    "cls": "A",
+    "reversible": "targeted",
+    "standing": 0,
+    "executions": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "eta_note": {
+    "tool": "issue_comment",
+    "cls": "A",
+    "reversible": "targeted",
+    "standing": 0,
+    "executions": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_triage": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": true,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 2,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "open_ticket",
+   "tool": "issue_create",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": true,
+   "mode": "none",
+   "t": 1791462107.576718,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.292,
+    "value": {
+     "number": 1
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "triage_note",
+   "tool": "issue_comment",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462108.8736343,
+   "pid": 32140,
+   "result": {
+    "kind": "error",
+    "elapsed_s": 2.292,
+    "value": null,
+    "exc_type": "httpx.HTTPStatusError",
+    "exc_msg": "Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+    "background": {},
+    "raw_exc_type": "httpx.HTTPStatusError",
+    "raw_exc_msg": "Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+    "signature": "error:httpx.HTTPStatusError:Server error '# Internal Server Error' for url 'http://localhost:#/api/v#/repos/",
+    "raw_signature": "error:httpx.HTTPStatusError"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "eta_note",
+   "tool": "issue_comment",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462111.246089,
+   "pid": 32140,
+   "result": {
+    "kind": "error",
+    "elapsed_s": 0.61,
+    "value": null,
+    "exc_type": "httpx.HTTPStatusError",
+    "exc_msg": "Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+    "background": {},
+    "raw_exc_type": "httpx.HTTPStatusError",
+    "raw_exc_msg": "Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+    "signature": "error:httpx.HTTPStatusError:Server error '# Internal Server Error' for url 'http://localhost:#/api/v#/repos/",
+    "raw_signature": "error:httpx.HTTPStatusError"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_triage",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462111.879289,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.41,
+    "value": {
+     "id": 1169
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Triage ticket TCK-3567 for Adatum: open the issue 'Ticket TCK-3567: Adatum cannot export reports' (body: 'Reported by Adatum. Priority 2.'), add exactly these two comments to it, in order: 'Triage: reproduced for Adatum; assigning to reports team.' and 'ETA for Adatum: fix in next release.', and record triage:TCK-3567 with amount 2. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-f09ec540366e434fb9a714a1b0b6e120",
+     "function": {
+      "name": "create_issue",
+      "arguments": "{\"title\": \"Ticket TCK-3567: Adatum cannot export reports\", \"body\": \"Reported by Adatum. Priority 2.\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-fbe01bcbed9343e2835649bd7f7772fc",
+     "function": {
+      "name": "add_comment",
+      "arguments": "{\"issue_number\": 3567, \"body\": \"Triage: reproduced for Adatum; assigning to reports team.\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-6761fdd29d914cbd8816d6f17ee2158c",
+     "function": {
+      "name": "add_comment",
+      "arguments": "{\"issue_number\": 3567, \"body\": \"ETA for Adatum: fix in next release.\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "chatcmpl-tool-f846c52008e54b6ba5f53776bb93c5d3",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"triage:TCK-3567\", \"amount\": 2}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-f09ec540366e434fb9a714a1b0b6e120",
+   "content": "{\"status\": \"ok\", \"result\": {\"number\": 1}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-fbe01bcbed9343e2835649bd7f7772fc",
+   "content": "{\"status\": \"error\", \"note\": \"httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500\"}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-6761fdd29d914cbd8816d6f17ee2158c",
+   "content": "{\"status\": \"error\", \"note\": \"httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:26001/api/v1/repos/<redacted>-admin/ep-82354dd3-e62e17/issues/3567/comments'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500\"}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-f846c52008e54b6ba5f53776bb93c5d3",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1169}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-3608a99c79834f6581addf343848b95a",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"triage:TCK-356\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-3608a99c79834f6581addf343848b95a",
+   "content": "{\"error\": \"invalid arguments: KeyError: 'amount'\"}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-872a403e6f0f47f381ba099aaa01cc51",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"failed\", \"summary\": \"Failed to complete the task due to server errors when adding comments and an invalid argument error when inserting a record.\", \"uncertain_operations\": [\"add_comment(issue_number=3567bo\"]}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-872a403e6f0f47f381ba099aaa01cc51",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "82354dd33771",
+ "run_namespace": "82354dd3-e62e17",
+ "wall_s": 27.97
+}

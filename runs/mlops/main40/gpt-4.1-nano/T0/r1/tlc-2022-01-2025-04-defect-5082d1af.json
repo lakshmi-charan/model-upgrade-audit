@@ -1,0 +1,234 @@
+{
+ "task_id": "tlc-2022-01-2025-04-defect-5082d1af",
+ "label": "gpt-4.1-nano",
+ "model": "openai/gpt-4.1-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000566,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2023-04"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2022-10",
+     "2023-01",
+     "2023-04"
+    ],
+    "versions": {
+     "2022-10": "reference",
+     "2023-01": "reference",
+     "2023-04": "current"
+    },
+    "retention": {
+     "2022-10": 1.0,
+     "2023-01": 1.0,
+     "2023-04": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "airport_fee": {
+      "baseline_psi": 0.0008,
+      "boundary_psi": 0.6099,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "ratecode": {
+      "baseline_psi": 0.0085,
+      "boundary_psi": 0.0011,
+      "input_boundary_psi": 0.001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "congestion_surcharge": {
+      "baseline_psi": 0.0006,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "vendor": {
+      "baseline_psi": 0.0059,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.6622,
+   "spent_seconds": 0.6622,
+   "wall_s": 1.376
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "airport_fee": 0.068254,
+     "cbd_congestion_fee": 0.735883
+    },
+    "rows": [
+     150320,
+     150320
+    ]
+   },
+   "cost_s": 0.3631,
+   "spent_seconds": 1.0253,
+   "wall_s": 6.529
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.991192
+    },
+    "rows": [
+     150320,
+     150320
+    ]
+   },
+   "cost_s": 3.3108,
+   "spent_seconds": 4.3361,
+   "wall_s": 1.2
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Detected drift in key components due to schema changes and feature distribution shifts, impacting model accuracy."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 14.05,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "Detected drift in key components due to schema changes and feature distribution shifts, impacting model accuracy."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2023-04\"}",
+   "usage": {
+    "prompt_tokens": 2368,
+    "completion_tokens": 23,
+    "total_tokens": 2391,
+    "cost": 0.000246
+   },
+   "cost": 0.000246,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2747,
+    "completion_tokens": 14,
+    "total_tokens": 2761,
+    "cost": 0.0001171
+   },
+   "cost": 0.0001171,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2827,
+    "completion_tokens": 14,
+    "total_tokens": 2841,
+    "cost": 9.63e-05
+   },
+   "cost": 9.63e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": true, \"reason\": \"Detected drift in key components due to schema changes and feature distribution shifts, impacting model accuracy.\"}",
+   "usage": {
+    "prompt_tokens": 2894,
+    "completion_tokens": 47,
+    "total_tokens": 2941,
+    "cost": 0.0001066
+   },
+   "cost": 0.0001066,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 10836,
+ "tokens_out": 98,
+ "compute_spent_s": 4.3361,
+ "compute_budget_s": 11.68125899998995,
+ "source_cache_hits": 7,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

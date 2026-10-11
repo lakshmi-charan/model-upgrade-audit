@@ -1,0 +1,525 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_326",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "no_tool_calls",
+ "error": null,
+ "category": "interface",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 326,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-9697: transfer 628 with memo 'payout PB-9697 INV-6314' and 875 with memo 'payout PB-9697 INV-4634', record payout:PB-9697 with amount 1503, and e-mail finance@acme.invalid with subject 'Payout batch PB-9697'.",
+ "claimed": "no_finish",
+ "model_summary": "All steps for the payout batch PB-9697 have been completed and verified. No additional actions are needed.\n\nStatus: completed  \nSummary: The task is fully executed and confirmed with no outstanding or uncertain operations.  \nUncertain operations: None",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 6,
+ "n_tool_calls": 8,
+ "n_writes": 4,
+ "n_nudges": 3,
+ "n_malformed": 0,
+ "stop": "no_tool_calls",
+ "agent_cost": 0.001619,
+ "paid_calls": 6,
+ "cached_calls": 0,
+ "tokens_in": 10222,
+ "tokens_out": 558,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Alibaba|qwen/qwen3-30b-a3b-instruct-2507"
+ ],
+ "model_latency_s": 11.48,
+ "step_map": {
+  "transfer_create:payout pb-9697 inv-6314": "pay_1",
+  "transfer_create:payout pb-9697 inv-4634": "pay_2",
+  "row_insert:payout:pb-9697": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-9697": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_8c183ad0ad7446a4b7888a",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791466647.487,
+   "args": {
+    "amount": 628,
+    "memo": "payout PB-9697 INV-6314"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"25311152976070713596930990698476906760\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_8a62beefd1a74cbabdc26e",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791466649.288,
+   "args": {
+    "amount": 875,
+    "memo": "payout PB-9697 INV-4634"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"146435193911081394926614659715117205630\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_c6d34286c6834c75a1167f",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791466651.398,
+   "args": {
+    "item": "payout:PB-9697",
+    "amount": 1503
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1527}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_5a4f877b38a940f7af7b5a",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791466652.446,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-9697",
+    "body": "Payout batch PB-9697 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_b8a329dd51ee4afcb46883",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791466656.04,
+   "args": {
+    "memo": "payout PB-9697 INV-6314"
+   },
+   "output": "{\"transfer_ids\": [\"25311152976070713596930990698476906760\"]}"
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "call_id": "call_4554ea263d16418ba1ba31",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791466658.028,
+   "args": {
+    "memo": "payout PB-9697 INV-4634"
+   },
+   "output": "{\"transfer_ids\": [\"146435193911081394926614659715117205630\"]}"
+  },
+  {
+   "i": 6,
+   "turn": 2,
+   "call_id": "call_4945bd5017c14eccae130d",
+   "tool": "find_records",
+   "kind": "read",
+   "t": 1791466659.992,
+   "args": {
+    "item": "payout:PB-9697"
+   },
+   "output": "[{\"id\": 1527, \"item\": \"payout:PB-9697\", \"amount\": 1503}]"
+  },
+  {
+   "i": 7,
+   "turn": 2,
+   "call_id": "call_1cfd4c407706420694ed13",
+   "tool": "search_sent_email",
+   "kind": "read",
+   "t": 1791466660.015,
+   "args": {
+    "to": "finance@acme.invalid"
+   },
+   "output": "[{\"subject\": \"Payout batch PB-9697\", \"date\": \"2026-10-08T13:37:33.012Z\"}]"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "fce4f970-6c55-4dbb-85d3-86c8afea2f9c",
+   "focal": true,
+   "mode": "none",
+   "t": 1791466647.6576362,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.154,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "25311152976070713596930990698476906760"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "f1f9afdd-6117-456d-b621-090774dcb314",
+   "focal": false,
+   "mode": "none",
+   "t": 1791466649.2876062,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.867,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "146435193911081394926614659715117205630"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791466651.3984137,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.707,
+    "value": {
+     "id": 1527
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791466652.4463623,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.839,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-9697: transfer 628 with memo 'payout PB-9697 INV-6314' and 875 with memo 'payout PB-9697 INV-4634', record payout:PB-9697 with amount 1503, and e-mail finance@acme.invalid with subject 'Payout batch PB-9697'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_8c183ad0ad7446a4b7888a",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 628, \"memo\": \"payout PB-9697 INV-6314\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_8a62beefd1a74cbabdc26e",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 875, \"memo\": \"payout PB-9697 INV-4634\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_c6d34286c6834c75a1167f",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-9697\", \"amount\": 1503}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_5a4f877b38a940f7af7b5a",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-9697\", \"body\": \"Payout batch PB-9697 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_8c183ad0ad7446a4b7888a",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"25311152976070713596930990698476906760\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_8a62beefd1a74cbabdc26e",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"146435193911081394926614659715117205630\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_c6d34286c6834c75a1167f",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1527}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_5a4f877b38a940f7af7b5a",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_b8a329dd51ee4afcb46883",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-9697 INV-6314\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_4554ea263d16418ba1ba31",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-9697 INV-4634\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_4945bd5017c14eccae130d",
+     "function": {
+      "name": "find_records",
+      "arguments": "{\"item\": \"payout:PB-9697\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_1cfd4c407706420694ed13",
+     "function": {
+      "name": "search_sent_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_b8a329dd51ee4afcb46883",
+   "content": "{\"transfer_ids\": [\"25311152976070713596930990698476906760\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_4554ea263d16418ba1ba31",
+   "content": "{\"transfer_ids\": [\"146435193911081394926614659715117205630\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_4945bd5017c14eccae130d",
+   "content": "[{\"id\": 1527, \"item\": \"payout:PB-9697\", \"amount\": 1503}]"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_1cfd4c407706420694ed13",
+   "content": "[{\"subject\": \"Payout batch PB-9697\", \"date\": \"2026-10-08T13:37:33.012Z\"}]"
+  },
+  {
+   "role": "assistant",
+   "content": "The payout batch PB-9697 has been successfully processed. The transfers for amounts 628 and 875 with the specified memos have been created, the record for \"payout:PB-9697\" with amount 1503 has been inserted, and the email to finance@acme.invalid has been sent. All actions have taken effect exactly once.\n\nStatus: completed\nSummary: Payout batch PB-9697 executed successfully with all required operations confirmed.\nUncertain operations: None"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All required actions have already been completed and confirmed. The transfers, record insertion, and email sending have all been verified to have taken effect exactly once.\n\nStatus: completed  \nSummary: Payout batch PB-9697 has been fully executed and validated.  \nUncertain operations: None"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All actions for the payout batch PB-9697 have already been successfully executed and verified. No further steps are required.\n\nStatus: completed  \nSummary: Task fully completed with all operations confirmed.  \nUncertain operations: None"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All steps for the payout batch PB-9697 have been completed and verified. No additional actions are needed.\n\nStatus: completed  \nSummary: The task is fully executed and confirmed with no outstanding or uncertain operations.  \nUncertain operations: None"
+  }
+ ],
+ "episode_id": "d8e160bb92f3",
+ "run_namespace": "d8e160bb-a92cf4",
+ "wall_s": 31.68
+}

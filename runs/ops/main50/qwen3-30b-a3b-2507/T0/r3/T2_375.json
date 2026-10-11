@@ -1,0 +1,525 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_375",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "no_tool_calls",
+ "error": null,
+ "category": "interface",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 375,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'.",
+ "claimed": "no_finish",
+ "model_summary": "All required actions for the task have already been completed and confirmed. There are no further steps to execute.\n\nfinish\nstatus: completed\nsummary: Payout batch PB-4805 was successfully executed with all required actions completed: two transfers created, one record inserted, and one email sent. All confirmations match the expected outcomes.\nuncertain_operations: []",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 6,
+ "n_tool_calls": 8,
+ "n_writes": 4,
+ "n_nudges": 3,
+ "n_malformed": 0,
+ "stop": "no_tool_calls",
+ "agent_cost": 0.001683,
+ "paid_calls": 6,
+ "cached_calls": 0,
+ "tokens_in": 10348,
+ "tokens_out": 649,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Alibaba|qwen/qwen3-30b-a3b-instruct-2507"
+ ],
+ "model_latency_s": 11.93,
+ "step_map": {
+  "transfer_create:payout pb-4805 inv-2306": "pay_1",
+  "transfer_create:payout pb-4805 inv-4630": "pay_2",
+  "row_insert:payout:pb-4805": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-4805": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "call_2a6711ffa72a43788bee6e",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791467864.439,
+   "args": {
+    "amount": 730,
+    "memo": "payout PB-4805 INV-2306"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"257532149398249753574972191435596818369\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "call_44e1989ad8fb43089918dc",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791467865.549,
+   "args": {
+    "amount": 579,
+    "memo": "payout PB-4805 INV-4630"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"5243822025393340055219432563912898343\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "call_9d7622715a8b4ce897c931",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791467866.586,
+   "args": {
+    "item": "payout:PB-4805",
+    "amount": 1309
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1658}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "call_01bb7403040a4530816a96",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791467866.65,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-4805",
+    "body": "Payout batch PB-4805 has been processed."
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "call_5ce2bf26f07d48e58d1588",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791467868.574,
+   "args": {
+    "memo": "payout PB-4805 INV-2306"
+   },
+   "output": "{\"transfer_ids\": [\"257532149398249753574972191435596818369\"]}"
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "call_id": "call_96f2f6b22fc24b3cb9ca5a",
+   "tool": "find_transfers",
+   "kind": "read",
+   "t": 1791467883.565,
+   "args": {
+    "memo": "payout PB-4805 INV-4630"
+   },
+   "output": "{\"transfer_ids\": [\"5243822025393340055219432563912898343\"]}"
+  },
+  {
+   "i": 6,
+   "turn": 2,
+   "call_id": "call_c2c2bf432d5243fa9782e0",
+   "tool": "find_records",
+   "kind": "read",
+   "t": 1791467887.605,
+   "args": {
+    "item": "payout:PB-4805"
+   },
+   "output": "[{\"id\": 1658, \"item\": \"payout:PB-4805\", \"amount\": 1309}]"
+  },
+  {
+   "i": 7,
+   "turn": 2,
+   "call_id": "call_a6f6d2447fd74628b0218b",
+   "tool": "search_sent_email",
+   "kind": "read",
+   "t": 1791467896.376,
+   "args": {
+    "to": "finance@acme.invalid"
+   },
+   "output": "[{\"subject\": \"Payout batch PB-4805\", \"date\": \"2026-10-08T13:57:46.801Z\"}]"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "b73a48d2-e32b-436a-8a8f-a2c806266997",
+   "focal": true,
+   "mode": "none",
+   "t": 1791467864.4782522,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.002,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "257532149398249753574972191435596818369"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "baa71006-f030-435e-9f16-f2b947186214",
+   "focal": false,
+   "mode": "none",
+   "t": 1791467865.5493944,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.981,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "5243822025393340055219432563912898343"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791467866.5860317,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.055,
+    "value": {
+     "id": 1658
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791467866.6495261,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.057,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_2a6711ffa72a43788bee6e",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 730, \"memo\": \"payout PB-4805 INV-2306\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_44e1989ad8fb43089918dc",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 579, \"memo\": \"payout PB-4805 INV-4630\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_9d7622715a8b4ce897c931",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-4805\", \"amount\": 1309}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_01bb7403040a4530816a96",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-4805\", \"body\": \"Payout batch PB-4805 has been processed.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_2a6711ffa72a43788bee6e",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"257532149398249753574972191435596818369\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_44e1989ad8fb43089918dc",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"5243822025393340055219432563912898343\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_9d7622715a8b4ce897c931",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1658}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_01bb7403040a4530816a96",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "call_5ce2bf26f07d48e58d1588",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-4805 INV-2306\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "call_96f2f6b22fc24b3cb9ca5a",
+     "function": {
+      "name": "find_transfers",
+      "arguments": "{\"memo\": \"payout PB-4805 INV-4630\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "call_c2c2bf432d5243fa9782e0",
+     "function": {
+      "name": "find_records",
+      "arguments": "{\"item\": \"payout:PB-4805\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "call_a6f6d2447fd74628b0218b",
+     "function": {
+      "name": "search_sent_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_5ce2bf26f07d48e58d1588",
+   "content": "{\"transfer_ids\": [\"257532149398249753574972191435596818369\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_96f2f6b22fc24b3cb9ca5a",
+   "content": "{\"transfer_ids\": [\"5243822025393340055219432563912898343\"]}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_c2c2bf432d5243fa9782e0",
+   "content": "[{\"id\": 1658, \"item\": \"payout:PB-4805\", \"amount\": 1309}]"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "call_a6f6d2447fd74628b0218b",
+   "content": "[{\"subject\": \"Payout batch PB-4805\", \"date\": \"2026-10-08T13:57:46.801Z\"}]"
+  },
+  {
+   "role": "assistant",
+   "content": "The payout batch PB-4805 has been successfully processed. The transfers for 730 and 579 with the specified memos have been created, the record for payout:PB-4805 with amount 1309 has been inserted, and the email to finance@acme.invalid has been sent. All actions have taken effect exactly once.\n\nAll operations were confirmed successful.\n\nfinish\nstatus: completed\nsummary: Payout batch PB-4805 was successfully executed with all required actions completed: two transfers created, one record inserted, and one email sent. All confirmations match the expected outcomes.\nuncertain_operations: []"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All required actions for the task have already been completed and confirmed. There are no further steps to execute.\n\nfinish\nstatus: completed\nsummary: Payout batch PB-4805 was successfully executed with all required actions completed: two transfers created, one record inserted, and one email sent. All confirmations match the expected outcomes.\nuncertain_operations: []"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All required actions for the task have already been completed and confirmed. There are no further steps to execute.\n\nfinish\nstatus: completed\nsummary: Payout batch PB-4805 was successfully executed with all required actions completed: two transfers created, one record inserted, and one email sent. All confirmations match the expected outcomes.\nuncertain_operations: []"
+  },
+  {
+   "role": "user",
+   "content": "Continue the task using the tools. When you are done, call finish."
+  },
+  {
+   "role": "assistant",
+   "content": "All required actions for the task have already been completed and confirmed. There are no further steps to execute.\n\nfinish\nstatus: completed\nsummary: Payout batch PB-4805 was successfully executed with all required actions completed: two transfers created, one record inserted, and one email sent. All confirmations match the expected outcomes.\nuncertain_operations: []"
+  }
+ ],
+ "episode_id": "9eadeebc7402",
+ "run_namespace": "9eadeebc-d1d091",
+ "wall_s": 62.18
+}

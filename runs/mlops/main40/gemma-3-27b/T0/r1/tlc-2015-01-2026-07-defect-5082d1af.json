@@ -1,0 +1,163 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000737,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 31.842
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.987597
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 2.8867,
+   "spent_seconds": 3.4017,
+   "wall_s": 1.863
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely due to changes in the trip_adapter and time_features components, as rolling back these components reveals differing outputs, and the changes align with source schema events and component updates."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 43.26,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely due to changes in the trip_adapter and time_features components, as rolling back these components reveals differing outputs, and the changes align with source schema events and component updates."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2886,
+    "completion_tokens": 20,
+    "total_tokens": 2906,
+    "cost": 0.00023408
+   },
+   "cost": 0.00023408,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 3002,
+    "completion_tokens": 20,
+    "total_tokens": 3022,
+    "cost": 0.00024336
+   },
+   "cost": 0.00024336,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": false, \"reason\": \"The accuracy drop is likely due to changes in the trip_adapter and time_features components, as rolling back these components reveals differing outputs, and the changes align with source schema events and component updates.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3092,
+    "completion_tokens": 76,
+    "total_tokens": 3168,
+    "cost": 0.00025952
+   },
+   "cost": 0.00025952,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8980,
+ "tokens_out": 116,
+ "compute_spent_s": 3.4017,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

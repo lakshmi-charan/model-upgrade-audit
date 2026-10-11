@@ -1,0 +1,160 @@
+{
+ "task_id": "tlc-2022-01-2025-04-defect-5082d1af",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.012319,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "airport_fee": 0.068254,
+     "cbd_congestion_fee": 0.735883
+    },
+    "rows": [
+     150320,
+     150320
+    ]
+   },
+   "cost_s": 0.3631,
+   "spent_seconds": 0.3631,
+   "wall_s": 2.715
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.991192
+    },
+    "rows": [
+     150320,
+     150320
+    ]
+   },
+   "cost_s": 3.3108,
+   "spent_seconds": 3.6738,
+   "wall_s": 0.296
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "Component changes in trip_adapter and time_features caused critical feature drift (airport_fee, cbd_congestion_fee, duration_min) requiring code/config fixes before retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 59.64,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Component changes in trip_adapter and time_features caused critical feature drift (airport_fee, cbd_congestion_fee, duration_min) requiring code/config fixes before retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2513,
+    "completion_tokens": 7496,
+    "total_tokens": 10009,
+    "cost": 0.0101531625
+   },
+   "cost": 0.0101531625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"time_features\"\n}",
+   "usage": {
+    "prompt_tokens": 2619,
+    "completion_tokens": 253,
+    "total_tokens": 2872,
+    "cost": 0.0007544875
+   },
+   "cost": 0.0007544875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"time_features\"],\n  \"retrain\": false,\n  \"reason\": \"Component changes in trip_adapter and time_features caused critical feature drift (airport_fee, cbd_congestion_fee, duration_min) requiring code/config fixes before retraining.\"\n}",
+   "usage": {
+    "prompt_tokens": 2709,
+    "completion_tokens": 747,
+    "total_tokens": 3456,
+    "cost": 0.0014113125
+   },
+   "cost": 0.0014113125,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 7841,
+ "tokens_out": 8496,
+ "compute_spent_s": 3.6738,
+ "compute_budget_s": 11.68125899998995,
+ "source_cache_hits": 4,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

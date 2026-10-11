@@ -1,0 +1,215 @@
+{
+ "task_id": "news-2013-2017-two-26a5381e",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "label_map"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.005109,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "label_map"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 5.072
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 1.0
+    },
+    "rows": [
+     8786,
+     8786
+    ]
+   },
+   "cost_s": 0.5113,
+   "spent_seconds": 0.5113,
+   "wall_s": 0.607
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.23065134099616857,
+    "cur_perf": 0.00842911877394636,
+    "ref_perf": 0.7222063989366753,
+    "rows": 2610,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 1.1208,
+   "spent_seconds": 1.6321,
+   "wall_s": 3.329
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 1.6321,
+   "wall_s": 0.145
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "vectorize config change causes output drift and low accuracy; retraining needed for genuine 2013-2017 covariate drift."
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 38.84,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "vectorize"
+  ],
+  "retrain": true,
+  "reason": "vectorize config change causes output drift and low accuracy; retraining needed for genuine 2013-2017 covariate drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"label_map\"}",
+   "usage": {
+    "prompt_tokens": 1224,
+    "completion_tokens": 937,
+    "total_tokens": 2161,
+    "cost": 0.001417
+   },
+   "cost": 0.001417,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"vectorize\"}",
+   "usage": {
+    "prompt_tokens": 1265,
+    "completion_tokens": 400,
+    "total_tokens": 1665,
+    "cost": 0.0007255625
+   },
+   "cost": 0.0007255625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"vectorize\"]}",
+   "usage": {
+    "prompt_tokens": 1338,
+    "completion_tokens": 556,
+    "total_tokens": 1894,
+    "cost": 0.000940225
+   },
+   "cost": 0.000940225,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"text_norm\"}",
+   "usage": {
+    "prompt_tokens": 1474,
+    "completion_tokens": 578,
+    "total_tokens": 2052,
+    "cost": 0.000990925
+   },
+   "cost": 0.000990925,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"vectorize\"], \"retrain\": true, \"reason\": \"vectorize config change causes output drift and low accuracy; retraining needed for genuine 2013-2017 covariate drift.\"}",
+   "usage": {
+    "prompt_tokens": 1517,
+    "completion_tokens": 607,
+    "total_tokens": 2124,
+    "cost": 0.0010356125
+   },
+   "cost": 0.0010356125,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6818,
+ "tokens_out": 3078,
+ "compute_spent_s": 1.6321,
+ "compute_budget_s": 25.4011835999263,
+ "source_cache_hits": 10,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

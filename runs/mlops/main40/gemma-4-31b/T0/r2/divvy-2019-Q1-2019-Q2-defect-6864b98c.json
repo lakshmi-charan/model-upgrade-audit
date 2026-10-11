@@ -1,0 +1,202 @@
+{
+ "task_id": "divvy-2019-Q1-2019-Q2-defect-6864b98c",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000481,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2019-Q2"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2018-Q4",
+     "2019-Q1",
+     "2019-Q2"
+    ],
+    "versions": {
+     "2018-Q4": "reference",
+     "2019-Q1": "reference",
+     "2019-Q2": "current"
+    },
+    "retention": {
+     "2018-Q4": 1.0,
+     "2019-Q1": 1.0,
+     "2019-Q2": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "user": {
+      "baseline_psi": 0.0153,
+      "boundary_psi": 0.2551,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "duration": {
+      "baseline_psi": 0.0057,
+      "boundary_psi": 0.1458,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.009,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0085,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 1.945
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: '01 - Rental Details Rental ID'"
+   },
+   "cost_s": 0.0006,
+   "spent_seconds": 0.0006,
+   "wall_s": 0.083
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter failed to handle the source schema change (long-form column headers), causing a failure when replaying on reference data and introducing drift in downstream time features."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 8.0,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter failed to handle the source schema change (long-form column headers), causing a failure when replaying on reference data and introducing drift in downstream time features."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2019-Q2\"}\n```",
+   "usage": {
+    "prompt_tokens": 2375,
+    "completion_tokens": 32,
+    "total_tokens": 2407,
+    "cost": 0.00012991
+   },
+   "cost": 0.00012991,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2929,
+    "completion_tokens": 20,
+    "total_tokens": 2949,
+    "cost": 0.00017569
+   },
+   "cost": 0.00017569,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"The trip_adapter failed to handle the source schema change (long-form column headers), causing a failure when replaying on reference data and introducing drift in downstream time features.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2996,
+    "completion_tokens": 66,
+    "total_tokens": 3062,
+    "cost": 0.0001756
+   },
+   "cost": 0.0001756,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 8300,
+ "tokens_out": 118,
+ "compute_spent_s": 0.0006,
+ "compute_budget_s": 11.276925600006507,
+ "source_cache_hits": 5,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

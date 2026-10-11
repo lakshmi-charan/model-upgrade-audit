@@ -1,0 +1,299 @@
+{
+ "task_id": "bts-2019-01-2022-01-defect-bcfcb399",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001524,
+ "n_steps": 7,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "flight_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.341
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.969053
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 1.9568,
+   "spent_seconds": 1.9568,
+   "wall_s": 0.296
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.97076
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 2.3717,
+   "spent_seconds": 4.3285,
+   "wall_s": 0.374
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0623,
+   "spent_seconds": 4.3908,
+   "wall_s": 0.266
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "airport_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 1.6152,
+   "spent_seconds": 6.006,
+   "wall_s": 0.237
+  },
+  {
+   "step": 6,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 6.006,
+   "wall_s": 0.111
+  },
+  {
+   "step": 7,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7879867046533713,
+    "cur_perf": 0.7790598290598291,
+    "ref_perf": 0.8263081895069793,
+    "rows": 42120,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.6341,
+   "spent_seconds": 6.6401,
+   "wall_s": 0.764
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Rolling back time_features improves accuracy, suggesting a defect in that component, and retraining is not necessary as the issue is likely a pipeline bug."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "bts",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 19.21,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Rolling back time_features improves accuracy, suggesting a defect in that component, and retraining is not necessary as the issue is likely a pipeline bug."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 8,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"flight_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2092,
+    "completion_tokens": 20,
+    "total_tokens": 2112,
+    "cost": 0.00017056
+   },
+   "cost": 0.00017056,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2140,
+    "completion_tokens": 20,
+    "total_tokens": 2160,
+    "cost": 0.0001744
+   },
+   "cost": 0.0001744,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2232,
+    "completion_tokens": 20,
+    "total_tokens": 2252,
+    "cost": 0.00018176
+   },
+   "cost": 0.00018176,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"clean\"}\n```",
+   "usage": {
+    "prompt_tokens": 2323,
+    "completion_tokens": 18,
+    "total_tokens": 2341,
+    "cost": 0.00018872
+   },
+   "cost": 0.00018872,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"airport_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 2371,
+    "completion_tokens": 20,
+    "total_tokens": 2391,
+    "cost": 0.00019288
+   },
+   "cost": 0.00019288,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"encode\"}\n```",
+   "usage": {
+    "prompt_tokens": 2421,
+    "completion_tokens": 18,
+    "total_tokens": 2439,
+    "cost": 0.00019656
+   },
+   "cost": 0.00019656,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"time_features\"]}\n```",
+   "usage": {
+    "prompt_tokens": 2469,
+    "completion_tokens": 20,
+    "total_tokens": 2489,
+    "cost": 0.00020072
+   },
+   "cost": 0.00020072,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"time_features\"], \"retrain\": false, \"reason\": \"Rolling back time_features improves accuracy, suggesting a defect in that component, and retraining is not necessary as the issue is likely a pipeline bug.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2613,
+    "completion_tokens": 60,
+    "total_tokens": 2673,
+    "cost": 0.00021864
+   },
+   "cost": 0.00021864,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 18661,
+ "tokens_out": 196,
+ "compute_spent_s": 6.6401,
+ "compute_budget_s": 15.425814300004276,
+ "source_cache_hits": 16,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

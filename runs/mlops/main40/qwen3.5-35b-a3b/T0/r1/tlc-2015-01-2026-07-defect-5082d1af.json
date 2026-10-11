@@ -1,0 +1,233 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.008926,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 10.995
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6791457753017641,
+    "cur_perf": 0.6752460538532962,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26925,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.9126,
+   "spent_seconds": 1.4276,
+   "wall_s": 1.268
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.987597
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 2.8867,
+   "spent_seconds": 4.3143,
+   "wall_s": 4.248
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6851315202853322,
+    "cur_perf": 0.6753975330658345,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26916,
+    "common_rows": 26916,
+    "masked": []
+   },
+   "cost_s": 0.643,
+   "spent_seconds": 4.9573,
+   "wall_s": 0.852
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Both components show significant output differences from reference versions due to config/environment changes, but even after rollback accuracy remains below reference levels indicating genuine covariate/concept drift over the 11-year period."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 60.06,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "Both components show significant output differences from reference versions due to config/environment changes, but even after rollback accuracy remains below reference levels indicating genuine covariate/concept drift over the 11-year period."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2682,
+    "completion_tokens": 3259,
+    "total_tokens": 5941,
+    "cost": 0.004672525
+   },
+   "cost": 0.004672525,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 2797,
+    "completion_tokens": 336,
+    "total_tokens": 3133,
+    "cost": 0.0008913125
+   },
+   "cost": 0.0008913125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"time_features\"\n}",
+   "usage": {
+    "prompt_tokens": 2939,
+    "completion_tokens": 539,
+    "total_tokens": 3478,
+    "cost": 0.0011782875
+   },
+   "cost": 0.0011782875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"time_features\"]\n}",
+   "usage": {
+    "prompt_tokens": 3029,
+    "completion_tokens": 221,
+    "total_tokens": 3250,
+    "cost": 0.0007795125
+   },
+   "cost": 0.0007795125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"time_features\"],\n  \"retrain\": true,\n  \"reason\": \"Both components show significant output differences from reference versions due to config/environment changes, but even after rollback accuracy remains below reference levels indicating genuine covariate/concept drift over the 11-year period.\"\n}",
+   "usage": {
+    "prompt_tokens": 3176,
+    "completion_tokens": 683,
+    "total_tokens": 3859,
+    "cost": 0.001404
+   },
+   "cost": 0.001404,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 14623,
+ "tokens_out": 5038,
+ "compute_spent_s": 4.9573,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 11,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

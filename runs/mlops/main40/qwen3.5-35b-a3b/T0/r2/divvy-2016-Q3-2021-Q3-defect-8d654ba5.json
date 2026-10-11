@@ -1,0 +1,237 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.016936,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 0.0048,
+   "wall_s": 0.272
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 1.7352,
+   "wall_s": 0.331
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 1.8593,
+   "wall_s": 0.607
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 1.8641,
+   "wall_s": 0.028
+  },
+  {
+   "step": 5,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "distance_km": 0.040515
+    },
+    "rows": [
+     99914,
+     99914
+    ]
+   },
+   "cost_s": 2.2058,
+   "spent_seconds": 4.0699,
+   "wall_s": 0.384
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to 2020-Q1 schema changes removing trip_id column causing pipeline errors, clean shows divergent behavior on reference data, and significant label drift (70%→49%) requires retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 83.98,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "clean"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to 2020-Q1 schema changes removing trip_id column causing pipeline errors, clean shows divergent behavior on reference data, and significant label drift (70%→49%) requires retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3195,
+    "completion_tokens": 7913,
+    "total_tokens": 11108,
+    "cost": 0.0108060875
+   },
+   "cost": 0.0108060875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 3257,
+    "completion_tokens": 438,
+    "total_tokens": 3695,
+    "cost": 0.0010986625
+   },
+   "cost": 0.0010986625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"station_join\"\n}",
+   "usage": {
+    "prompt_tokens": 3379,
+    "completion_tokens": 444,
+    "total_tokens": 3823,
+    "cost": 0.0011262875
+   },
+   "cost": 0.0011262875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"trip_adapter\"]\n}",
+   "usage": {
+    "prompt_tokens": 3430,
+    "completion_tokens": 563,
+    "total_tokens": 3993,
+    "cost": 0.001289275
+   },
+   "cost": 0.001289275,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 3492,
+    "completion_tokens": 493,
+    "total_tokens": 3985,
+    "cost": 0.00120835
+   },
+   "cost": 0.00120835,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"trip_adapter\", \"clean\"],\n  \"retrain\": true,\n  \"reason\": \"trip_adapter is broken due to 2020-Q1 schema changes removing trip_id column causing pipeline errors, clean shows divergent behavior on reference data, and significant label drift (70%→49%) requires retraining.\"\n}",
+   "usage": {
+    "prompt_tokens": 3579,
+    "completion_tokens": 635,
+    "total_tokens": 4214,
+    "cost": 0.0014070875
+   },
+   "cost": 0.0014070875,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 20332,
+ "tokens_out": 10486,
+ "compute_spent_s": 4.0699,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 9,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

@@ -1,0 +1,421 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_330",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 330,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-9935: transfer 177 with memo 'payout PB-9935 INV-8410' and 184 with memo 'payout PB-9935 INV-8815', record payout:PB-9935 with amount 361, and e-mail finance@acme.invalid with subject 'Payout batch PB-9935'.",
+ "claimed": "completed",
+ "model_summary": "Executed payout batch PB-9935: created two transfers, recorded payout, and sent e-mail.",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000326,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 2385,
+ "tokens_out": 178,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "Mistral|mistralai/mistral-small-2603"
+ ],
+ "model_latency_s": 2.91,
+ "step_map": {
+  "transfer_create:payout pb-9935 inv-8410": "pay_1",
+  "transfer_create:payout pb-9935 inv-8815": "pay_2",
+  "row_insert:payout:pb-9935": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-9935": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "JfP6DePOa",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791460418.216,
+   "args": {
+    "amount": 177,
+    "memo": "payout PB-9935 INV-8410"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"153132868881070685505144728416292270769\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "uzphRGxAb",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791460419.543,
+   "args": {
+    "amount": 184,
+    "memo": "payout PB-9935 INV-8815"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"30960806512226176890766333919272953031\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "kLOe6Z38k",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791460421.266,
+   "args": {
+    "item": "payout:PB-9935",
+    "amount": 361
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 918}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "fCE8TQVpw",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791460421.425,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-9935",
+    "body": ""
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "wIUKJZu5P",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791460422.96,
+   "args": {
+    "status": "completed",
+    "summary": "Executed payout batch PB-9935: created two transfers, recorded payout, and sent e-mail.",
+    "uncertain_operations": []
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "1605a9e1-7bd9-4159-8580-dc4f6a4d104c",
+   "focal": true,
+   "mode": "none",
+   "t": 1791460418.2389307,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.246,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "153132868881070685505144728416292270769"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "213821bf-88c3-4a84-9107-82c5634ab98c",
+   "focal": false,
+   "mode": "none",
+   "t": 1791460419.543602,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.567,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "30960806512226176890766333919272953031"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791460421.2660754,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.067,
+    "value": {
+     "id": 918
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791460421.4252946,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.07,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-9935: transfer 177 with memo 'payout PB-9935 INV-8410' and 184 with memo 'payout PB-9935 INV-8815', record payout:PB-9935 with amount 361, and e-mail finance@acme.invalid with subject 'Payout batch PB-9935'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "JfP6DePOa",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 177, \"memo\": \"payout PB-9935 INV-8410\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "uzphRGxAb",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 184, \"memo\": \"payout PB-9935 INV-8815\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "kLOe6Z38k",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-9935\", \"amount\": 361}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "fCE8TQVpw",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-9935\", \"body\": \"\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "JfP6DePOa",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"153132868881070685505144728416292270769\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "uzphRGxAb",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"30960806512226176890766333919272953031\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "kLOe6Z38k",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 918}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "fCE8TQVpw",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "wIUKJZu5P",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"completed\", \"summary\": \"Executed payout batch PB-9935: created two transfers, recorded payout, and sent e-mail.\", \"uncertain_operations\": []}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "wIUKJZu5P",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "d6e1453b93a6",
+ "run_namespace": "d6e1453b-cdc83b",
+ "wall_s": 15.06
+}

@@ -1,0 +1,132 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "station_join"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.000557,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "start_lat": 1.0,
+     "start_lng": 1.0,
+     "end_lat": 0.99897,
+     "end_lng": 0.99897,
+     "distance_km": 0.99897,
+     "round_trip": 0.34739
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 0.0637,
+   "spent_seconds": 0.0637,
+   "wall_s": 3.031
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "Severe accuracy drop with drift indicators; station_join output differs from reference after rollback, indicating a defective component contributing to data/feature drift; fix station_join and retrain to recover performance."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 16.39,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "station_join"
+  ],
+  "retrain": true,
+  "reason": "Severe accuracy drop with drift indicators; station_join output differs from reference after rollback, indicating a defective component contributing to data/feature drift; fix station_join and retrain to recover performance."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"station_join\"}",
+   "usage": {
+    "prompt_tokens": 3014,
+    "completion_tokens": 460,
+    "total_tokens": 3474,
+    "cost": 0.0003347
+   },
+   "cost": 0.0003347,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"station_join\"], \"retrain\": true, \"reason\": \"Severe accuracy drop with drift indicators; station_join output differs from reference after rollback, indicating a defective component contributing to data/feature drift; fix station_join and retrain to recover performance.\"}",
+   "usage": {
+    "prompt_tokens": 3134,
+    "completion_tokens": 496,
+    "total_tokens": 3630,
+    "cost": 0.00022262
+   },
+   "cost": 0.00022262,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6148,
+ "tokens_out": 956,
+ "compute_spent_s": 0.0637,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 2,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

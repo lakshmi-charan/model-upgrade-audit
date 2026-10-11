@@ -1,0 +1,151 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.00134,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 6.6891,
+   "spent_seconds": 6.6891,
+   "wall_s": 0.335
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 8.4195,
+   "wall_s": 0.132
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter component failed to process data from 2019-Q3 onward due to schema changes in 2020-Q1, indicating it is broken and must be fixed; retraining is needed due to significant label drift and model performance degradation."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 5.03,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter component failed to process data from 2019-Q3 onward due to schema changes in 2020-Q1, indicating it is broken and must be fixed; retraining is needed due to significant label drift and model performance degradation."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3177,
+    "completion_tokens": 24,
+    "total_tokens": 3201,
+    "cost": 0.00042549
+   },
+   "cost": 0.00042549,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3279,
+    "completion_tokens": 14,
+    "total_tokens": 3293,
+    "cost": 0.00043355
+   },
+   "cost": 0.00043355,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"The trip_adapter component failed to process data from 2019-Q3 onward due to schema changes in 2020-Q1, indicating it is broken and must be fixed; retraining is needed due to significant label drift and model performance degradation.\"}",
+   "usage": {
+    "prompt_tokens": 3393,
+    "completion_tokens": 77,
+    "total_tokens": 3470,
+    "cost": 0.00048113
+   },
+   "cost": 0.00048113,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9849,
+ "tokens_out": 115,
+ "compute_spent_s": 8.4195,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 7,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

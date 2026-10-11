@@ -1,0 +1,128 @@
+{
+ "task_id": "tlc-2015-01-2015-07-two-849b4376",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000547,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "vendor": 1.0,
+     "pu_borough": 0.069961,
+     "do_borough": 0.06995,
+     "pu_service": 0.061488,
+     "do_service": 0.061477
+    },
+    "rows": [
+     92294,
+     92294
+    ]
+   },
+   "cost_s": 0.217,
+   "spent_seconds": 0.217,
+   "wall_s": 0.427
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "Rollback showed encode outputs differ from reference after config change, with key columns (vendor, pu_borough, do_borough, pu_service, do_service) drifting. Revert or patch encode to the known-good (reference) version and re-evaluate before retraining."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "effective": [
+   "encode",
+   "zone_join"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 15.26,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "Rollback showed encode outputs differ from reference after config change, with key columns (vendor, pu_borough, do_borough, pu_service, do_service) drifting. Revert or patch encode to the known-good (reference) version and re-evaluate before retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2288,
+    "completion_tokens": 412,
+    "total_tokens": 2700,
+    "cost": 0.0002792
+   },
+   "cost": 0.0002792,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"encode\"], \"retrain\": false, \"reason\": \"Rollback showed encode outputs differ from reference after config change, with key columns (vendor, pu_borough, do_borough, pu_service, do_service) drifting. Revert or patch encode to the known-good (reference) version and re-evaluate before retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2396,
+    "completion_tokens": 369,
+    "total_tokens": 2765,
+    "cost": 0.0002674
+   },
+   "cost": 0.0002674,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 4684,
+ "tokens_out": 781,
+ "compute_spent_s": 0.217,
+ "compute_budget_s": 58.65384449994599,
+ "source_cache_hits": 2,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

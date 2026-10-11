@@ -1,0 +1,114 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000625,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 0.0048,
+   "wall_s": 8.538
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "Schema drift in trips table (2020+ layout) removed trip_id and replaced with ride_id; downstream components expect trip_id, causing a KeyError. Fix trip_adapter to align with current schema (support both old and new layouts or rename fields) before retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 27.61,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "Schema drift in trips table (2020+ layout) removed trip_id and replaced with ride_id; downstream components expect trip_id, causing a KeyError. Fix trip_adapter to align with current schema (support both old and new layouts or rename fields) before retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3009,
+    "completion_tokens": 495,
+    "total_tokens": 3504,
+    "cost": 0.00034845
+   },
+   "cost": 0.00034845,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"Schema drift in trips table (2020+ layout) removed trip_id and replaced with ride_id; downstream components expect trip_id, causing a KeyError. Fix trip_adapter to align with current schema (support both old and new layouts or rename fields) before retraining.\"}",
+   "usage": {
+    "prompt_tokens": 3062,
+    "completion_tokens": 639,
+    "total_tokens": 3701,
+    "cost": 0.00027622
+   },
+   "cost": 0.00027622,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6071,
+ "tokens_out": 1134,
+ "compute_spent_s": 0.0048,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 2,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

@@ -1,0 +1,269 @@
+{
+ "task_id": "tlc-2015-01-2026-07-defect-5082d1af",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.001038,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "ratecode": 1.0,
+     "airport_fee": 0.068289,
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.515,
+   "spent_seconds": 0.515,
+   "wall_s": 2.624
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6791457753017641,
+    "cur_perf": 0.6752460538532962,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26925,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.4207,
+   "spent_seconds": 0.9358,
+   "wall_s": 0.567
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.987597
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 2.8867,
+   "spent_seconds": 3.8225,
+   "wall_s": 0.357
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6860603358597117,
+    "cur_perf": 0.6753975330658345,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26916,
+    "common_rows": 26916,
+    "masked": []
+   },
+   "cost_s": 0.3518,
+   "spent_seconds": 4.1743,
+   "wall_s": 0.458
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6851315202853322,
+    "cur_perf": 0.6753975330658345,
+    "ref_perf": 0.7126164874551971,
+    "rows": 26916,
+    "common_rows": 26916,
+    "masked": []
+   },
+   "cost_s": 0.4565,
+   "spent_seconds": 4.6308,
+   "wall_s": 0.429
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter mishandles current schema changes and time_features produces invalid duration values; rolling them back improves accuracy, while the remaining degradation indicates genuine temporal/data drift requiring retraining after the pipeline fixes."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 60.71,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter mishandles current schema changes and time_features produces invalid duration values; rolling them back improves accuracy, while the remaining degradation indicates genuine temporal/data drift requiring retraining after the pipeline fixes."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2516,
+    "completion_tokens": 105,
+    "total_tokens": 2621,
+    "cost": 0.00017686
+   },
+   "cost": 0.00017686,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 2604,
+    "completion_tokens": 85,
+    "total_tokens": 2689,
+    "cost": 0.00015462
+   },
+   "cost": 0.00015462,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2702,
+    "completion_tokens": 59,
+    "total_tokens": 2761,
+    "cost": 0.00014792
+   },
+   "cost": 0.00014792,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"trip_adapter\",\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2768,
+    "completion_tokens": 63,
+    "total_tokens": 2831,
+    "cost": 0.00014668
+   },
+   "cost": 0.00014668,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"effect\",\"components\":[\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2871,
+    "completion_tokens": 57,
+    "total_tokens": 2928,
+    "cost": 0.00015005
+   },
+   "cost": 0.00015005,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\",\"time_features\"],\"retrain\":true,\"reason\":\"trip_adapter mishandles current schema changes and time_features produces invalid duration values; rolling them back improves accuracy, while the remaining degradation indicates genuine temporal/data drift requiring retraining after the pipeline fixes.\"}",
+   "usage": {
+    "prompt_tokens": 2971,
+    "completion_tokens": 149,
+    "total_tokens": 3120,
+    "cost": 0.00026176
+   },
+   "cost": 0.00026176,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 16432,
+ "tokens_out": 518,
+ "compute_spent_s": 4.6308,
+ "compute_budget_s": 7.956432299979497,
+ "source_cache_hits": 14,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

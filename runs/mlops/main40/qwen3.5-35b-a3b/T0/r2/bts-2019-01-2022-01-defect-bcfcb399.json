@@ -1,0 +1,149 @@
+{
+ "task_id": "bts-2019-01-2022-01-defect-bcfcb399",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 1,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.01224,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "day_of_year": 0.969053
+    },
+    "rows": [
+     150000,
+     150000
+    ]
+   },
+   "cost_s": 1.9568,
+   "spent_seconds": 1.9568,
+   "wall_s": 0.865
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0623,
+   "spent_seconds": 2.0192,
+   "wall_s": 1.883
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "Rollback time_features to resolve environment-induced feature drift; retrain model to adapt to natural data distribution changes."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "bts",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 107.08,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "Rollback time_features to resolve environment-induced feature drift; retrain model to adapt to natural data distribution changes."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"time_features\"\n}",
+   "usage": {
+    "prompt_tokens": 1933,
+    "completion_tokens": 5941,
+    "total_tokens": 7874,
+    "cost": 0.0080374125
+   },
+   "cost": 0.0080374125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"clean\"\n}",
+   "usage": {
+    "prompt_tokens": 2025,
+    "completion_tokens": 261,
+    "total_tokens": 2286,
+    "cost": 0.0006683625
+   },
+   "cost": 0.0006683625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"time_features\"],\n  \"retrain\": true,\n  \"reason\": \"Rollback time_features to resolve environment-induced feature drift; retrain model to adapt to natural data distribution changes.\"\n}",
+   "usage": {
+    "prompt_tokens": 2075,
+    "completion_tokens": 2459,
+    "total_tokens": 4534,
+    "cost": 0.0035338875
+   },
+   "cost": 0.0035338875,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 6033,
+ "tokens_out": 8661,
+ "compute_spent_s": 2.0192,
+ "compute_budget_s": 15.425814300004276,
+ "source_cache_hits": 4,
+ "components": [
+  "flight_adapter",
+  "time_features",
+  "clean",
+  "airport_join",
+  "encode"
+ ]
+}

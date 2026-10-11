@@ -1,0 +1,222 @@
+{
+ "task_id": "tlc-2015-01-2015-01-two-8215838f",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean",
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.001122,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.999028
+    },
+    "rows": [
+     150167,
+     150167
+    ]
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.579
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "passenger_count": 0.00041
+    },
+    "rows": [
+     92608,
+     92608
+    ]
+   },
+   "cost_s": 0.0433,
+   "spent_seconds": 0.0433,
+   "wall_s": 0.981
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0989,
+   "spent_seconds": 0.1422,
+   "wall_s": 0.994
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features",
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7126164874551971,
+    "cur_perf": 0.7125089605734767,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27900,
+    "common_rows": 27900,
+    "masked": []
+   },
+   "cost_s": 10.5934,
+   "spent_seconds": 10.7357,
+   "wall_s": 23.574
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "Rolling back time_features and clean restores the model accuracy, indicating these components are the source of the degradation."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "clean",
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "two",
+ "tier": "T2",
+ "wall_s": 42.43,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features",
+   "clean"
+  ],
+  "retrain": false,
+  "reason": "Rolling back time_features and clean restores the model accuracy, indicating these components are the source of the degradation."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2577,
+    "completion_tokens": 20,
+    "total_tokens": 2597,
+    "cost": 0.00020936
+   },
+   "cost": 0.00020936,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"clean\"}\n```",
+   "usage": {
+    "prompt_tokens": 2665,
+    "completion_tokens": 18,
+    "total_tokens": 2683,
+    "cost": 0.00021608
+   },
+   "cost": 0.00021608,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"zone_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 2750,
+    "completion_tokens": 20,
+    "total_tokens": 2770,
+    "cost": 0.0002232
+   },
+   "cost": 0.0002232,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"time_features\", \"clean\"]}\n```",
+   "usage": {
+    "prompt_tokens": 2800,
+    "completion_tokens": 23,
+    "total_tokens": 2823,
+    "cost": 0.00022768
+   },
+   "cost": 0.00022768,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"time_features\", \"clean\"], \"retrain\": false, \"reason\": \"Rolling back time_features and clean restores the model accuracy, indicating these components are the source of the degradation.\"}\n```",
+   "usage": {
+    "prompt_tokens": 2954,
+    "completion_tokens": 56,
+    "total_tokens": 3010,
+    "cost": 0.00024528
+   },
+   "cost": 0.00024528,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 13746,
+ "tokens_out": 137,
+ "compute_spent_s": 10.7357,
+ "compute_budget_s": 28.396611300078803,
+ "source_cache_hits": 10,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

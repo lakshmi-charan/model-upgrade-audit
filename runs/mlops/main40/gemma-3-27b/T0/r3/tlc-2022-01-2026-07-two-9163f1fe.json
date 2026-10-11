@@ -1,0 +1,194 @@
+{
+ "task_id": "tlc-2022-01-2026-07-two-9163f1fe",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "trip_adapter"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.000953,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "cbd_congestion_fee": 0.769306
+    },
+    "rows": [
+     149965,
+     149965
+    ]
+   },
+   "cost_s": 0.1793,
+   "spent_seconds": 0.1793,
+   "wall_s": 1.922
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 8.392,
+   "spent_seconds": 8.5713,
+   "wall_s": 0.278
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "vendor": 1.0,
+     "ratecode": 0.03096,
+     "pu_borough": 0.007017,
+     "do_borough": 0.010132,
+     "pu_service": 0.112391,
+     "do_service": 0.028688
+    },
+    "rows": [
+     90212,
+     90212
+    ]
+   },
+   "cost_s": 0.1877,
+   "spent_seconds": 8.759,
+   "wall_s": 0.181
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode",
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely caused by changes in the trip_adapter and encode components, as rollbacks revealed differing outputs, and retraining won't fix pipeline issues."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": false,
+  "effective": [
+   "encode",
+   "trip_adapter"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "defect_only",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 9.55,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely caused by changes in the trip_adapter and encode components, as rollbacks revealed differing outputs, and retraining won't fix pipeline issues."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2785,
+    "completion_tokens": 20,
+    "total_tokens": 2805,
+    "cost": 0.000226
+   },
+   "cost": 0.000226,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 2877,
+    "completion_tokens": 20,
+    "total_tokens": 2897,
+    "cost": 0.00023336
+   },
+   "cost": 0.00023336,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"rollback\", \"component\": \"encode\"}\n```",
+   "usage": {
+    "prompt_tokens": 2927,
+    "completion_tokens": 18,
+    "total_tokens": 2945,
+    "cost": 0.00023704
+   },
+   "cost": 0.00023704,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"encode\"], \"retrain\": false, \"reason\": \"The accuracy drop is likely caused by changes in the trip_adapter and encode components, as rollbacks revealed differing outputs, and retraining won't fix pipeline issues.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3079,
+    "completion_tokens": 67,
+    "total_tokens": 3146,
+    "cost": 0.00025704
+   },
+   "cost": 0.00025704,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 11668,
+ "tokens_out": 125,
+ "compute_spent_s": 8.759,
+ "compute_budget_s": 14.082873899984406,
+ "source_cache_hits": 6,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

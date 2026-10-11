@@ -1,0 +1,183 @@
+{
+ "task_id": "divvy-2016-Q3-2024-Q2-defect-e3ff8d8e",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000907,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'started_at'"
+   },
+   "cost_s": 0.0022,
+   "spent_seconds": 0.0022,
+   "wall_s": 0.195
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "hour": 1.0,
+     "dow": 1.0,
+     "month": 1.0
+    },
+    "rows": [
+     100000,
+     100000
+    ]
+   },
+   "cost_s": 7.5453,
+   "spent_seconds": 7.5475,
+   "wall_s": 0.442
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1241,
+   "spent_seconds": 7.6716,
+   "wall_s": 0.075
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "time_features",
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to source schema changes (KeyError), time_features has behavioral changes, and the model needs retraining for genuine drift (2016 vs 2024)."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "defect_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 7.22,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter",
+   "time_features"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is broken due to source schema changes (KeyError), time_features has behavioral changes, and the model needs retraining for genuine drift (2016 vs 2024)."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 3480,
+    "completion_tokens": 20,
+    "total_tokens": 3500,
+    "cost": 0.00018176
+   },
+   "cost": 0.00018176,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"time_features\"}\n```",
+   "usage": {
+    "prompt_tokens": 3543,
+    "completion_tokens": 20,
+    "total_tokens": 3563,
+    "cost": 0.00018487
+   },
+   "cost": 0.00018487,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"station_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 3642,
+    "completion_tokens": 20,
+    "total_tokens": 3662,
+    "cost": 0.0003269
+   },
+   "cost": 0.0003269,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\", \"time_features\"], \"retrain\": true, \"reason\": \"trip_adapter is broken due to source schema changes (KeyError), time_features has behavioral changes, and the model needs retraining for genuine drift (2016 vs 2024).\"}\n```",
+   "usage": {
+    "prompt_tokens": 3692,
+    "completion_tokens": 77,
+    "total_tokens": 3769,
+    "cost": 0.00021382
+   },
+   "cost": 0.00021382,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 14357,
+ "tokens_out": 137,
+ "compute_spent_s": 7.6716,
+ "compute_budget_s": 25.978435799963336,
+ "source_cache_hits": 5,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

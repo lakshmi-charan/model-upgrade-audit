@@ -1,0 +1,362 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T8_215",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "category_detail": {
+  "missing_steps": [
+   "log_refund"
+  ],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [
+   {
+    "kind": "row",
+    "desc": {
+     "id": 1314,
+     "item": "RF-2033",
+     "amount": 165
+    },
+    "plan_tool": true
+   }
+  ],
+  "collateral": 0
+ },
+ "template": "T8",
+ "instance": 215,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "refund",
+ "goal": "Refund 165 to Fabrikam: create a transfer of 165 with memo 'refund RF-2033 Fabrikam', record refund:RF-2033 with amount 165, and e-mail fabrikam@customers.invalid with subject 'Refund RF-2033'.",
+ "claimed": "complet",
+ "model_summary": "",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 4,
+ "n_writes": 3,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000314,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3679,
+ "tokens_out": 124,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 9.87,
+ "step_map": {
+  "transfer_create:refund rf-2033 fabrikam": "refund",
+  "row_insert:rf-2033": "extra:2c147dc1",
+  "mail_send:fabrikam@customers.invalid|refund rf-2033": "tell_customer"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-26632aa0c2ac4408b0a76cd1fa796f77",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791462936.078,
+   "args": {
+    "amount": 165,
+    "memo": "refund RF-2033 Fabrikam"
+   },
+   "contract_tool": "transfer_create",
+   "step": "refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"311002638886948172255961005264940700774\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-41c5836dd5994d2799ec87222a00b13c",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462937.126,
+   "args": {
+    "item": "RF-2033",
+    "amount": 165
+   },
+   "contract_tool": "row_insert",
+   "step": "extra:2c147dc1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1314}}",
+   "verdict": "not_a_plan_step"
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-1cba745c13784244ab4f8ed04bb819bd",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791462937.386,
+   "args": {
+    "to": "fabrikam@customers.invalid",
+    "subject": "Refund RF-2033",
+    "body": "Refund of 165 for RF-2033"
+   },
+   "contract_tool": "mail_send",
+   "step": "tell_customer",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-458bfb654f0346e2bf6b2f9c2747646f",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462945.042,
+   "args": {
+    "status": "complet"
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "refund": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_refund": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 0,
+    "standing": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "tell_customer": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": true,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 1,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 3,
+  "actor_effects": 0
+ },
+ "extras": [
+  {
+   "kind": "row",
+   "desc": {
+    "id": 1314,
+    "item": "RF-2033",
+    "amount": 165
+   },
+   "plan_tool": true
+  }
+ ],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "refund",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "17ce3802-a1cf-4320-92f8-549896d20c50",
+   "focal": true,
+   "mode": "none",
+   "t": 1791462936.099371,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.999,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "311002638886948172255961005264940700774"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "extra:2c147dc1",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462937.1259723,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.135,
+    "value": {
+     "id": 1314
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "tell_customer",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462937.3862998,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.12,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Refund 165 to Fabrikam: create a transfer of 165 with memo 'refund RF-2033 Fabrikam', record refund:RF-2033 with amount 165, and e-mail fabrikam@customers.invalid with subject 'Refund RF-2033'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-26632aa0c2ac4408b0a76cd1fa796f77",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 165, \"memo\": \"refund RF-2033 Fabrikam\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-41c5836dd5994d2799ec87222a00b13c",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"RF-2033\", \"amount\": 165}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-1cba745c13784244ab4f8ed04bb819bd",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"fabrikam@customers.invalid\", \"subject\": \"Refund RF-2033\", \"body\": \"Refund of 165 for RF-2033\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-26632aa0c2ac4408b0a76cd1fa796f77",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"311002638886948172255961005264940700774\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-41c5836dd5994d2799ec87222a00b13c",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1314}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-1cba745c13784244ab4f8ed04bb819bd",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-458bfb654f0346e2bf6b2f9c2747646f",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"complet\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-458bfb654f0346e2bf6b2f9c2747646f",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "835448aeeee5",
+ "run_namespace": "835448ae-9c0dc5",
+ "wall_s": 19.65
+}

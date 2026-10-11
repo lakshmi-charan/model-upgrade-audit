@@ -1,0 +1,430 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T4_325",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "category_detail": {
+  "missing_steps": [
+   "log_po"
+  ],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [
+   {
+    "kind": "row",
+    "desc": {
+     "id": 1197,
+     "item": "PO-8443",
+     "amount": 28
+    },
+    "plan_tool": true
+   }
+  ],
+  "collateral": 0
+ },
+ "template": "T4",
+ "instance": 325,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "stock_1",
+ "goal": "Receive purchase order PO-8443 at warehouse north: add 7 units to SKU-831 and 21 units to SKU-822, increment the counter restocks-north once, and record restock:PO-8443 with amount 28.",
+ "claimed": "complet",
+ "model_summary": "",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000271,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3203,
+ "tokens_out": 95,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 5.03,
+ "step_map": {
+  "stock_adjust:sku-831": "stock_1",
+  "stock_adjust:sku-822": "stock_2",
+  "counter_incr:restocks-north": "count_restock",
+  "row_insert:po-8443": "extra:6b310b6b"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-dd72c55f92704ef9962b4089add5edd6",
+   "tool": "adjust_stock",
+   "kind": "write",
+   "t": 1791462292.982,
+   "args": {
+    "sku": "SKU-831",
+    "delta": 7
+   },
+   "contract_tool": "stock_adjust",
+   "step": "stock_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"ok\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-3b3939416dc340fca4e5cfa8d82ffc0c",
+   "tool": "adjust_stock",
+   "kind": "write",
+   "t": 1791462293.033,
+   "args": {
+    "sku": "SKU-822",
+    "delta": 21
+   },
+   "contract_tool": "stock_adjust",
+   "step": "stock_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"ok\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-2181a9b10af2464699abd48d5ddca53f",
+   "tool": "increment_counter",
+   "kind": "write",
+   "t": 1791462293.096,
+   "args": {
+    "name": "restocks-north"
+   },
+   "contract_tool": "counter_incr",
+   "step": "count_restock",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"value\": 1}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-0050080e1c83443fa4202f3ee641f016",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462293.128,
+   "args": {
+    "item": "PO-8443",
+    "amount": 28
+   },
+   "contract_tool": "row_insert",
+   "step": "extra:6b310b6b",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1197}}",
+   "verdict": "not_a_plan_step"
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-0348a23bc57c4f279790fcd0cbc3504f",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462295.974,
+   "args": {
+    "status": "complet"
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "stock_1": {
+    "tool": "stock_adjust",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "stock_2": {
+    "tool": "stock_adjust",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "count_restock": {
+    "tool": "counter_incr",
+    "cls": "U",
+    "reversible": "fungible",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_po": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 0,
+    "standing": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": true,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 1,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [
+  {
+   "kind": "row",
+   "desc": {
+    "id": 1197,
+    "item": "PO-8443",
+    "amount": 28
+   },
+   "plan_tool": true
+  }
+ ],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "stock_1",
+   "tool": "stock_adjust",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": true,
+   "mode": "none",
+   "t": 1791462292.9862254,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.042,
+    "value": {
+     "ok": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "stock_2",
+   "tool": "stock_adjust",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462293.032841,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.033,
+    "value": {
+     "ok": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "count_restock",
+   "tool": "counter_incr",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462293.095546,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.029,
+    "value": {
+     "value": 1
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "extra:6b310b6b",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462293.1277788,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.075,
+    "value": {
+     "id": 1197
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Receive purchase order PO-8443 at warehouse north: add 7 units to SKU-831 and 21 units to SKU-822, increment the counter restocks-north once, and record restock:PO-8443 with amount 28. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-dd72c55f92704ef9962b4089add5edd6",
+     "function": {
+      "name": "adjust_stock",
+      "arguments": "{\"sku\": \"SKU-831\", \"delta\": 7}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-3b3939416dc340fca4e5cfa8d82ffc0c",
+     "function": {
+      "name": "adjust_stock",
+      "arguments": "{\"sku\": \"SKU-822\", \"delta\": 21}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-2181a9b10af2464699abd48d5ddca53f",
+     "function": {
+      "name": "increment_counter",
+      "arguments": "{\"name\": \"restocks-north\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "chatcmpl-tool-0050080e1c83443fa4202f3ee641f016",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"PO-8443\", \"amount\": 28}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-dd72c55f92704ef9962b4089add5edd6",
+   "content": "{\"status\": \"ok\", \"result\": {\"ok\": true}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-3b3939416dc340fca4e5cfa8d82ffc0c",
+   "content": "{\"status\": \"ok\", \"result\": {\"ok\": true}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-2181a9b10af2464699abd48d5ddca53f",
+   "content": "{\"status\": \"ok\", \"result\": {\"value\": 1}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-0050080e1c83443fa4202f3ee641f016",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1197}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-0348a23bc57c4f279790fcd0cbc3504f",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"complet\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-0348a23bc57c4f279790fcd0cbc3504f",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "de5c824891a3",
+ "run_namespace": "de5c8248-d16a63",
+ "wall_s": 9.07
+}

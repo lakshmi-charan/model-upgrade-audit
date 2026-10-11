@@ -1,0 +1,196 @@
+{
+ "task_id": "divvy-2016-Q3-2026-Q3-defect-354c29b6",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [
+   "time_features"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.001183,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2017-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2016-Q3",
+     "2016-Q4",
+     "2017-Q1"
+    ],
+    "failed": [
+     "2017-Q1"
+    ]
+   },
+   "cost_s": 1.9216,
+   "spent_seconds": 1.9216,
+   "wall_s": 3.503
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 6.6891,
+   "spent_seconds": 8.6108,
+   "wall_s": 1.333
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0074,
+   "spent_seconds": 8.6182,
+   "wall_s": 0.114
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The significant accuracy drop and errors suggest the trip_adapter component is failing to handle the schema changes in the input data, specifically the change to new columns in 2020-Q1 and the removal of old columns."
+ },
+ "oracle": {
+  "fix": [
+   "time_features"
+  ],
+  "retrain": true,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": [
+   "time_features"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 14.38,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The significant accuracy drop and errors suggest the trip_adapter component is failing to handle the schema changes in the input data, specifically the change to new columns in 2020-Q1 and the removal of old columns."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2017-Q1\"}\n```",
+   "usage": {
+    "prompt_tokens": 3467,
+    "completion_tokens": 32,
+    "total_tokens": 3499,
+    "cost": 0.00028248
+   },
+   "cost": 0.00028248,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}\n```",
+   "usage": {
+    "prompt_tokens": 3571,
+    "completion_tokens": 32,
+    "total_tokens": 3603,
+    "cost": 0.0002908
+   },
+   "cost": 0.0002908,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"trip_adapter\"]}\n```",
+   "usage": {
+    "prompt_tokens": 3684,
+    "completion_tokens": 20,
+    "total_tokens": 3704,
+    "cost": 0.00029792
+   },
+   "cost": 0.00029792,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"The significant accuracy drop and errors suggest the trip_adapter component is failing to handle the schema changes in the input data, specifically the change to new columns in 2020-Q1 and the removal of old columns.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3747,
+    "completion_tokens": 77,
+    "total_tokens": 3824,
+    "cost": 0.00031208
+   },
+   "cost": 0.00031208,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 14469,
+ "tokens_out": 161,
+ "compute_spent_s": 8.6182,
+ "compute_budget_s": 24.54167339999549,
+ "source_cache_hits": 9,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

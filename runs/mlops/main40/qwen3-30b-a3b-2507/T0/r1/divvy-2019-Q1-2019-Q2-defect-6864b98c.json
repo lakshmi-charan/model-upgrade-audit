@@ -1,0 +1,331 @@
+{
+ "task_id": "divvy-2019-Q1-2019-Q2-defect-6864b98c",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.00258,
+ "n_steps": 6,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2019-Q2"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2018-Q4",
+     "2019-Q1",
+     "2019-Q2"
+    ],
+    "versions": {
+     "2018-Q4": "reference",
+     "2019-Q1": "reference",
+     "2019-Q2": "current"
+    },
+    "retention": {
+     "2018-Q4": 1.0,
+     "2019-Q1": 1.0,
+     "2019-Q2": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "user": {
+      "baseline_psi": 0.0153,
+      "boundary_psi": 0.2551,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "duration": {
+      "baseline_psi": 0.0057,
+      "boundary_psi": 0.1458,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.009,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0085,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 2.517
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: '01 - Rental Details Rental ID'"
+   },
+   "cost_s": 0.0006,
+   "spent_seconds": 0.0006,
+   "wall_s": 0.055
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0008,
+   "spent_seconds": 0.0014,
+   "wall_s": 0.124
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "start_area": 1e-05,
+     "end_area": 1e-05
+    },
+    "rows": [
+     99874,
+     99874
+    ]
+   },
+   "cost_s": 0.0431,
+   "spent_seconds": 0.0446,
+   "wall_s": 0.319
+  },
+  {
+   "step": 5,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "start_area": 6e-05,
+     "end_area": 5e-05
+    },
+    "rows": [
+     99865,
+     99865
+    ]
+   },
+   "cost_s": 0.0285,
+   "spent_seconds": 0.073,
+   "wall_s": 0.793
+  },
+  {
+   "step": 6,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0008,
+   "spent_seconds": 0.0739,
+   "wall_s": 0.012
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter component failed to handle the new source schema, causing downstream failures; retraining is needed due to detected label drift and pipeline breakage."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "encode"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T3r",
+ "wall_s": 14.25,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "The trip_adapter component failed to handle the new source schema, causing downstream failures; retraining is needed due to detected label drift and pipeline breakage."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 7,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2019-Q2\"}",
+   "usage": {
+    "prompt_tokens": 2167,
+    "completion_tokens": 24,
+    "total_tokens": 2191,
+    "cost": 0.00029419
+   },
+   "cost": 0.00029419,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2678,
+    "completion_tokens": 14,
+    "total_tokens": 2692,
+    "cost": 0.00035542
+   },
+   "cost": 0.00035542,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2739,
+    "completion_tokens": 13,
+    "total_tokens": 2752,
+    "cost": 0.00036283
+   },
+   "cost": 0.00036283,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2794,
+    "completion_tokens": 13,
+    "total_tokens": 2807,
+    "cost": 0.00036998
+   },
+   "cost": 0.00036998,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"encode\"}",
+   "usage": {
+    "prompt_tokens": 2883,
+    "completion_tokens": 12,
+    "total_tokens": 2895,
+    "cost": 0.00038103
+   },
+   "cost": 0.00038103,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"trip_adapter\", \"encode\"]}",
+   "usage": {
+    "prompt_tokens": 2971,
+    "completion_tokens": 16,
+    "total_tokens": 2987,
+    "cost": 0.00039455
+   },
+   "cost": 0.00039455,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"The trip_adapter component failed to handle the new source schema, causing downstream failures; retraining is needed due to detected label drift and pipeline breakage.\"}",
+   "usage": {
+    "prompt_tokens": 3029,
+    "completion_tokens": 54,
+    "total_tokens": 3083,
+    "cost": 0.00042185
+   },
+   "cost": 0.00042185,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 19261,
+ "tokens_out": 146,
+ "compute_spent_s": 0.0739,
+ "compute_budget_s": 11.276925600006507,
+ "source_cache_hits": 12,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

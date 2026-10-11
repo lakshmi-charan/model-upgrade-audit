@@ -1,0 +1,299 @@
+{
+ "task_id": "tlc-2015-01-2015-07-two-849b4376",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "encode"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "zone_join"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.011239,
+ "n_steps": 6,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1985,
+   "spent_seconds": 0.1985,
+   "wall_s": 9.71
+  },
+  {
+   "step": 2,
+   "action": "rollback",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "do_borough": 0.141158,
+     "do_service": 0.18687
+    },
+    "rows": [
+     92294,
+     92294
+    ]
+   },
+   "cost_s": 0.0532,
+   "spent_seconds": 0.2517,
+   "wall_s": 0.486
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "zone_join"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6972473754464447,
+    "cur_perf": 0.6970669937587937,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27719,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 1.8715,
+   "spent_seconds": 2.1232,
+   "wall_s": 4.189
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "vendor": 1.0,
+     "pu_borough": 0.069961,
+     "do_borough": 0.06995,
+     "pu_service": 0.061488,
+     "do_service": 0.061477
+    },
+    "rows": [
+     92294,
+     92294
+    ]
+   },
+   "cost_s": 0.217,
+   "spent_seconds": 2.3402,
+   "wall_s": 1.886
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.689887802590281,
+    "cur_perf": 0.6970669937587937,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27719,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.4176,
+   "spent_seconds": 2.7578,
+   "wall_s": 0.475
+  },
+  {
+   "step": 6,
+   "action": "replay",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "do_borough": 0.124891,
+     "do_service": 0.168743
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 0.0599,
+   "spent_seconds": 2.8178,
+   "wall_s": 0.783
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "zone_join"
+  ],
+  "retrain": true,
+  "reason": "zone_join config change causes significant drift in do_borough/do_service columns and degrades accuracy; model retraining needed due to genuine performance drop from 0.7126 to 0.6971."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "effective": [
+   "encode",
+   "zone_join"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 73.02,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "zone_join"
+  ],
+  "retrain": true,
+  "reason": "zone_join config change causes significant drift in do_borough/do_service columns and degrades accuracy; model retraining needed due to genuine performance drop from 0.7126 to 0.6971."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 7,
+ "turns": [
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"trip_adapter\"\n}",
+   "usage": {
+    "prompt_tokens": 2412,
+    "completion_tokens": 4195,
+    "total_tokens": 6607,
+    "cost": 0.00584545
+   },
+   "cost": 0.00584545,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"zone_join\"\n}",
+   "usage": {
+    "prompt_tokens": 2462,
+    "completion_tokens": 246,
+    "total_tokens": 2708,
+    "cost": 0.000719875
+   },
+   "cost": 0.000719875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"zone_join\"]\n}",
+   "usage": {
+    "prompt_tokens": 2564,
+    "completion_tokens": 160,
+    "total_tokens": 2724,
+    "cost": 0.00062465
+   },
+   "cost": 0.00062465,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"rollback\",\n  \"component\": \"encode\"\n}",
+   "usage": {
+    "prompt_tokens": 2706,
+    "completion_tokens": 514,
+    "total_tokens": 3220,
+    "cost": 0.001107925
+   },
+   "cost": 0.001107925,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"effect\",\n  \"components\": [\"encode\"]\n}",
+   "usage": {
+    "prompt_tokens": 2843,
+    "completion_tokens": 87,
+    "total_tokens": 2930,
+    "cost": 0.0005750875
+   },
+   "cost": 0.0005750875,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"replay\",\n  \"component\": \"zone_join\"\n}",
+   "usage": {
+    "prompt_tokens": 2983,
+    "completion_tokens": 523,
+    "total_tokens": 3506,
+    "cost": 0.0011646375
+   },
+   "cost": 0.0011646375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\n  \"action\": \"final\",\n  \"fix\": [\"zone_join\"],\n  \"retrain\": true,\n  \"reason\": \"zone_join config change causes significant drift in do_borough/do_service columns and degrades accuracy; model retraining needed due to genuine performance drop from 0.7126 to 0.6971.\"\n}",
+   "usage": {
+    "prompt_tokens": 3087,
+    "completion_tokens": 538,
+    "total_tokens": 3625,
+    "cost": 0.0012010375
+   },
+   "cost": 0.0012010375,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 19057,
+ "tokens_out": 6263,
+ "compute_spent_s": 2.8178,
+ "compute_budget_s": 58.65384449994599,
+ "source_cache_hits": 15,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

@@ -1,0 +1,212 @@
+{
+ "task_id": "tlc-2022-01-2025-04-defect-5082d1af",
+ "label": "qwen3.5-35b-a3b",
+ "model": "qwen/qwen3.5-35b-a3b",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.006785,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.1378,
+   "spent_seconds": 0.1378,
+   "wall_s": 1.878
+  },
+  {
+   "step": 2,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7709938945050545,
+    "cur_perf": 0.7709938945050545,
+    "ref_perf": 0.7973555280089724,
+    "rows": 29973,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.5971,
+   "spent_seconds": 0.7348,
+   "wall_s": 0.762
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.99954
+    },
+    "rows": [
+     149906,
+     149906
+    ]
+   },
+   "cost_s": 4.059,
+   "spent_seconds": 4.7938,
+   "wall_s": 5.57
+  },
+  {
+   "step": 4,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7706970222993724,
+    "cur_perf": 0.7711309921217786,
+    "ref_perf": 0.7973555280089724,
+    "rows": 29956,
+    "common_rows": 29956,
+    "masked": []
+   },
+   "cost_s": 1.1473,
+   "spent_seconds": 5.9412,
+   "wall_s": 1.808
+  }
+ ],
+ "final_decision": {
+  "fix": [],
+  "retrain": true,
+  "reason": "Accuracy drop is due to genuine covariate/concept drift over 3 years (high PSI in duration_min, speed_mph) rather than broken pipeline components; rolling back time_features did not improve accuracy."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 53.58,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [],
+  "retrain": true,
+  "reason": "Accuracy drop is due to genuine covariate/concept drift over 3 years (high PSI in duration_min, speed_mph) rather than broken pipeline components; rolling back time_features did not improve accuracy."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2513,
+    "completion_tokens": 1336,
+    "total_tokens": 3849,
+    "cost": 0.0021451625
+   },
+   "cost": 0.0021451625,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 2557,
+    "completion_tokens": 574,
+    "total_tokens": 3131,
+    "cost": 0.0011617125
+   },
+   "cost": 0.0011617125,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2692,
+    "completion_tokens": 550,
+    "total_tokens": 3242,
+    "cost": 0.00115245
+   },
+   "cost": 0.00115245,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"time_features\"]}",
+   "usage": {
+    "prompt_tokens": 2775,
+    "completion_tokens": 392,
+    "total_tokens": 3167,
+    "cost": 0.0009605375
+   },
+   "cost": 0.0009605375,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [], \"retrain\": true, \"reason\": \"Accuracy drop is due to genuine covariate/concept drift over 3 years (high PSI in duration_min, speed_mph) rather than broken pipeline components; rolling back time_features did not improve accuracy.\"}",
+   "usage": {
+    "prompt_tokens": 2915,
+    "completion_tokens": 686,
+    "total_tokens": 3601,
+    "cost": 0.0013654875
+   },
+   "cost": 0.0013654875,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 13452,
+ "tokens_out": 3538,
+ "compute_spent_s": 5.9412,
+ "compute_budget_s": 11.68125899998995,
+ "source_cache_hits": 11,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

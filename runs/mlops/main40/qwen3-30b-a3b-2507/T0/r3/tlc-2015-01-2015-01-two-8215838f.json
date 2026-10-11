@@ -1,0 +1,249 @@
+{
+ "task_id": "tlc-2015-01-2015-01-two-8215838f",
+ "label": "qwen3-30b-a3b-2507",
+ "model": "qwen/qwen3-30b-a3b-instruct-2507",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 1,
+ "status": "completed",
+ "error": null,
+ "category": "ok",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [
+   "clean",
+   "time_features"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.002055,
+ "n_steps": 5,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "time_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "duration_min": 0.999028
+    },
+    "rows": [
+     150167,
+     150167
+    ]
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 2.144
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "clean"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "passenger_count": 0.000411
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 2.3099,
+   "spent_seconds": 2.3099,
+   "wall_s": 0.471
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 12.9286,
+   "spent_seconds": 15.2385,
+   "wall_s": 0.381
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "fare_features"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 15.2385,
+   "wall_s": 0.405
+  },
+  {
+   "step": 5,
+   "action": "effect",
+   "args": {
+    "components": [
+     "time_features",
+     "clean"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.7126164874551971,
+    "cur_perf": 0.7125089605734767,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27900,
+    "common_rows": 27900,
+    "masked": []
+   },
+   "cost_s": 3.9526,
+   "spent_seconds": 19.1911,
+   "wall_s": 6.981
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "clean",
+   "time_features"
+  ],
+  "retrain": false,
+  "reason": "The drift in duration_min and speed_mph is caused by changes in time_features and clean components; replay shows they produce different outputs on current data, and rolling them back restores accuracy to reference level without needing retraining."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "clean",
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "two",
+ "tier": "T2",
+ "wall_s": 21.5,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "time_features",
+   "clean"
+  ],
+  "retrain": false,
+  "reason": "The drift in duration_min and speed_mph is caused by changes in time_features and clean components; replay shows they produce different outputs on current data, and rolling them back restores accuracy to reference level without needing retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 6,
+ "turns": [
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"time_features\"}",
+   "usage": {
+    "prompt_tokens": 2356,
+    "completion_tokens": 14,
+    "total_tokens": 2370,
+    "cost": 0.00031356
+   },
+   "cost": 0.00031356,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"clean\"}",
+   "usage": {
+    "prompt_tokens": 2438,
+    "completion_tokens": 13,
+    "total_tokens": 2451,
+    "cost": 0.0003237
+   },
+   "cost": 0.0003237,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"zone_join\"}",
+   "usage": {
+    "prompt_tokens": 2519,
+    "completion_tokens": 14,
+    "total_tokens": 2533,
+    "cost": 0.00033475
+   },
+   "cost": 0.00033475,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"fare_features\"}",
+   "usage": {
+    "prompt_tokens": 2564,
+    "completion_tokens": 14,
+    "total_tokens": 2578,
+    "cost": 0.0003406
+   },
+   "cost": 0.0003406,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"time_features\", \"clean\"]}",
+   "usage": {
+    "prompt_tokens": 2609,
+    "completion_tokens": 16,
+    "total_tokens": 2625,
+    "cost": 0.00034749
+   },
+   "cost": 0.00034749,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"time_features\", \"clean\"], \"retrain\": false, \"reason\": \"The drift in duration_min and speed_mph is caused by changes in time_features and clean components; replay shows they produce different outputs on current data, and rolling them back restores accuracy to reference level without needing retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2753,
+    "completion_tokens": 71,
+    "total_tokens": 2824,
+    "cost": 0.00039481
+   },
+   "cost": 0.00039481,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 15239,
+ "tokens_out": 142,
+ "compute_spent_s": 19.1911,
+ "compute_budget_s": 28.396611300078803,
+ "source_cache_hits": 12,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

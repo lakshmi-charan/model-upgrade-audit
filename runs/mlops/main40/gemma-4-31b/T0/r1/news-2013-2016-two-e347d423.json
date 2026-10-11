@@ -1,0 +1,188 @@
+{
+ "task_id": "news-2013-2016-two-e347d423",
+ "label": "gemma-4-31b",
+ "model": "google/gemma-4-31b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [
+   "vectorize"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000367,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "replay",
+   "args": {
+    "component": "text_norm"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 2.975,
+   "spent_seconds": 2.975,
+   "wall_s": 1.256
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "vectorize"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "tok": 1.0
+    },
+    "rows": [
+     34583,
+     34583
+    ]
+   },
+   "cost_s": 4.9073,
+   "spent_seconds": 7.8823,
+   "wall_s": 0.308
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "vectorize"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.20238433153562305,
+    "cur_perf": 0.01419244961680386,
+    "ref_perf": 0.7222063989366753,
+    "rows": 3523,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.978,
+   "spent_seconds": 8.8603,
+   "wall_s": 1.937
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "The label_map component is stale due to unhandled new category values in the source schema, and the target distribution (y) has shifted significantly."
+ },
+ "oracle": {
+  "fix": [
+   "label_map",
+   "vectorize"
+  ],
+  "retrain": true,
+  "effective": [
+   "label_map",
+   "vectorize"
+  ],
+  "consequential": [
+   "label_map",
+   "vectorize"
+  ]
+ },
+ "domain": "news",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T1+T3",
+ "wall_s": 8.88,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "label_map"
+  ],
+  "retrain": true,
+  "reason": "The label_map component is stale due to unhandled new category values in the source schema, and the target distribution (y) has shifted significantly."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"text_norm\"}\n```",
+   "usage": {
+    "prompt_tokens": 1242,
+    "completion_tokens": 20,
+    "total_tokens": 1262,
+    "cost": 0.0001109
+   },
+   "cost": 0.0001109,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"vectorize\"}\n```",
+   "usage": {
+    "prompt_tokens": 1292,
+    "completion_tokens": 19,
+    "total_tokens": 1311,
+    "cost": 7.41e-05
+   },
+   "cost": 7.41e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"vectorize\"]}\n```",
+   "usage": {
+    "prompt_tokens": 1372,
+    "completion_tokens": 19,
+    "total_tokens": 1391,
+    "cost": 7.874e-05
+   },
+   "cost": 7.874e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"label_map\"], \"retrain\": true, \"reason\": \"The label_map component is stale due to unhandled new category values in the source schema, and the target distribution (y) has shifted significantly.\"}\n```",
+   "usage": {
+    "prompt_tokens": 1516,
+    "completion_tokens": 61,
+    "total_tokens": 1577,
+    "cost": 0.00010342
+   },
+   "cost": 0.00010342,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 5422,
+ "tokens_out": 119,
+ "compute_spent_s": 8.8603,
+ "compute_budget_s": 16.746626099949935,
+ "source_cache_hits": 8,
+ "components": [
+  "ingest",
+  "label_map",
+  "text_norm",
+  "vectorize"
+ ]
+}

@@ -1,0 +1,270 @@
+{
+ "task_id": "tlc-2022-01-2025-04-defect-5082d1af",
+ "label": "mistral-small-2603",
+ "model": "mistralai/mistral-small-2603",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000745,
+ "n_steps": 3,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2023-04"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2022-10",
+     "2023-01",
+     "2023-04"
+    ],
+    "versions": {
+     "2022-10": "reference",
+     "2023-01": "reference",
+     "2023-04": "current"
+    },
+    "retention": {
+     "2022-10": 1.0,
+     "2023-01": 1.0,
+     "2023-04": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "airport_fee": {
+      "baseline_psi": 0.0008,
+      "boundary_psi": 0.6099,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "ratecode": {
+      "baseline_psi": 0.0085,
+      "boundary_psi": 0.0011,
+      "input_boundary_psi": 0.001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "congestion_surcharge": {
+      "baseline_psi": 0.0006,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.002,
+      "missing_jump": -0.002
+     },
+     "vendor": {
+      "baseline_psi": 0.0059,
+      "boundary_psi": 0.0001,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.6622,
+   "spent_seconds": 0.6622,
+   "wall_s": 6.511
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2025-01"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2024-10",
+     "2024-12",
+     "2025-01"
+    ],
+    "versions": {
+     "2024-10": "reference",
+     "2024-12": "reference",
+     "2025-01": "current"
+    },
+    "retention": {
+     "2024-10": 1.0,
+     "2024-12": 1.0,
+     "2025-01": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "airport_fee": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.397,
+      "input_boundary_psi": 0.0005,
+      "input_missing_jump": 0.0651,
+      "missing_jump": -0.0651
+     },
+     "ratecode": {
+      "baseline_psi": 0.0016,
+      "boundary_psi": 0.042,
+      "input_boundary_psi": 0.0024,
+      "input_missing_jump": 0.0651,
+      "missing_jump": -0.0651
+     },
+     "congestion_surcharge": {
+      "baseline_psi": 0.0013,
+      "boundary_psi": 0.0235,
+      "input_boundary_psi": 0.0001,
+      "input_missing_jump": 0.0651,
+      "missing_jump": -0.0651
+     },
+     "vendor": {
+      "baseline_psi": 0.0003,
+      "boundary_psi": 0.0008,
+      "input_boundary_psi": 0.0008,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.2137,
+   "spent_seconds": 0.8759,
+   "wall_s": 2.445
+  },
+  {
+   "step": 3,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "airport_fee": 0.068254,
+     "cbd_congestion_fee": 0.735883
+    },
+    "rows": [
+     150320,
+     150320
+    ]
+   },
+   "cost_s": 0.3631,
+   "spent_seconds": 1.239,
+   "wall_s": 40.003
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails to handle renamed airport_fee and new cbd_congestion_fee columns, causing output drift and accuracy drop."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [
+   "time_features"
+  ],
+  "consequential": []
+ },
+ "domain": "tlc",
+ "otype": "none",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 60.07,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter fails to handle renamed airport_fee and new cbd_congestion_fee columns, causing output drift and accuracy drop."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 4,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2023-04\"}",
+   "usage": {
+    "prompt_tokens": 2597,
+    "completion_tokens": 29,
+    "total_tokens": 2626,
+    "cost": 0.00038103
+   },
+   "cost": 0.00038103,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2025-01\"}",
+   "usage": {
+    "prompt_tokens": 3065,
+    "completion_tokens": 29,
+    "total_tokens": 3094,
+    "cost": 0.00012939
+   },
+   "cost": 0.00012939,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3542,
+    "completion_tokens": 16,
+    "total_tokens": 3558,
+    "cost": 0.0001305
+   },
+   "cost": 0.0001305,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"trip_adapter fails to handle renamed airport_fee and new cbd_congestion_fee columns, causing output drift and accuracy drop.\"}",
+   "usage": {
+    "prompt_tokens": 3641,
+    "completion_tokens": 55,
+    "total_tokens": 3696,
+    "cost": 0.00010395
+   },
+   "cost": 0.00010395,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 12845,
+ "tokens_out": 129,
+ "compute_spent_s": 1.239,
+ "compute_budget_s": 11.68125899998995,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}

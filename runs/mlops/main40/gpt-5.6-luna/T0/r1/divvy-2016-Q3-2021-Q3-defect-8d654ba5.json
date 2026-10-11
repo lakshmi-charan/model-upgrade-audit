@@ -1,0 +1,212 @@
+{
+ "task_id": "divvy-2016-Q3-2021-Q3-defect-8d654ba5",
+ "label": "gpt-5.6-luna",
+ "model": "openai/gpt-5.6-luna",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.002058,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0048,
+   "spent_seconds": 0.0048,
+   "wall_s": 0.16
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 6.6891,
+   "spent_seconds": 6.6939,
+   "wall_s": 1.739
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "ExecError: trip_adapter in env p30 failed: ^^^^^^^\n  File \"pandas/_libs/index.pyx\", line 168, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 197, in pandas._libs.index"
+   },
+   "cost_s": 1.7304,
+   "spent_seconds": 8.4243,
+   "wall_s": 0.246
+  },
+  {
+   "step": 4,
+   "action": [
+    "final"
+   ],
+   "args": {
+    "fix": [
+     "trip_adapter"
+    ],
+    "retrain": true,
+    "reason": "The adapter is stale/incompatible with the source schema changes, causing severe feature-output drift and missing bike/round-trip data; repair it first, then retrain for the remaining genuine temporal and label drift."
+   },
+   "valid": false,
+   "tool_error": true,
+   "result": {
+    "error": "unknown action ['final']"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 8.4243,
+   "wall_s": 0.002
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is stale and incompatible with the evolving source schema, evidenced by execution failures and severe downstream drift including missing bike and round_trip values; repair it first, then retrain for remaining genuine drift."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": true,
+  "effective": [
+   "clean"
+  ],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "drift_only",
+ "scenario": "defect",
+ "tier": "T2",
+ "wall_s": 28.4,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "trip_adapter is stale and incompatible with the evolving source schema, evidenced by execution failures and severe downstream drift including missing bike and round_trip values; repair it first, then retrain for remaining genuine drift."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 1,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\":\"rollback\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3009,
+    "completion_tokens": 79,
+    "total_tokens": 3088,
+    "cost": 0.0008469
+   },
+   "cost": 0.0008469,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"boundary\",\"component\":\"trip_adapter\",\"period\":\"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3059,
+    "completion_tokens": 167,
+    "total_tokens": 3226,
+    "cost": 0.00027362
+   },
+   "cost": 0.00027362,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"replay\",\"component\":\"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 3142,
+    "completion_tokens": 132,
+    "total_tokens": 3274,
+    "cost": 0.00024087
+   },
+   "cost": 0.00024087,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":[\"final\"],\"fix\":[\"trip_adapter\"],\"retrain\":true,\"reason\":\"The adapter is stale/incompatible with the source schema changes, causing severe feature-output drift and missing bike/round-trip data; repair it first, then retrain for the remaining genuine temporal and label drift.\"}",
+   "usage": {
+    "prompt_tokens": 3247,
+    "completion_tokens": 346,
+    "total_tokens": 3593,
+    "cost": 0.00050483
+   },
+   "cost": 0.00050483,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\":\"final\",\"fix\":[\"trip_adapter\"],\"retrain\":true,\"reason\":\"trip_adapter is stale and incompatible with the evolving source schema, evidenced by execution failures and severe downstream drift including missing bike and round_trip values; repair it first, then retrain for remaining genuine drift.\"}",
+   "usage": {
+    "prompt_tokens": 3340,
+    "completion_tokens": 86,
+    "total_tokens": 3426,
+    "cost": 0.00019193
+   },
+   "cost": 0.00019193,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 15797,
+ "tokens_out": 810,
+ "compute_spent_s": 8.4243,
+ "compute_budget_s": 15.793100099992444,
+ "source_cache_hits": 9,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

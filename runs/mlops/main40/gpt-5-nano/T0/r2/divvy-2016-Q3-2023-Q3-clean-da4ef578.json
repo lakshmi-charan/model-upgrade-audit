@@ -1,0 +1,149 @@
+{
+ "task_id": "divvy-2016-Q3-2023-Q3-clean-da4ef578",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 2,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "unrequested_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "trip_adapter"
+  ],
+  "missing_fix": [],
+  "extra_retrain": true,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000772,
+ "n_steps": 2,
+ "actions": [
+  {
+   "step": 1,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.0169,
+   "spent_seconds": 0.0169,
+   "wall_s": 6.093
+  },
+  {
+   "step": 2,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "failed": [
+     "2019-Q3",
+     "2019-Q4"
+    ]
+   },
+   "cost_s": 0.1529,
+   "spent_seconds": 0.1698,
+   "wall_s": 4.266
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Trip data schema drift/inconsistent upstream changes have broken trip_adapter; fix it to restore data quality, then retrain to recover performance."
+ },
+ "oracle": {
+  "fix": [],
+  "retrain": false,
+  "effective": [],
+  "consequential": []
+ },
+ "domain": "divvy",
+ "otype": "none",
+ "scenario": "clean",
+ "tier": "none",
+ "wall_s": 33.29,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "reason": "Trip data schema drift/inconsistent upstream changes have broken trip_adapter; fix it to restore data quality, then retrain to recover performance."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 3,
+ "turns": [
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2970,
+    "completion_tokens": 344,
+    "total_tokens": 3314,
+    "cost": 0.0002861
+   },
+   "cost": 0.0002861,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 3023,
+    "completion_tokens": 368,
+    "total_tokens": 3391,
+    "cost": 0.00029835
+   },
+   "cost": 0.00029835,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": true, \"reason\": \"Trip data schema drift/inconsistent upstream changes have broken trip_adapter; fix it to restore data quality, then retrain to recover performance.\"}",
+   "usage": {
+    "prompt_tokens": 3111,
+    "completion_tokens": 412,
+    "total_tokens": 3523,
+    "cost": 0.00018787
+   },
+   "cost": 0.00018787,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 9104,
+ "tokens_out": 1124,
+ "compute_spent_s": 0.1698,
+ "compute_budget_s": 9.177554700003384,
+ "source_cache_hits": 7,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

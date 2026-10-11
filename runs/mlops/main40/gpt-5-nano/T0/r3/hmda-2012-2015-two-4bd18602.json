@@ -1,0 +1,120 @@
+{
+ "task_id": "hmda-2012-2015-two-4bd18602",
+ "label": "gpt-5-nano",
+ "model": "openai/gpt-5-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [
+   "lar_adapter"
+  ],
+  "missing_fix": [
+   "features"
+  ],
+  "extra_retrain": false,
+  "missing_retrain": false,
+  "fix_inconsequential": [],
+  "forced_final": false,
+  "overlap": "disjoint"
+ },
+ "agent_cost": 0.000707,
+ "n_steps": 1,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "msa_income_k",
+    "period": "2015"
+   },
+   "valid": false,
+   "tool_error": true,
+   "result": {
+    "error": "KeyError: 'msa_income_k'"
+   },
+   "cost_s": 0.0,
+   "spent_seconds": 0.0,
+   "wall_s": 0.004
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "High drift and validation failure on msa_income_k (psi ~0.8984, validation_fail true) correlated with upstream source-schema changes (missing values handling in source data). The root cause appears to be in the lar_adapter's handling of missing values/schema changes rather than model parameters. Fix"
+ },
+ "oracle": {
+  "fix": [
+   "features"
+  ],
+  "retrain": false,
+  "effective": [
+   "features"
+  ],
+  "consequential": [
+   "features"
+  ]
+ },
+ "domain": "hmda",
+ "otype": "defect_only",
+ "scenario": "two",
+ "tier": "T3+T3r",
+ "wall_s": 16.68,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "lar_adapter"
+  ],
+  "retrain": false,
+  "reason": "High drift and validation failure on msa_income_k (psi ~0.8984, validation_fail true) correlated with upstream source-schema changes (missing values handling in source data). The root cause appears to be in the lar_adapter's handling of missing values/schema changes rather than model parameters. Fix lar_adapter to correctly ingest and normalize missing values (accounting for the 2014-2015 schema events), then re-evaluate without retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 1,
+ "n_llm_calls": 2,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"msa_income_k\", \"period\": \"2015\"}",
+   "usage": {
+    "prompt_tokens": 1984,
+    "completion_tokens": 622,
+    "total_tokens": 2606,
+    "cost": 0.000348
+   },
+   "cost": 0.000348,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"lar_adapter\"], \"retrain\": false, \"reason\": \"High drift and validation failure on msa_income_k (psi ~0.8984, validation_fail true) correlated with upstream source-schema changes (missing values handling in source data). The root cause appears to be in the lar_adapter's handling of missing values/schema changes rather than model parameters. Fix lar_adapter to correctly ingest and normalize missing values (accounting for the 2014-2015 schema events), then re-evaluate without retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2040,
+    "completion_tokens": 643,
+    "total_tokens": 2683,
+    "cost": 0.0003592
+   },
+   "cost": 0.0003592,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 4024,
+ "tokens_out": 1265,
+ "compute_spent_s": 0.0,
+ "compute_budget_s": 22.837521900000866,
+ "source_cache_hits": 0,
+ "components": [
+  "lar_adapter",
+  "clean",
+  "features",
+  "encode"
+ ]
+}

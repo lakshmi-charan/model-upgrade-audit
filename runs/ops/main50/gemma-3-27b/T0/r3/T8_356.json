@@ -1,0 +1,362 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T8_356",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_write",
+ "category_detail": {
+  "missing_steps": [
+   "log_refund"
+  ],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [
+   {
+    "kind": "row",
+    "desc": {
+     "id": 1312,
+     "item": "RF-9955",
+     "amount": 149
+    },
+    "plan_tool": true
+   }
+  ],
+  "collateral": 0
+ },
+ "template": "T8",
+ "instance": 356,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "refund",
+ "goal": "Refund 149 to Northwind: create a transfer of 149 with memo 'refund RF-9955 Northwind', record refund:RF-9955 with amount 149, and e-mail northwind@customers.invalid with subject 'Refund RF-9955'.",
+ "claimed": "compl",
+ "model_summary": "",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 4,
+ "n_writes": 3,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000314,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3675,
+ "tokens_out": 123,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 11.23,
+ "step_map": {
+  "transfer_create:refund rf-9955 northwind": "refund",
+  "row_insert:rf-9955": "extra:82caa581",
+  "mail_send:northwind@customers.invalid|refund rf-9955": "tell_customer"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-f3d9613d28f6428fbf47bde22a40d69b",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791462917.116,
+   "args": {
+    "amount": 149,
+    "memo": "refund RF-9955 Northwind"
+   },
+   "contract_tool": "transfer_create",
+   "step": "refund",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"217583697592998576712166384611205102893\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-2bfff4edf9cc4f3590ae19bc087e5ce8",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462918.4,
+   "args": {
+    "item": "RF-9955",
+    "amount": 149
+   },
+   "contract_tool": "row_insert",
+   "step": "extra:82caa581",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1312}}",
+   "verdict": "not_a_plan_step"
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-8582df7b0ea84e039da0d377d0224c71",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791462918.615,
+   "args": {
+    "to": "northwind@customers.invalid",
+    "subject": "Refund RF-9955",
+    "body": "Refund of 149 processed for RF-9955."
+   },
+   "contract_tool": "mail_send",
+   "step": "tell_customer",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-68d6d7dcfc134361b5f2a131703b46c7",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462921.282,
+   "args": {
+    "status": "compl"
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "refund": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_refund": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 0,
+    "standing": 0,
+    "expected": 1,
+    "ok": false,
+    "missing": true,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "tell_customer": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": true,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 1,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 3,
+  "actor_effects": 0
+ },
+ "extras": [
+  {
+   "kind": "row",
+   "desc": {
+    "id": 1312,
+    "item": "RF-9955",
+    "amount": 149
+   },
+   "plan_tool": true
+  }
+ ],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "refund",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "4dbeec02-17c8-49d2-a7a2-73ec4cf114bb",
+   "focal": true,
+   "mode": "none",
+   "t": 1791462917.215835,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.071,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "217583697592998576712166384611205102893"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "extra:82caa581",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462918.3997073,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.075,
+    "value": {
+     "id": 1312
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "tell_customer",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462918.6164448,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.038,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Refund 149 to Northwind: create a transfer of 149 with memo 'refund RF-9955 Northwind', record refund:RF-9955 with amount 149, and e-mail northwind@customers.invalid with subject 'Refund RF-9955'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-f3d9613d28f6428fbf47bde22a40d69b",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 149, \"memo\": \"refund RF-9955 Northwind\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-2bfff4edf9cc4f3590ae19bc087e5ce8",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"RF-9955\", \"amount\": 149}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-8582df7b0ea84e039da0d377d0224c71",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"northwind@customers.invalid\", \"subject\": \"Refund RF-9955\", \"body\": \"Refund of 149 processed for RF-9955.\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-f3d9613d28f6428fbf47bde22a40d69b",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"217583697592998576712166384611205102893\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-2bfff4edf9cc4f3590ae19bc087e5ce8",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1312}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-8582df7b0ea84e039da0d377d0224c71",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-68d6d7dcfc134361b5f2a131703b46c7",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"compl\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-68d6d7dcfc134361b5f2a131703b46c7",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "e70ed49e8e49",
+ "run_namespace": "e70ed49e-299b10",
+ "wall_s": 26.25
+}

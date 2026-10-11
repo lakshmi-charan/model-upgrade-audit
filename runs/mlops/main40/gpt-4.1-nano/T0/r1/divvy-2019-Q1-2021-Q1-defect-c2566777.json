@@ -1,0 +1,262 @@
+{
+ "task_id": "divvy-2019-Q1-2021-Q1-defect-c2566777",
+ "label": "gpt-4.1-nano",
+ "model": "openai/gpt-4.1-nano",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 1,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [],
+  "forced_final": false
+ },
+ "agent_cost": 0.000675,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "boundary",
+   "args": {
+    "component": "trip_adapter",
+    "period": "2020-Q1"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "periods": [
+     "2019-Q3",
+     "2019-Q4",
+     "2020-Q1"
+    ],
+    "versions": {
+     "2019-Q3": "reference",
+     "2019-Q4": "reference",
+     "2020-Q1": "current"
+    },
+    "retention": {
+     "2019-Q3": 1.0,
+     "2019-Q4": 1.0,
+     "2020-Q1": 1.0
+    },
+    "retention_jump": 0.0,
+    "columns_top": {
+     "duration": {
+      "baseline_psi": 0.1207,
+      "boundary_psi": 4.3351,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end_station": {
+      "baseline_psi": 0.003,
+      "boundary_psi": 0.0007,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start_station": {
+      "baseline_psi": 0.0046,
+      "boundary_psi": 0.0007,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "end": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "start": {
+      "baseline_psi": 0.0,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     },
+     "user": {
+      "baseline_psi": 0.131,
+      "boundary_psi": 0.0,
+      "input_boundary_psi": 0.0,
+      "input_missing_jump": 0.0,
+      "missing_jump": 0.0
+     }
+    }
+   },
+   "cost_s": 0.0787,
+   "spent_seconds": 0.0787,
+   "wall_s": 2.225
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "station_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 0.2492,
+   "spent_seconds": 0.3279,
+   "wall_s": 0.41
+  },
+  {
+   "step": 3,
+   "action": "effect",
+   "args": {
+    "components": [
+     "station_join",
+     "trip_adapter"
+    ]
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.004,
+   "spent_seconds": 0.3319,
+   "wall_s": 0.333
+  },
+  {
+   "step": 4,
+   "action": "rollback",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": true,
+   "result": {
+    "result": "error",
+    "error": "KeyError: 'trip_id'"
+   },
+   "cost_s": 0.004,
+   "spent_seconds": 0.3359,
+   "wall_s": 0.259
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter component is broken due to schema changes, causing key errors. Fixing it is necessary before retraining."
+ },
+ "oracle": {
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": true,
+  "effective": [
+   "trip_adapter"
+  ],
+  "consequential": [
+   "trip_adapter"
+  ]
+ },
+ "domain": "divvy",
+ "otype": "both",
+ "scenario": "defect",
+ "tier": "T1",
+ "wall_s": 9.87,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "trip_adapter"
+  ],
+  "retrain": false,
+  "reason": "The trip_adapter component is broken due to schema changes, causing key errors. Fixing it is necessary before retraining."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "{\"action\": \"boundary\", \"component\": \"trip_adapter\", \"period\": \"2020-Q1\"}",
+   "usage": {
+    "prompt_tokens": 2370,
+    "completion_tokens": 23,
+    "total_tokens": 2393,
+    "cost": 0.0002462
+   },
+   "cost": 0.0002462,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"replay\", \"component\": \"station_join\"}",
+   "usage": {
+    "prompt_tokens": 2847,
+    "completion_tokens": 15,
+    "total_tokens": 2862,
+    "cost": 0.0001275
+   },
+   "cost": 0.0001275,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"effect\", \"components\": [\"station_join\", \"trip_adapter\"]}",
+   "usage": {
+    "prompt_tokens": 2887,
+    "completion_tokens": 19,
+    "total_tokens": 2906,
+    "cost": 9.47e-05
+   },
+   "cost": 9.47e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"rollback\", \"component\": \"trip_adapter\"}",
+   "usage": {
+    "prompt_tokens": 2943,
+    "completion_tokens": 14,
+    "total_tokens": 2957,
+    "cost": 9.83e-05
+   },
+   "cost": 9.83e-05,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "{\"action\": \"final\", \"fix\": [\"trip_adapter\"], \"retrain\": false, \"reason\": \"The trip_adapter component is broken due to schema changes, causing key errors. Fixing it is necessary before retraining.\"}",
+   "usage": {
+    "prompt_tokens": 2994,
+    "completion_tokens": 49,
+    "total_tokens": 3043,
+    "cost": 0.0001078
+   },
+   "cost": 0.0001078,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 14041,
+ "tokens_out": 120,
+ "compute_spent_s": 0.3359,
+ "compute_budget_s": 6.196439699990151,
+ "source_cache_hits": 8,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "station_join",
+  "clean",
+  "encode"
+ ]
+}

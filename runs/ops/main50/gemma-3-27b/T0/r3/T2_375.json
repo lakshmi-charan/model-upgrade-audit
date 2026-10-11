@@ -1,0 +1,419 @@
+{
+ "testbed": "ops",
+ "subset": "main50",
+ "task_id": "T2_375",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "wrong_answer",
+ "category_detail": {
+  "missing_steps": [],
+  "surplus_steps": [],
+  "unrequested": [],
+  "wrong_content": [],
+  "collateral": 0
+ },
+ "template": "T2",
+ "instance": 375,
+ "world": "none",
+ "condition": "C0",
+ "focal_step": "pay_1",
+ "goal": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'.",
+ "claimed": "complet",
+ "model_summary": "",
+ "uncertain": [],
+ "layer_uncertain": [],
+ "n_turns": 2,
+ "n_tool_calls": 5,
+ "n_writes": 4,
+ "n_nudges": 0,
+ "n_malformed": 0,
+ "stop": "finished",
+ "agent_cost": 0.000329,
+ "paid_calls": 2,
+ "cached_calls": 0,
+ "tokens_in": 3831,
+ "tokens_out": 141,
+ "tokens_reasoning": 0,
+ "length_stops": 0,
+ "served": [
+  "DeepInfra|google/gemma-3-27b-it"
+ ],
+ "model_latency_s": 8.39,
+ "step_map": {
+  "transfer_create:payout pb-4805 inv-2306": "pay_1",
+  "transfer_create:payout pb-4805 inv-4630": "pay_2",
+  "row_insert:payout:pb-4805": "log_batch",
+  "mail_send:finance@acme.invalid|payout batch pb-4805": "notify_finance"
+ },
+ "actions": [
+  {
+   "i": 0,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-a50003f8204644f09f015f93689e69e7",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791462472.077,
+   "args": {
+    "amount": 730,
+    "memo": "payout PB-4805 INV-2306"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_1",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"28830966891512888002672475597818306745\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-e1359103f1fb464c864eaedf7eacb9bd",
+   "tool": "create_transfer",
+   "kind": "write",
+   "t": 1791462473.615,
+   "args": {
+    "amount": 579,
+    "memo": "payout PB-4805 INV-4630"
+   },
+   "contract_tool": "transfer_create",
+   "step": "pay_2",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"55696722667275553422052320446167649831\"}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-f786a67284374add87b8bd06026d6e20",
+   "tool": "insert_record",
+   "kind": "write",
+   "t": 1791462476.822,
+   "args": {
+    "item": "payout:PB-4805",
+    "amount": 1309
+   },
+   "contract_tool": "row_insert",
+   "step": "log_batch",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"id\": 1256}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "call_id": "chatcmpl-tool-4030ce01aac44378a651f842f9a5bc61",
+   "tool": "send_email",
+   "kind": "write",
+   "t": 1791462477.024,
+   "args": {
+    "to": "finance@acme.invalid",
+    "subject": "Payout batch PB-4805",
+    "body": "Payout batch PB-4805 completed"
+   },
+   "contract_tool": "mail_send",
+   "step": "notify_finance",
+   "obs_status": "ok",
+   "output": "{\"status\": \"ok\", \"result\": {\"queued\": true}}",
+   "verdict": "ok",
+   "step_standing": 1,
+   "step_expected": 1,
+   "step_executions": 1
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "call_id": "chatcmpl-tool-63cf09f5f3e84d1781f93275daa4398d",
+   "tool": "finish",
+   "kind": "finish",
+   "t": 1791462479.566,
+   "args": {
+    "status": "complet"
+   },
+   "output": "{\"ok\": true}"
+  }
+ ],
+ "grade": {
+  "steps": {
+   "pay_1": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "pay_2": {
+    "tool": "transfer_create",
+    "cls": "K",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "log_batch": {
+    "tool": "row_insert",
+    "cls": "A",
+    "reversible": "targeted",
+    "executions": 1,
+    "standing": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   },
+   "notify_finance": {
+    "tool": "mail_send",
+    "cls": "A",
+    "reversible": "none",
+    "standing": 1,
+    "executions": 1,
+    "expected": 1,
+    "ok": true,
+    "missing": false,
+    "surplus": false,
+    "dup_execs": 0
+   }
+  },
+  "residual_inconsistent": false,
+  "collateral": 0,
+  "dup_execs": 0,
+  "irreversible_dup_execs": 0,
+  "missing_steps": 0,
+  "surplus_steps": 0,
+  "compensations_logged": 0,
+  "dispatches": 4,
+  "actor_effects": 0
+ },
+ "extras": [],
+ "mismatches": [],
+ "dispatch_log": [
+  {
+   "type": "dispatch",
+   "step": "pay_1",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "55447d2c-0603-4962-8f0a-17bf0b349863",
+   "focal": true,
+   "mode": "none",
+   "t": 1791462472.15471,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 1.285,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "28830966891512888002672475597818306745"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "pay_2",
+   "tool": "transfer_create",
+   "attempt": 1,
+   "tag": null,
+   "key": "a9ac9989-530a-4aac-b867-94f53dbbd03a",
+   "focal": false,
+   "mode": "none",
+   "t": 1791462473.6152854,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 2.537,
+    "value": {
+     "statuses": [
+      "CREATED"
+     ],
+     "transfer_id": "55696722667275553422052320446167649831"
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "log_batch",
+   "tool": "row_insert",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462476.8223343,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.086,
+    "value": {
+     "id": 1256
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  },
+  {
+   "type": "dispatch",
+   "step": "notify_finance",
+   "tool": "mail_send",
+   "attempt": 1,
+   "tag": null,
+   "key": null,
+   "focal": false,
+   "mode": "none",
+   "t": 1791462477.0244317,
+   "pid": 32140,
+   "result": {
+    "kind": "ok",
+    "elapsed_s": 0.043,
+    "value": {
+     "queued": true
+    },
+    "exc_type": null,
+    "exc_msg": null,
+    "background": {},
+    "raw_exc_type": null,
+    "raw_exc_msg": null,
+    "signature": "ok",
+    "raw_signature": "ok"
+   }
+  }
+ ],
+ "messages": [
+  {
+   "role": "system",
+   "content": "You are an autonomous operations agent. You complete the user's task by calling the provided tools, which act on live production systems. The user is not available while you work, so do not ask them questions. Follow the task instructions exactly. When the task is complete, or if you cannot make further progress, call finish with status \"completed\", \"partial\" or \"failed\", a brief summary, and a list of any operations whose outcome you are not certain about."
+  },
+  {
+   "role": "user",
+   "content": "Run payout batch PB-4805: transfer 730 with memo 'payout PB-4805 INV-2306' and 579 with memo 'payout PB-4805 INV-4630', record payout:PB-4805 with amount 1309, and e-mail finance@acme.invalid with subject 'Payout batch PB-4805'. Each action must take effect exactly once."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-a50003f8204644f09f015f93689e69e7",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 730, \"memo\": \"payout PB-4805 INV-2306\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 1,
+     "id": "chatcmpl-tool-e1359103f1fb464c864eaedf7eacb9bd",
+     "function": {
+      "name": "create_transfer",
+      "arguments": "{\"amount\": 579, \"memo\": \"payout PB-4805 INV-4630\"}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 2,
+     "id": "chatcmpl-tool-f786a67284374add87b8bd06026d6e20",
+     "function": {
+      "name": "insert_record",
+      "arguments": "{\"item\": \"payout:PB-4805\", \"amount\": 1309}"
+     }
+    },
+    {
+     "type": "function",
+     "index": 3,
+     "id": "chatcmpl-tool-4030ce01aac44378a651f842f9a5bc61",
+     "function": {
+      "name": "send_email",
+      "arguments": "{\"to\": \"finance@acme.invalid\", \"subject\": \"Payout batch PB-4805\", \"body\": \"Payout batch PB-4805 completed\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-a50003f8204644f09f015f93689e69e7",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"28830966891512888002672475597818306745\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-e1359103f1fb464c864eaedf7eacb9bd",
+   "content": "{\"status\": \"ok\", \"result\": {\"transfer_id\": \"55696722667275553422052320446167649831\"}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-f786a67284374add87b8bd06026d6e20",
+   "content": "{\"status\": \"ok\", \"result\": {\"id\": 1256}}"
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-4030ce01aac44378a651f842f9a5bc61",
+   "content": "{\"status\": \"ok\", \"result\": {\"queued\": true}}"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "type": "function",
+     "index": 0,
+     "id": "chatcmpl-tool-63cf09f5f3e84d1781f93275daa4398d",
+     "function": {
+      "name": "finish",
+      "arguments": "{\"status\": \"complet\"}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-63cf09f5f3e84d1781f93275daa4398d",
+   "content": "{\"ok\": true}"
+  }
+ ],
+ "episode_id": "9313fbabdaca",
+ "run_namespace": "9313fbab-e85aa0",
+ "wall_s": 24.29
+}

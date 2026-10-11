@@ -1,0 +1,231 @@
+{
+ "task_id": "tlc-2015-01-2015-07-two-849b4376",
+ "label": "gemma-3-27b",
+ "model": "google/gemma-3-27b-it",
+ "provider": "openrouter",
+ "temperature": 0.0,
+ "repeat": 3,
+ "success": 0,
+ "status": "completed",
+ "error": null,
+ "category": "missing_write",
+ "exact_match": 0,
+ "grade_flags": {
+  "extra_fix": [],
+  "missing_fix": [],
+  "extra_retrain": false,
+  "missing_retrain": true,
+  "fix_inconsequential": [
+   "zone_join"
+  ],
+  "forced_final": false
+ },
+ "agent_cost": 0.001159,
+ "n_steps": 4,
+ "actions": [
+  {
+   "step": 1,
+   "action": "effect",
+   "args": {
+    "components": [
+     "trip_adapter",
+     "zone_join",
+     "encode"
+    ]
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "ok",
+    "perf": 0.6901403369529925,
+    "cur_perf": 0.6970669937587937,
+    "ref_perf": 0.7126164874551971,
+    "rows": 27719,
+    "common_rows": null,
+    "masked": []
+   },
+   "cost_s": 0.5201,
+   "spent_seconds": 0.5201,
+   "wall_s": 0.697
+  },
+  {
+   "step": 2,
+   "action": "replay",
+   "args": {
+    "component": "trip_adapter"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "equal"
+   },
+   "cost_s": 1.0558,
+   "spent_seconds": 1.5759,
+   "wall_s": 1.753
+  },
+  {
+   "step": 3,
+   "action": "replay",
+   "args": {
+    "component": "zone_join"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "do_borough": 0.124891,
+     "do_service": 0.168743
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 0.0599,
+   "spent_seconds": 1.6358,
+   "wall_s": 0.423
+  },
+  {
+   "step": 4,
+   "action": "replay",
+   "args": {
+    "component": "encode"
+   },
+   "valid": true,
+   "tool_error": false,
+   "result": {
+    "result": "differ",
+    "differing_columns": {
+     "vendor": 1.0,
+     "ratecode": 0.001675,
+     "pu_borough": 0.067054,
+     "do_borough": 0.073517,
+     "pu_service": 0.05909
+    },
+    "rows": [
+     92537,
+     92537
+    ]
+   },
+   "cost_s": 0.1715,
+   "spent_seconds": 1.8073,
+   "wall_s": 0.167
+  }
+ ],
+ "final_decision": {
+  "fix": [
+   "encode",
+   "zone_join"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely caused by changes in zone_join and encode components, as replay experiments revealed differing outputs for these components on reference data."
+ },
+ "oracle": {
+  "fix": [
+   "encode"
+  ],
+  "retrain": true,
+  "effective": [
+   "encode",
+   "zone_join"
+  ],
+  "consequential": [
+   "encode"
+  ]
+ },
+ "domain": "tlc",
+ "otype": "both",
+ "scenario": "two",
+ "tier": "T3",
+ "wall_s": 13.44,
+ "final_problem": null,
+ "final_raw": {
+  "action": "final",
+  "fix": [
+   "zone_join",
+   "encode"
+  ],
+  "retrain": false,
+  "reason": "The accuracy drop is likely caused by changes in zone_join and encode components, as replay experiments revealed differing outputs for these components on reference data."
+ },
+ "forced_final": false,
+ "stop_reason": "agent",
+ "n_invalid_actions": 0,
+ "n_llm_calls": 5,
+ "turns": [
+  {
+   "text": "```json\n{\"action\": \"effect\", \"components\": [\"trip_adapter\", \"zone_join\", \"encode\"]}\n```",
+   "usage": {
+    "prompt_tokens": 2617,
+    "completion_tokens": 28,
+    "total_tokens": 2645,
+    "cost": 0.00021384
+   },
+   "cost": 0.00021384,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"trip_adapter\"}\n```",
+   "usage": {
+    "prompt_tokens": 2769,
+    "completion_tokens": 20,
+    "total_tokens": 2789,
+    "cost": 0.00022472
+   },
+   "cost": 0.00022472,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"zone_join\"}\n```",
+   "usage": {
+    "prompt_tokens": 2819,
+    "completion_tokens": 20,
+    "total_tokens": 2839,
+    "cost": 0.00022872
+   },
+   "cost": 0.00022872,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"replay\", \"component\": \"encode\"}\n```",
+   "usage": {
+    "prompt_tokens": 2922,
+    "completion_tokens": 18,
+    "total_tokens": 2940,
+    "cost": 0.00023664
+   },
+   "cost": 0.00023664,
+   "cached": false,
+   "finish_reason": "stop"
+  },
+  {
+   "text": "```json\n{\"action\": \"final\", \"fix\": [\"zone_join\", \"encode\"], \"retrain\": false, \"reason\": \"The accuracy drop is likely caused by changes in zone_join and encode components, as replay experiments revealed differing outputs for these components on reference data.\"}\n```",
+   "usage": {
+    "prompt_tokens": 3059,
+    "completion_tokens": 63,
+    "total_tokens": 3122,
+    "cost": 0.0002548
+   },
+   "cost": 0.0002548,
+   "cached": false,
+   "finish_reason": "stop"
+  }
+ ],
+ "tokens_in": 14186,
+ "tokens_out": 149,
+ "compute_spent_s": 1.8073,
+ "compute_budget_s": 58.65384449994599,
+ "source_cache_hits": 10,
+ "components": [
+  "trip_adapter",
+  "time_features",
+  "clean",
+  "zone_join",
+  "fare_features",
+  "encode"
+ ]
+}
